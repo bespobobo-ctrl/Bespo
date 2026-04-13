@@ -1720,6 +1720,101 @@ textarea:focus {
     }
 }
 
+.clickable-row {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.clickable-row:hover {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.history-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.history-modal-card {
+    background: #0a0a0a;
+    width: 90%;
+    max-width: 600px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 35px;
+}
+
+.h-modal-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.h-modal-title h2 {
+    color: #fff;
+    font-size: 1.4rem;
+    margin-top: 5px;
+}
+
+.h-modal-close {
+    background: none;
+    border: none;
+    color: #444;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.h-detail-section {
+    margin-bottom: 20px;
+}
+
+.h-detail-section label {
+    display: block;
+    color: #666;
+    font-size: 0.6rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.h-detail-section p {
+    color: #ccc;
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.sol-text {
+    color: #10b981 !important;
+    background: rgba(16, 185, 129, 0.05);
+    padding: 15px;
+    border-radius: 12px;
+    border-left: 3px solid #10b981;
+}
+
+.h-detail-footer {
+    display: flex;
+    gap: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 20px;
+    margin-top: 10px;
+}
+
+.h-f-item {
+    font-size: 0.75rem;
+    color: #444;
+}
+
+.h-f-item strong {
+    color: #888;
+}
+
 /* SYSTEM AUDIT HISTORY DESIGN */
 .event-log-v4 {
     margin-top: 30px !important;

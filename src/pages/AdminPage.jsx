@@ -35,6 +35,7 @@ const AdminPage = () => {
     const [selectedAgentKey, setSelectedAgentKey] = useState(null);
     const [agentTestResults, setAgentTestResults] = useState({});
     const [isTestRunning, setIsTestRunning] = useState(false);
+    const [selectedHistoryItem, setSelectedHistoryItem] = useState(null);
 
     const runAgentTests = async () => {
         setIsTestRunning(true);
@@ -700,7 +701,7 @@ const AdminPage = () => {
                                             <table className="telemetry-table v4-history">
                                                 <tbody>
                                                     {agents.patchHistory?.map(event => (
-                                                        <tr key={event.id}>
+                                                        <tr key={event.id} onClick={() => setSelectedHistoryItem(event)} className="clickable-row">
                                                             <td><div className="h-issue"><span className="h-title">{event.title}</span><span className="h-impact">Impact: {event.impact}</span></div></td>
                                                             <td><div className="h-date">{new Date(event.timestamp).toLocaleDateString()}<small>{new Date(event.timestamp).toLocaleTimeString()}</small></div></td>
                                                             <td><span className="h-status-check">OK</span></td>
@@ -710,6 +711,49 @@ const AdminPage = () => {
                                             </table>
                                         </div>
                                     </div>
+
+                                    <AnimatePresence>
+                                        {selectedHistoryItem && (
+                                            <motion.div
+                                                className="history-modal-overlay"
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                exit={{ opacity: 0 }}
+                                                onClick={() => setSelectedHistoryItem(null)}
+                                            >
+                                                <motion.div
+                                                    className="history-modal-card"
+                                                    initial={{ scale: 0.9, y: 20 }}
+                                                    animate={{ scale: 1, y: 0 }}
+                                                    exit={{ scale: 0.9, y: 20 }}
+                                                    onClick={e => e.stopPropagation()}
+                                                >
+                                                    <div className="h-modal-header">
+                                                        <div className="h-modal-title">
+                                                            <h6>HODISA_TAFSIHLOTLARI_{selectedHistoryItem.id}</h6>
+                                                            <h2>{selectedHistoryItem.title}</h2>
+                                                        </div>
+                                                        <button className="h-modal-close" onClick={() => setSelectedHistoryItem(null)}>×</button>
+                                                    </div>
+
+                                                    <div className="h-modal-body">
+                                                        <div className="h-detail-section">
+                                                            <label>ANIQLANGAN MUAMMO</label>
+                                                            <p>{selectedHistoryItem.problem}</p>
+                                                        </div>
+                                                        <div className="h-detail-section">
+                                                            <label>AI TOMONIDAN QILINGAN YECHIM</label>
+                                                            <p className="sol-text">{selectedHistoryItem.solution}</p>
+                                                        </div>
+                                                        <div className="h-detail-footer">
+                                                            <div className="h-f-item"><span>Status:</span> <strong>Muvaffaqiyatli</strong></div>
+                                                            <div className="h-f-item"><span>Vaqt:</span> <strong>{new Date(selectedHistoryItem.timestamp).toLocaleString('uz-UZ')}</strong></div>
+                                                        </div>
+                                                    </div>
+                                                </motion.div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
                                 </div>
                             </div>
                         </motion.div>

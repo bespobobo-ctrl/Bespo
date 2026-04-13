@@ -453,6 +453,16 @@ const useSiteStore = create(
 
                 set((s) => {
                     const history = s.agents?.patchHistory || [];
+                    const newEntry = {
+                        id: `P${Math.floor(Math.random() * 10000)}`,
+                        title: currentFix?.title || 'Tizim barqarorligi paketi',
+                        problem: currentFix?.problem || 'Tizimda ishlash unumdorligi pasayishi va kutilmagan kechikishlar aniqlandi.',
+                        solution: 'AI agenti kod strukturasini optimallashtirdi va ortiqcha re-render jarayonlarini bartaraf etdi.',
+                        status: 'RESOLVED',
+                        timestamp: new Date().toISOString(),
+                        impact: currentFix?.severity || 'Normal'
+                    };
+
                     return {
                         agents: {
                             ...s.agents,
