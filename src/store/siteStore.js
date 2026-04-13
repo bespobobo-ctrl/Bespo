@@ -497,6 +497,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
+            version: 3, // Force refresh to apply new AI Audit structure
         }
 
     )
