@@ -98,6 +98,29 @@ const useSiteStore = create(
             heroSettings: {
                 slides: defaultHeroSlides
             },
+            recommendedHeroSlides: [
+                {
+                    id: 'rec1',
+                    title: 'URBAN AVANT-GARDE',
+                    subtitle: 'STREET WEAR 2026',
+                    description: 'Ko\'cha uslubining yuqori modaga aylanishi. Chegaralarni buzing.',
+                    image: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&q=80&w=2000'
+                },
+                {
+                    id: 'rec2',
+                    title: 'CRAFTED PRECISION',
+                    subtitle: 'HAND-MADE QUALITY',
+                    description: 'Sifat va detallarga bo\'lgan e\'tibor. Har bir chok - san\'at asari.',
+                    image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&q=80&w=2000'
+                },
+                {
+                    id: 'rec3',
+                    title: 'DIGITAL NOMAD',
+                    subtitle: 'TECH & STYLE',
+                    description: 'Texnologiya va zamonaviy yashash tarzi uyg\'unligi.',
+                    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=2000'
+                }
+            ],
 
             aboutSettings: {
                 title: 'ARCHITECTURE',
