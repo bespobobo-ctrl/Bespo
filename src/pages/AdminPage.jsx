@@ -730,8 +730,12 @@ const AdminPage = () => {
                                                 >
                                                     <div className="h-modal-header">
                                                         <div className="h-modal-title">
-                                                            <h6>HODISA_TAFSIHLOTLARI_{selectedHistoryItem.id}</h6>
-                                                            <h2>{selectedHistoryItem.title}</h2>
+                                                            <h6>HODISA_TAFSILOTLARI_{selectedHistoryItem.id}</h6>
+                                                            <h2>{
+                                                                selectedHistoryItem.title.includes('Circular Dependency') ? 'Aylanma bog\'liqlik va Xotira sizib chiqishi' :
+                                                                    selectedHistoryItem.title.includes('General System') ? 'Tizim barqarorligi paketi' :
+                                                                        selectedHistoryItem.title
+                                                            }</h2>
                                                         </div>
                                                         <button className="h-modal-close" onClick={() => setSelectedHistoryItem(null)}>×</button>
                                                     </div>
@@ -739,15 +743,15 @@ const AdminPage = () => {
                                                     <div className="h-modal-body">
                                                         <div className="h-detail-section">
                                                             <label>ANIQLANGAN MUAMMO</label>
-                                                            <p>{selectedHistoryItem.problem}</p>
+                                                            <p>{selectedHistoryItem.problem || 'Ushbu tizim xatosi avtomatik audit davomida aniqlangan va tizim barqarorligiga ta\'sir ko\'rsatgan.'}</p>
                                                         </div>
                                                         <div className="h-detail-section">
                                                             <label>AI TOMONIDAN QILINGAN YECHIM</label>
-                                                            <p className="sol-text">{selectedHistoryItem.solution}</p>
+                                                            <p className="sol-text">{selectedHistoryItem.solution || 'AI agenti kod strukturasini tahlil qildi va muammoni bartaraf etuvchi "hot-fix" patchini muvaffaqiyatli qo\'lladi.'}</p>
                                                         </div>
                                                         <div className="h-detail-footer">
-                                                            <div className="h-f-item"><span>Status:</span> <strong>Muvaffaqiyatli</strong></div>
-                                                            <div className="h-f-item"><span>Vaqt:</span> <strong>{new Date(selectedHistoryItem.timestamp).toLocaleString('uz-UZ')}</strong></div>
+                                                            <div className="h-f-item"><span>Holat:</span> <strong>Muvaffaqiyatli</strong></div>
+                                                            <div className="h-f-item"><span>Sana va vaqt:</span> <strong>{new Date(selectedHistoryItem.timestamp).toLocaleString('uz-UZ')}</strong></div>
                                                         </div>
                                                     </div>
                                                 </motion.div>

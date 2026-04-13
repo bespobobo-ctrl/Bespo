@@ -348,16 +348,16 @@ const useSiteStore = create(
                         guard: {
                             ...state.agents.guard,
                             status: 'scanning',
-                            logs: ['[00:01] Deep Security Audit initiated...', ...state.agents.guard.logs]
+                            logs: ['[00:01] Chuqur xavfsizlik auditi boshlandi...', ...(state.agents.guard?.logs || [])]
                         }
                     }
                 }));
 
                 const phases = [
-                    { msg: '[00:04] Analyzing HTTP Security Headers (CORS, HSTS, CSP)...', score: 98 },
-                    { msg: '[00:08] Scanning for OWASP Top 10 Vulnerabilities...', score: 95 },
-                    { msg: '[00:12] Auditing SSL/TLS Certificate Chains...', score: 100 },
-                    { msg: '[00:15] Stress Testing API Gateways (Rate-Limit Check)...', score: 92 }
+                    { msg: '[00:04] HTTP xavfsizlik sarlavhalari (CORS, HSTS, CSP) tahlil qilinmoqda...', score: 98 },
+                    { msg: '[00:08] OWASP Top 10 zaifliklari skanerlanmoqda...', score: 95 },
+                    { msg: '[00:12] SSL/TLS sertifikat zanjirlari auditi boshlandi...', score: 100 },
+                    { msg: '[00:15] API shlyuzlarini stress-testdan o\'tkazish (Rate-Limit)...', score: 92 }
                 ];
 
                 for (let phase of phases) {
@@ -367,7 +367,7 @@ const useSiteStore = create(
                             ...state.agents,
                             guard: {
                                 ...state.agents.guard,
-                                logs: [phase.msg, ...state.agents.guard.logs],
+                                logs: [phase.msg, ...(state.agents.guard?.logs || [])],
                                 healthScore: phase.score
                             }
                         }
@@ -380,7 +380,12 @@ const useSiteStore = create(
                         guard: {
                             ...state.agents.guard,
                             status: 'secure',
-                            lastReport: { timestamp: new Date().toISOString(), threatLevel: 'Low', auditedEndpoints: 14 }
+                            lastReport: {
+                                timestamp: new Date().toISOString(),
+                                threatLevel: 'Minimal',
+                                auditedEndpoints: 14,
+                                vulnerabilities: ['Kritik zaifliklar topilmadi. Tizim himoyasi faol.']
+                            }
                         }
                     }
                 }));
@@ -393,7 +398,7 @@ const useSiteStore = create(
                         debugger: {
                             ...state.agents.debugger,
                             status: 'scanning',
-                            logs: ['[00:01] Static Code Analysis (AST) started...', ...state.agents.debugger.logs],
+                            logs: ['[00:01] Statik kod tahlili boshlandi (AST)...', ...(state.agents.debugger?.logs || [])],
                             proposedFix: null
                         }
                     }
@@ -402,11 +407,11 @@ const useSiteStore = create(
                 await new Promise(r => setTimeout(r, 2000));
 
                 const bugReport = {
-                    severity: 'CRITICAL',
-                    title: 'Circular Dependency & Memory Leak',
-                    problem: 'Infinite re-render detected in siteStore update cycle due to unmemoized selector.',
-                    impact: 'Browser CPU usage spike up to 80% on long sessions.',
-                    solution: 'Implement useCallback and useShallow for complex objects in state selectors.',
+                    severity: 'KRITIK',
+                    title: 'Aylanma bog\'liqlik va Xotira sizib chiqishi',
+                    problem: 'siteStore yangilanishi davomida unmemoized selektorlar tufayli cheksiz re-render jarayoni aniqlandi.',
+                    impact: 'Uzoq sessiyalar davomida brauzer protsessor yuklamasi 80% gacha oshishi.',
+                    solution: 'Murakkab ob\'yektlar uchun useCallback va useShallow selektorlarini joriy etish orqali xotira optimallashtirildi.',
                     code: 'const items = useSiteStore(useShallow(state => state.items));'
                 };
 
@@ -416,7 +421,7 @@ const useSiteStore = create(
                         debugger: {
                             ...state.agents.debugger,
                             status: 'compromised',
-                            logs: [`[00:05] 🔴 EXCEPTION FOUND: ${bugReport.title}`, ...state.agents.debugger.logs],
+                            logs: [`[00:05] 🔴 XATOLIK ANIQLANDI: ${bugReport.title}`, ...(state.agents.debugger?.logs || [])],
                             proposedFix: bugReport,
                             metrics: { complexity: 78, performance: 42 }
                         }
