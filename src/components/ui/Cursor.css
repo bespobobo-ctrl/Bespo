@@ -1,0 +1,40 @@
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.custom-cursor__inner {
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--color-accent);
+    border-radius: 50%;
+    transition: all 0.3s var(--ease-out);
+}
+
+.custom-cursor__dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 2px;
+    height: 2px;
+    background-color: var(--color-accent);
+    border-radius: 50%;
+}
+
+.custom-cursor--active .custom-cursor__inner {
+    border-color: var(--color-text-primary);
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(2px);
+}
+
+@media (max-width: 1024px) {
+    .custom-cursor {
+        display: none;
+    }
+}

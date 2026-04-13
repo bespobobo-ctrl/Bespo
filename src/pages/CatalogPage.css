@@ -1,0 +1,206 @@
+/* Catalog V2 - Reverted to Warm Earth Luxury Aesthetic */
+.catalog-v2 {
+    background: #050505;
+    /* Original Obsidian Black */
+    min-height: 100vh;
+    padding: 120px 60px 80px;
+    color: #fff;
+    background-image:
+        radial-gradient(circle at 0% 0%, rgba(181, 150, 107, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(181, 150, 107, 0.05) 0%, transparent 50%);
+}
+
+.catalog-v2__header {
+    margin-bottom: 80px;
+    text-align: left;
+}
+
+.header-meta {
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    color: var(--color-accent);
+    /* Gold Accent */
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.catalog-v2__header h1 {
+    font-family: var(--font-heading);
+    font-size: 4.5rem;
+    letter-spacing: -0.02em;
+    margin: 0;
+    line-height: 0.9;
+}
+
+.catalog-v2__header h1 .accent {
+    color: var(--color-accent);
+}
+
+.catalog-v2__filters {
+    display: flex;
+    gap: 30px;
+    margin-top: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 20px;
+}
+
+.catalog-v2__filters button {
+    background: transparent;
+    border: none;
+    color: #555;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.catalog-v2__filters button.active {
+    color: var(--color-accent);
+}
+
+/* Grid Layout matching screenshot */
+.catalog-v2__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+}
+
+.product-card-v2 {
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);
+    /* Corner cut effect */
+}
+
+.product-card-v2.featured {
+    grid-column: span 2;
+    grid-row: span 1;
+}
+
+.card-inner {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-image-wrapper {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: #b4c2cd;
+    overflow: hidden;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 95%, 95% 100%, 0 100%);
+}
+
+.product-card-v2.featured .card-image-wrapper {
+    aspect-ratio: 16/10;
+}
+
+.card-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    mix-blend-mode: multiply;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-inner:hover img {
+    transform: scale(1.05);
+}
+
+.featured-overlay {
+    position: absolute;
+    inset: 0;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent);
+}
+
+.featured-tag {
+    font-size: 3rem;
+    font-family: var(--font-heading);
+    letter-spacing: -0.05em;
+}
+
+.featured-action {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 10px 20px;
+    border-radius: 40px;
+    margin-top: 10px;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subtitle {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.dots {
+    display: flex;
+    gap: 5px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card-info h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+.price {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.card-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #000;
+    color: #fff;
+    font-size: 0.6rem;
+    padding: 4px 10px;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+
+@media (max-width: 1024px) {
+    .catalog-v2__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product-card-v2.featured {
+        grid-column: span 2;
+    }
+}

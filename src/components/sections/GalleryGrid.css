@@ -1,0 +1,122 @@
+.gallery-v2 {
+    background-color: var(--color-bg);
+}
+
+.gallery-v2__header {
+    text-align: center;
+    margin-bottom: var(--space-4xl);
+}
+
+.gallery-v2__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 4rem);
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    margin-top: var(--space-md);
+}
+
+.gallery-v2__mosaic {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 250px;
+    gap: var(--space-lg);
+}
+
+.gallery-v2__item {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+}
+
+.gallery-v2__item--large {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.gallery-v2__item--tall {
+    grid-row: span 2;
+}
+
+.gallery-v2__item--medium {
+    grid-column: span 2;
+}
+
+.gallery-v2__img-wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.gallery-v2__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--duration-slow) var(--ease-out);
+}
+
+.gallery-v2__item:hover .gallery-v2__img {
+    transform: scale(1.1);
+}
+
+.gallery-v2__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.8) 0%, transparent 60%);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: var(--space-xl);
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-out);
+}
+
+.gallery-v2__item:hover .gallery-v2__overlay {
+    opacity: 1;
+}
+
+.gallery-v2__item-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-v2__cat {
+    font-family: var(--font-accent);
+    font-size: 0.6rem;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.gallery-v2__name {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.gallery-v2__id {
+    font-family: var(--font-accent);
+    font-size: 0.6rem;
+    color: var(--color-text-muted);
+}
+
+@media (max-width: 1024px) {
+    .gallery-v2__mosaic {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 640px) {
+    .gallery-v2__mosaic {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 200px;
+    }
+
+    .gallery-v2__item--large,
+    .gallery-v2__item--medium {
+        grid-column: span 1;
+    }
+}

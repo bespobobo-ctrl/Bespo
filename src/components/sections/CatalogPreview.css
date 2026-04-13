@@ -1,0 +1,107 @@
+.catalog-v2 {
+    background-color: var(--color-bg);
+}
+
+.catalog-v2__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: var(--space-4xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.catalog-v2__tag {
+    display: block;
+    font-family: var(--font-accent);
+    font-size: 0.7rem;
+    color: var(--color-accent);
+    letter-spacing: 0.3em;
+    margin-bottom: var(--space-sm);
+}
+
+.catalog-v2__title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+}
+
+.catalog-v2__links {
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    text-align: right;
+    align-items: flex-end;
+}
+
+.catalog-v2__desc {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+.catalog-v2__browse-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-md);
+    font-family: var(--font-accent);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-text-primary);
+    transition: color var(--duration-fast);
+}
+
+.catalog-v2__btn-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+    border-radius: 50%;
+    transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.catalog-v2__browse-btn:hover {
+    color: var(--color-accent);
+}
+
+.catalog-v2__browse-btn:hover .catalog-v2__btn-icon {
+    transform: translateX(5px) rotate(-45deg);
+}
+
+.catalog-v2__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xl);
+}
+
+@media (max-width: 1024px) {
+    .catalog-v2__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .catalog-v2__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-xl);
+    }
+
+    .catalog-v2__links {
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .catalog-v2__grid {
+        gap: var(--space-md);
+    }
+}
