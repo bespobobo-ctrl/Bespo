@@ -1,155 +1,157 @@
 .social-widget {
-    display: flex;
-    flex-direction: column;
+    background: var(--color-bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 20px;
+    padding: 25px;
 }
 
 .social-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
+    margin-top: 20px;
 }
 
 .social-item {
+    background: #000;
+    border: 1px solid var(--border-subtle);
+    padding: 15px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
-    background: #0f0f12;
-    border: 1px solid #1a1a1e;
-    padding: 12px 15px;
-    border-radius: 10px;
-    transition: transform 0.3s cubic-bezier(0.2, 1, 0.3, 1), box-shadow 0.3s;
+    gap: 15px;
     cursor: pointer;
+    transition: transform 0.2s;
 }
 
 .social-item:hover {
-    transform: translateX(-5px) scale(1.02);
-    background: #15151a;
-    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.6);
+    transform: translateX(5px);
     border-color: #333;
 }
 
 .social-icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
-    margin-right: 15px;
-    flex-shrink: 0;
 }
 
 .social-info {
-    display: flex;
-    flex-direction: column;
     flex: 1;
 }
 
 .social-info h4 {
-    margin: 0 0 2px 0;
+    margin: 0 0 3px 0;
     font-size: 0.8rem;
-    color: #eee;
+    font-weight: 600;
+    color: #fff;
 }
 
 .social-info span {
-    font-size: 0.6rem;
-    color: #777;
+    font-size: 0.65rem;
+    color: #444;
 }
 
 .social-stats {
+    text-align: right;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    gap: 3px;
 }
 
 .social-stats .count {
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 700;
     color: #fff;
-    margin-bottom: 2px;
     font-family: var(--font-heading);
 }
 
 .social-stats .trend {
     font-size: 0.6rem;
-    font-weight: 800;
+    font-weight: 700;
 }
 
-/* MODAL DASHBOARD */
+.sm-config-btn {
+    background: #000;
+    border: 1px solid var(--border-subtle);
+    color: #444;
+    font-size: 0.6rem;
+    padding: 5px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* Modals */
 .social-modal-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(8px);
-    z-index: 9999;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 10000;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
 .social-modal-content {
-    background: #0a0a0c;
-    border: 1px solid #222;
-    width: 900px;
-    max-width: 90%;
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+    max-width: 900px;
+    width: 100%;
+    background: #0d0d0f;
+    border: 1px solid #1a1a1e;
+    border-radius: 30px;
+    padding: 40px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
 .modal-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding-bottom: 20px;
+    align-items: flex-start;
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     margin-bottom: 30px;
-    border-bottom: 1px solid #222;
 }
 
 .mc-left {
     display: flex;
+    gap: 20px;
     align-items: center;
-    gap: 15px;
 }
 
 .mc-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
 .mc-left h2 {
     margin: 0;
-    font-size: 1.4rem;
-    color: #fff;
-    font-family: var(--font-heading);
+    font-size: 1.8rem;
 }
 
 .mc-left p {
     margin: 5px 0 0 0;
-    color: #888;
-    font-size: 0.8rem;
+    color: #666;
+    font-size: 0.9rem;
 }
 
 .mc-close {
     background: transparent;
     border: none;
-    color: #666;
-    font-size: 1.5rem;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.mc-close:hover {
     color: #fff;
-    transform: rotate(90deg);
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
 .modal-charts-grid {
@@ -159,173 +161,109 @@
 }
 
 .mc-chart-box {
-    background: #0f0f12;
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid #1a1a1e;
+    background: #000;
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .mc-chart-box h4 {
-    margin: 0 0 20px 0;
-    font-size: 1rem;
-    color: #eee;
-    font-weight: 500;
+    margin: 0 0 25px 0;
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .mc-bars {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
     height: 180px;
-    padding-top: 20px;
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
 }
 
 .mc-bar-wrapper {
+    flex: 1;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    height: 100%;
     justify-content: flex-end;
-    gap: 8px;
-    flex: 1;
+    align-items: center;
+    gap: 10px;
 }
 
 .mc-bar {
     width: 20px;
-    border-radius: 4px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px 10px 0 0;
 }
 
 .mc-val {
     font-size: 0.6rem;
     color: #fff;
-    font-weight: 700;
-    opacity: 0;
-    transition: 0.3s;
-    transform: translateY(10px);
-}
-
-.mc-bar-wrapper:hover .mc-val {
-    opacity: 1;
-    transform: translateY(0);
+    font-weight: 600;
 }
 
 .mc-day {
-    font-size: 0.6rem;
-    color: #666;
-    font-weight: 700;
+    font-size: 0.55rem;
+    color: #444;
     text-transform: uppercase;
-}
-
-/* URL CONFIGURATION MODAL & BTN */
-.sm-config-btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid #222;
-    color: #aaa;
-    border-radius: 6px;
-    padding: 4px 10px;
-    font-size: 0.65rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.sm-config-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border-color: #444;
-}
-
-.linked-text {
-    color: #10b981 !important;
-    font-weight: 700;
+    font-weight: 800;
 }
 
 .sm-config-modal {
-    background: #0f0f12;
-    border: 1px solid #2a2a30;
-    width: 450px;
-    max-width: 90%;
-    border-radius: 16px;
+    max-width: 450px;
+    width: 100%;
+    background: #0d0d0f;
+    border: 1px solid #1a1a1e;
+    border-radius: 24px;
     padding: 30px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.05);
-    position: relative;
 }
 
 .config-header {
-    border-bottom: 1px solid #1a1a1e;
-    padding-bottom: 15px;
     margin-bottom: 25px;
 }
 
 .config-header h3 {
-    margin: 0 0 5px 0;
-    font-size: 1.2rem;
-    color: #eee;
+    margin: 0 0 10px 0;
 }
 
 .config-header p {
+    font-size: 0.8rem;
+    color: #666;
     margin: 0;
-    font-size: 0.75rem;
-    color: #777;
-    line-height: 1.4;
-}
-
-.config-header .mc-close {
-    position: absolute;
-    top: 25px;
-    right: 25px;
+    line-height: 1.5;
 }
 
 .config-input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
     margin-bottom: 20px;
 }
 
 .config-input-group label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #aaa;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    display: block;
+    font-size: 0.7rem;
+    color: #666;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .config-input-group input {
-    background: #050505;
-    border: 1px solid #222;
+    width: 100%;
+    background: #000;
+    border: 1px solid #1a1a1e;
     color: #fff;
-    padding: 12px 15px;
-    border-radius: 8px;
-    font-family: inherit;
+    padding: 12px;
+    border-radius: 10px;
     font-size: 0.85rem;
-    transition: 0.3s;
-}
-
-.config-input-group input:focus {
-    outline: none;
-    border-color: var(--color-accent);
-    box-shadow: 0 0 10px rgba(181, 150, 107, 0.2);
 }
 
 .save-urls-btn {
     width: 100%;
-    background: linear-gradient(135deg, var(--color-accent) 0%, rgba(181, 150, 107, 0.8) 100%);
-    color: #000;
+    background: var(--color-accent);
     border: none;
-    padding: 14px;
-    border-radius: 8px;
+    color: #000;
+    padding: 15px;
+    border-radius: 10px;
     font-weight: 800;
-    font-family: inherit;
-    font-size: 0.9rem;
     cursor: pointer;
-    transition: 0.3s;
-    margin-top: 10px;
-}
-
-.save-urls-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(181, 150, 107, 0.3);
 }

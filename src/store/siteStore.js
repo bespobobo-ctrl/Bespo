@@ -133,11 +133,11 @@ const useSiteStore = create(
                 }
             },
             agents: {
-                predictor: { name: 'AI Predictor (Sales)', icon: '🤖', active: true, logs: ["12:45 - 2 ta hoodie tugash arafi haqida ogohlantirish berildi", "09:30 - Trend 80% o'sishi aniqlandi"] },
-                vision: { name: 'AI Vision (Image)', icon: '👁️', active: true, logs: ["10:15 - 'Aurora Puffer' rasm foni tozalandi", "Kecha - Rasmlar avtomatik 4K ga o'tkazildi"] },
-                copywriter: { name: 'AI Copywriter (SEO)', icon: '✍️', active: true, logs: ["08:20 - Premium ko'ylak uchun SEO tavsif yozildi"] },
-                theme: { name: 'Dynamic Theme Agent', icon: '🎨', active: true, logs: ["1 soat oldin - Qorong'u (Dark Theme) o'rnatildi", "Kecha - Yorug'lik (Light) tekshiruvi"] },
-                monitor: { name: 'AI Health Monitor', icon: '🩺', active: true, logs: ["15 daqiqa oldin - Server barqarorligi tekshirildi (OK)", "Kecha - Memory xatoliklarni kuzatuvdan o'tkazdi"] }
+                predictor: { name: 'AI Predictor (Sales)', icon: '🤖', active: true, logs: ["2 ta qora hoodie modeli tugash arafasida. Yangi xarid qilishni tavsiya qilamiz (Trend 80% yuqori)."] },
+                vision: { name: 'AI Vision (Image)', icon: '👁️', active: true, logs: ["Mahsulot rasmlari avtomatik 4K ga o'tkazilmoqda va fon tozalanmoqda."] },
+                copywriter: { name: 'AI Copywriter (SEO)', icon: '✍️', active: true, logs: ["Premium matnlar va kalit so'zlar siz uchun yozib berishga tayyor."] },
+                theme: { name: 'Dynamic Theme Agent', icon: '🎨', active: true, logs: ["1 soat oldin - Qorong'u (Dark Theme) o'rnatildi"] },
+                monitor: { name: 'AI Health Monitor', icon: '🩺', active: true, logs: ["15 daqiqa oldin - Server barqarorligi tekshirildi (OK)"] }
             },
             analytics: {
                 visitors: [120, 450, 300, 560, 800, 950, 1100],
@@ -237,7 +237,9 @@ const useSiteStore = create(
                     image1: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&q=80&w=1000',
                     image2: 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&q=80&w=600',
                     location: 'TOKYO / SHIBUYA',
-                    craft: 'HAND-CRAFTED'
+                    craft: 'HAND-CRAFTED',
+                    instagram: 'https://instagram.com/bespo.official',
+                    telegram: 'https://t.me/bespo'
                 },
                 globalSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '30', '32', '34'],
                 globalColors: [
@@ -248,7 +250,33 @@ const useSiteStore = create(
                     { name: 'Desert Sand', hex: '#d2b48c' },
                     { name: 'Olive Green', hex: '#4b5320' },
                     { name: 'Blood Red', hex: '#991b1b' },
-                ]
+                ],
+                theme: {
+                    name: 'Warm Earth Luxury',
+                    colors: {
+                        bg: '#0A0A0A',
+                        bgCard: '#141416',
+                        bgSurface: '#1E1E22',
+                        accent: '#C8A87C',
+                        textPrimary: '#F5F0E8'
+                    }
+                },
+                agents: {
+                    predictor: { name: 'AI Predictor (Sales)', icon: '🤖', active: true, logs: ["2 ta qora hoodie modeli tugash arafasida. Yangi xarid qilishni tavsiya qilamiz (Trend 80% yuqori)."] },
+                    vision: { name: 'AI Vision (Image)', icon: '👁️', active: true, logs: ["Mahsulot rasmlari avtomatik 4K ga o'tkazilmoqda va fon tozalanmoqda."] },
+                    copywriter: { name: 'AI Copywriter (SEO)', icon: '✍️', active: true, logs: ["Premium matnlar va kalit so'zlar siz uchun yozib berishga tayyor."] },
+                    theme: { name: 'Dynamic Theme Agent', icon: '🎨', active: true, logs: ["1 soat oldin - Qorong'u (Dark Theme) o'rnatildi"] },
+                    monitor: { name: 'AI Health Monitor', icon: '🩺', active: true, logs: ["15 daqiqa oldin - Server barqarorligi tekshirildi (OK)"] }
+                },
+                analytics: {
+                    visitors: [120, 450, 300, 560, 800, 950, 1100],
+                    popularProducts: [1, 3],
+                    slowProducts: [5, 6],
+                    stockAlerts: [
+                        { id: 2, count: 3, name: 'Essential Heavy Hoodie' }
+                    ],
+                    lastUpdate: '2026-04-10'
+                }
             })
         }),
         {
