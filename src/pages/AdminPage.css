@@ -182,6 +182,13 @@
 }
 
 /* Bento Layout */
+.admin-v3__bento-grid {
+    display: grid;
+    grid-template-columns: 280px 1fr 340px;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
 .admin-card {
     background: var(--color-bg-card);
     border: 1px solid var(--border-subtle);
@@ -189,166 +196,18 @@
     padding: 25px;
 }
 
-/* Bento Layout V4 */
-.admin-v3__bento-grid {
-    display: grid;
-    grid-template-columns: 280px 1fr 340px;
-    gap: 20px;
-    align-items: start;
-    margin-bottom: 30px;
-}
-
-.admin-v3__column {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* Agent Compact Cards */
-.ai-agents-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.agent-compact-card {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border-subtle);
-    border-radius: 12px;
-    padding: 12px 15px;
+/* Left Column: AI Agents */
+.ai-hub__header {
     display: flex;
     align-items: center;
-    gap: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.agent-compact-card:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: var(--color-accent);
-}
-
-.agent-compact-card.active .agent-status {
-    color: #10b981;
-}
-
-.agent-icon {
-    font-size: 1.2rem;
-}
-
-.agent-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.agent-name {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #fff;
-}
-
-.agent-status {
-    font-size: 0.6rem;
-    color: #444;
-}
-
-/* Rebranding Widget Compact */
-.rebrand-grid-compact {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-}
-
-.rebrand-grid-compact button {
-    background: #000;
-    border: 1px solid var(--border-subtle);
-    color: #fff;
-    padding: 8px;
-    border-radius: 8px;
-    font-size: 0.65rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-}
-
-.rebrand-grid-compact button:hover {
-    border-color: var(--color-accent);
-    background: var(--color-bg-surface);
-}
-
-/* Smart Form V4 */
-.storyboard-layout-v4 {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
-    margin-top: 10px;
+    margin-bottom: 25px;
 }
 
-.story-slot {
-    aspect-ratio: 0.8;
-    background: #000;
-    border: 1px solid #1a1a1e;
-    border-radius: 10px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.story-slot img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.slot-empty {
-    font-size: 1.2rem;
-    color: #333;
-}
-
-.story-slot input {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.slot-loader {
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.6rem;
+.sparkle-icon {
+    font-size: 1rem;
     color: var(--color-accent);
 }
-
-.ai-btn-small {
-    background: rgba(181, 150, 107, 0.1);
-    border: 1px solid var(--color-accent);
-    color: var(--color-accent);
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 0.6rem;
-    font-weight: 700;
-    cursor: pointer;
-}
-
-.desc-box-v4 textarea {
-    width: 100%;
-    min-height: 120px;
-    background: #000;
-    border: 1px solid #1a1a1e;
-    color: #fff;
-    padding: 15px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    line-height: 1.6;
-    resize: none;
-}
-
 
 .ai-hub__header h3 {
     font-size: 1rem;
@@ -1116,32 +975,28 @@
     color: var(--color-accent);
 }
 
-/* --- REBRANDING HUB --- */
-.rebranding-hub {
-    margin-top: 25px !important;
-}
-
+/* --- AI REBRANDING WIDGET --- */
 .rebrand-options {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .rebrand-chip {
     background: #000;
     border: 1px solid var(--border-subtle);
     color: #fff;
-    padding: 12px;
+    padding: 10px 12px;
     border-radius: 10px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     cursor: pointer;
     transition: 0.3s;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 6px;
 }
 
 .rebrand-chip:hover {
@@ -1150,18 +1005,8 @@
 }
 
 .rebrand-tip {
-    font-size: 0.65rem;
-    color: #444;
-    line-height: 1.4;
+    font-size: 0.6rem;
+    color: #555;
+    line-height: 1.5;
     margin: 0;
-}
-
-/* Adjust Dashboard Left Col to stack */
-.admin-v3__bento-grid {
-    align-items: start;
-}
-
-.admin-v3__bento-grid .left-col {
-    display: flex;
-    flex-direction: column;
 }

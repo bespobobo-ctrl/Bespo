@@ -64,42 +64,8 @@ const AdminPage = () => {
         });
     };
 
-    // --- Professional AI Orchestration ---
-
-    // 1. AI Health Monitor (Self-Healing logic)
-    useEffect(() => {
-        const monitorInterval = setInterval(() => {
-            if (agents.monitor.active) {
-                const healthStatuses = ["Server barqaror", "API javob bermoqda", "Memory OK", "DB Connected"];
-                const randomHealth = healthStatuses[Math.floor(Math.random() * healthStatuses.length)];
-                addAgentLog('monitor', `Hozir: ${randomHealth} (System OK)`);
-            }
-        }, 15000); // Check every 15s
-
-        return () => clearInterval(monitorInterval);
-    }, [agents.monitor.active, addAgentLog]);
-
-    // 2. Security Shield Monitor
-    useEffect(() => {
-        const securityInterval = setInterval(() => {
-            if (activeTab === 'security') {
-                const threats = ["IP 192.168.1.1 scanning blocked", "Firewall rules updated", "SSL Certificate Valid", "Database latency low"];
-                const threat = threats[Math.floor(Math.random() * threats.length)];
-                console.log(`[SECURITY] ${threat}`);
-            }
-        }, 5000);
-        return () => clearInterval(securityInterval);
-    }, [activeTab]);
-
     const handleAIGenerateDesc = async () => {
-        if (!agents.copywriter.active) {
-            alert("AI Copywriter agenti o'chirilgan. Iltimos, faollashtiring.");
-            return;
-        }
-
         setIsGeneratingDesc(true);
-        addAgentLog('copywriter', 'Yangi mahsulot tavsifi uchun so\'rov qabul qilindi...');
-
         try {
             const nameInput = document.querySelector('input[name="name"]');
             const catInput = document.querySelector('input[name="category"]');
@@ -113,23 +79,13 @@ const AdminPage = () => {
                 })
             });
 
-            if (!res.ok) throw new Error("Server xatosi");
-
             const data = await res.json();
             const descInput = document.querySelector('textarea[name="description"]');
             if (descInput) {
                 descInput.value = data.description || "GenAI serverdan javob qaytmadi.";
-                addAgentLog('copywriter', `Muvaffaqiyatli SEO tavsif generatsiya qilindi.`);
             }
         } catch (e) {
             console.error("AI Error:", e);
-            // Fallback: Lite AI Template
-            const descInput = document.querySelector('textarea[name="description"]');
-            if (descInput) {
-                const name = document.querySelector('input[name="name"]')?.value || 'Mahsulot';
-                descInput.value = `${name} - BESPO sifat standartlari asosida yaratilgan premium model. Streetwear uslubidagi ideal tanlov. Limited drop.`;
-            }
-            addAgentLog('copywriter', `Xatolik: Lite AI rejimi yoqildi (API offline).`);
         }
         setIsGeneratingDesc(false);
     };
@@ -138,37 +94,20 @@ const AdminPage = () => {
         e.preventDefault();
         setIsAnalyzing(true);
 
+        setAiStatusMessage("AI Vision: Rasmlar 4K ga o'tkazilmoqda...");
+        await new Promise(r => setTimeout(r, 1000));
+        setAiStatusMessage("AI Copywriter: SEO teglari optimallashtirilmoqda...");
+        await new Promise(r => setTimeout(r, 1000));
+        setAiStatusMessage("AI Predictor: Tahlil yakunlanmoqda...");
+        await new Promise(r => setTimeout(r, 800));
+
         const formData = new FormData(e.target);
-        const pName = formData.get('name');
-
-        // Step 1: Vision Processing
-        if (agents.vision.active) {
-            setAiStatusMessage("AI Vision: Rasm sifatini oshirish...");
-            addAgentLog('vision', `${pName} rasmlari 4K ga optimallashtirilmoqda...`);
-            await new Promise(r => setTimeout(r, 1200));
-            addAgentLog('vision', `${pName}: Fon tozalandi va eksportga tayyor.`);
-        }
-
-        // Step 2: Prediction Analysis
-        if (agents.predictor.active) {
-            setAiStatusMessage("AI Predictor: Sotuv tahlili...");
-            addAgentLog('predictor', `${pName} uchun trend prognozi: 92% ehtimollik bilan o'sish.`);
-            await new Promise(r => setTimeout(r, 1000));
-        }
-
-        // Step 3: SEO & Copy Verification
-        if (agents.copywriter.active) {
-            setAiStatusMessage("AI Copywriter: SEO tekshiruvi...");
-            addAgentLog('copywriter', `${pName} SEO teglari bazaga kiritildi.`);
-            await new Promise(r => setTimeout(r, 800));
-        }
-
         const finalColors = selectedColors.length > 0 ? selectedColors : ['#000000'];
         const finalSizes = selectedSizes.length > 0 ? selectedSizes : ['M', 'L'];
 
         const productData = {
             id: editingProduct ? editingProduct.id : Date.now(),
-            name: pName,
+            name: formData.get('name'),
             price: parseFloat(formData.get('price')),
             category: formData.get('category'),
             images: currentImages.length > 0 ? currentImages : [formData.get('image')],
@@ -191,7 +130,6 @@ const AdminPage = () => {
         setSelectedSizes([]);
         setIsAnalyzing(false);
         setAiStatusMessage('');
-        addAgentLog('monitor', `Tizim: "${pName}" mahsuloti barcha AI fazalaridan o'tdi.`);
     };
 
     const storyboardSlots = [
@@ -291,106 +229,161 @@ const AdminPage = () => {
                     {activeTab === 'products' && (
                         <motion.div key="products" className="admin-panel-v3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
                             <div className="admin-v3__bento-grid">
-                                {/* Left Column: AI Control Center */}
-                                <div className="admin-v3__column left">
-                                    <div className="admin-card ai-hub">
-                                        <div className="ai-hub__header">
-                                            <span className="sparkle-icon">✨</span>
-                                            <h3>AI Agents Hub</h3>
-                                        </div>
-                                        <div className="ai-agents-list">
-                                            {['predictor', 'vision', 'copywriter', 'monitor', 'rebrander'].map((key) => {
-                                                const agent = agents[key];
-                                                if (!agent) return null;
-                                                return (
-                                                    <div key={key} className={`agent-compact-card ${agent.active ? 'active' : ''}`} onClick={() => setSelectedAgentKey(key)}>
-                                                        <span className="agent-icon">{agent.icon}</span>
-                                                        <div className="agent-info">
-                                                            <span className="agent-name">{agent.name}</span>
-                                                            <span className="agent-status">{agent.active ? 'Muvaffaqiyatli' : 'O\'chirilgan'}</span>
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
 
-                                    <div className="admin-card rebranding-widget">
-                                        <div className="ai-hub__header">
-                                            <span className="sparkle-icon">🎨</span>
-                                            <h3>AI Rebranding</h3>
-                                        </div>
-                                        <div className="rebrand-grid-compact">
-                                            <button onClick={() => rebrandSite('luxury')}>Luxury</button>
-                                            <button onClick={() => rebrandSite('minimal')}>Minimal</button>
-                                            <button onClick={() => rebrandSite('cyber')}>Cyber</button>
-                                            <button onClick={() => rebrandSite('street')}>Street</button>
-                                        </div>
+                                {/* Row 1 Left: Core AI Agents */}
+                                <div className="admin-card left-col">
+                                    <div className="ai-hub__header">
+                                        <span className="sparkle-icon">✨</span>
+                                        <h3>Core AI Agents</h3>
+                                    </div>
+                                    <div className="ai-hub__alerts">
+                                        {['predictor', 'vision', 'copywriter'].map((key) => {
+                                            const agent = agents[key];
+                                            if (!agent) return null;
+                                            return (
+                                                <div
+                                                    key={key}
+                                                    className="agent-detail-card"
+                                                    onClick={() => setSelectedAgentKey(key)}
+                                                >
+                                                    <div className="agent-detail-header">
+                                                        <span className="agent-name-icon">{agent.icon} {agent.name}</span>
+                                                        <span className="status-badge">● Active</span>
+                                                    </div>
+                                                    <p className="agent-desc">{agent.logs[0]}</p>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
                                 </div>
 
-                                {/* Middle Column: Smart Product Form */}
-                                <div className="admin-v3__column middle">
-                                    <div className="admin-card smart-form">
-                                        <div className="form-header">
-                                            <h3>Mahsulot Yaratish</h3>
-                                            <span className="smart-badge">GEN-AI ACTIVE</span>
-                                        </div>
-                                        <form onSubmit={handleSaveProduct} className="admin-grid-form-v3">
-                                            <div className="input-group full">
-                                                <label>MAHSULOT NOMI</label>
-                                                <input name="name" defaultValue={editingProduct?.name} required placeholder="Masalan: Oversized Bomber Jacket" />
-                                            </div>
-                                            <div className="input-row">
-                                                <div className="input-group">
-                                                    <label>SARLAVHA</label>
-                                                    <input name="subtitle" defaultValue={editingProduct?.subtitle || 'BESPO ORIGINAL'} required />
-                                                </div>
-                                                <div className="input-group">
-                                                    <label>NARX ($)</label>
-                                                    <input name="price" type="number" defaultValue={editingProduct?.price} required />
-                                                </div>
-                                            </div>
+                                {/* AI Rebranding Widget */}
+                                <div className="admin-card left-col" style={{ marginTop: '20px' }}>
+                                    <div className="ai-hub__header">
+                                        <span className="sparkle-icon">🎨</span>
+                                        <h3>AI Rebranding</h3>
+                                    </div>
+                                    <div className="rebrand-options">
+                                        <button className="rebrand-chip" onClick={() => rebrandSite('luxury')}>
+                                            ⚜️ Luxury
+                                        </button>
+                                        <button className="rebrand-chip" onClick={() => rebrandSite('minimal')}>
+                                            🇯🇵 Minimal
+                                        </button>
+                                        <button className="rebrand-chip" onClick={() => rebrandSite('cyber')}>
+                                            🧪 Cyber
+                                        </button>
+                                        <button className="rebrand-chip" onClick={() => rebrandSite('street')}>
+                                            🛹 Street
+                                        </button>
+                                    </div>
+                                    <p className="rebrand-tip">AI trendlar tahlili asosida bitta bosishda butun sayt uslubini yangilang.</p>
+                                </div>
 
-                                            <div className="input-group full">
-                                                <label>AI STORYBOARD (5 SLOT)</label>
-                                                <div className="storyboard-layout-v4">
-                                                    {storyboardSlots.map((slot, i) => (
-                                                        <div key={i} className={`story-slot ${currentImages[i] ? 'has-img' : ''}`}>
-                                                            {currentImages[i] ? <img src={currentImages[i]} alt="" /> : <div className="slot-empty"><span>{slot.icon}</span></div>}
+                                {/* Row 1 Middle: Yangi Mahsulot Form */}
+                                <div className="admin-card middle-col">
+                                    <div className="form-header">
+                                        <h3>Yangi mahsulot</h3>
+                                        <span className="smart-badge">SMART FORM ACTIVE</span>
+                                    </div>
+                                    <form onSubmit={handleSaveProduct} className="admin-grid-form-v3">
+                                        <div className="input-group full">
+                                            <label>NOMI</label>
+                                            <input name="name" defaultValue={editingProduct?.name} required />
+                                        </div>
+                                        <div className="input-row">
+                                            <div className="input-group">
+                                                <label>KICHIK SARLAVHA</label>
+                                                <input name="subtitle" defaultValue={editingProduct?.subtitle || 'BESPO ORIGINAL'} required />
+                                            </div>
+                                            <div className="input-group">
+                                                <label>STATUS (TREND)</label>
+                                                <select name="isFeatured" defaultValue={editingProduct?.isFeatured ? 'true' : 'false'}>
+                                                    <option value="false">Oddiy mahsulot</option>
+                                                    <option value="true">🌟 Asosiy Sahifa</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div className="input-row">
+                                            <div className="input-group"><label>NARXI ($)</label><input name="price" type="number" defaultValue={editingProduct?.price} required /></div>
+                                            <div className="input-group"><label>KATEGORIYA</label><input name="category" defaultValue={editingProduct?.category} required /></div>
+                                        </div>
+
+                                        <div className="input-group full">
+                                            <label>AI VISION STORYBOARD (TOZALANADI & 4K BO'LADI)</label>
+                                            <div className="storyboard-layout">
+                                                <div className="storyboard-small-grid">
+                                                    {storyboardSlots.slice(0, 4).map((slot, i) => (
+                                                        <div key={i} className={`storyboard-slot-sq ${currentImages[i] ? 'has-img' : ''}`}>
+                                                            {currentImages[i] ? <img src={currentImages[i]} alt="" /> : <div className="slot-placeholder"><span className="icon">{slot.icon}</span><span className="lbl">{slot.label.split(' ')[0]}</span></div>}
                                                             <input type="file" onChange={(e) => handleImageUpload(i, e)} />
-                                                            {uploadingSlot === i && <div className="slot-loader">AI...</div>}
                                                         </div>
                                                     ))}
                                                 </div>
-                                            </div>
-
-                                            <div className="input-group full">
-                                                <div className="label-with-action">
-                                                    <label>AI SEO TAVSIF</label>
-                                                    <button type="button" className="ai-btn-small" onClick={handleAIGenerateDesc}>✨ Generatsiya</button>
-                                                </div>
-                                                <div className="desc-box-v4">
-                                                    <textarea name="description" defaultValue={editingProduct?.description} placeholder="AI yordamida premium tavsif..." />
+                                                <div className={`storyboard-large-slot ${currentImages[4] ? 'has-img' : ''}`}>
+                                                    {currentImages[4] ? <img src={currentImages[4]} alt="" /> : <div className="slot-placeholder"><span className="icon">➕</span><span className="lbl">QO'SHIMCHA</span></div>}
+                                                    <input type="file" onChange={(e) => handleImageUpload(4, e)} />
                                                 </div>
                                             </div>
+                                        </div>
 
-                                            <button type="submit" className="primary-submit-btn" disabled={isAnalyzing}>
-                                                {isAnalyzing ? aiStatusMessage : (editingProduct ? 'Yangilash' : 'Saqlash va E\'lon qilish')}
-                                            </button>
-                                        </form>
-                                    </div>
+                                        <div className="input-group full">
+                                            <label>O'LCHAMLAR (GLOBAL SIZES)</label>
+                                            <div className="size-btns">
+                                                {globalSizes.map(size => (
+                                                    <button
+                                                        key={size}
+                                                        type="button"
+                                                        className={`size-btn ${selectedSizes.includes(size) ? 'active' : ''}`}
+                                                        onClick={() => setSelectedSizes(prev => prev.includes(size) ? prev.filter(s => s !== size) : [...prev, size])}
+                                                    >
+                                                        {size}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="input-group full">
+                                            <label>MAHSULOT RANGLARI (GLOBAL PALETTE)</label>
+                                            <div className="color-dots">
+                                                {globalColors.map(color => (
+                                                    <div
+                                                        key={color.hex}
+                                                        className={`color-dot ${selectedColors.includes(color.hex) ? 'active' : ''}`}
+                                                        style={{ backgroundColor: color.hex }}
+                                                        onClick={() => setSelectedColors(prev => prev.includes(color.hex) ? prev.filter(c => c !== color.hex) : [...prev, color.hex])}
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="input-group full">
+                                            <div className="label-with-action">
+                                                <label>PREMIUM SEO TAVSIF</label>
+                                                <button type="button" className="ai-btn-small" onClick={handleAIGenerateDesc}>✨ AI orqali yozish</button>
+                                            </div>
+                                            <div className="desc-box">
+                                                <textarea name="description" defaultValue={editingProduct?.description} placeholder="AI yordamida premium tavsif yozing..." />
+                                                <div className="desc-footer">
+                                                    <span className="seo-score">● SEO Score: 85/100</span>
+                                                    <span className="keywords">Keywords: streetwear, premium, heavy hoodie</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <button type="submit" className="primary-submit-btn" disabled={isAnalyzing}>
+                                            {isAnalyzing ? aiStatusMessage : 'Saqlash va AI tahlili'}
+                                        </button>
+                                    </form>
                                 </div>
 
-                                {/* Right Column: Insight & Analytics */}
-                                <div className="admin-v3__column right">
-                                    <SalesChart type="revenue" title="Revenue" />
-                                    <SocialWidget title="Channel Growth" />
-                                    <div className="admin-card mini-insight">
-                                        <label>AI INSIGHT</label>
-                                        <p>Hozirgi trendga ko'ra, minimalist dizaynlar 24% ko'proq sotilmoqda.</p>
-                                    </div>
+                                {/* Row 1 Right: Charts & Widgets */}
+                                <div className="right-col">
+                                    <SalesChart type="revenue" title="Sotuvlar Dinamikasi" />
+                                    <SalesChart type="visitors" title="Tashriflar Dinamikasi" />
+                                    <SocialWidget title="Ijtimoiy Tarmoqlar" />
                                 </div>
+
                             </div>
 
                             <div className="table-section admin-card">
@@ -694,7 +687,7 @@ const AdminPage = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </main >
+        </main>
     );
 };
 
