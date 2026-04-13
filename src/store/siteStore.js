@@ -649,7 +649,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 11, // Force definitive 5-slide elite layout v11
+            version: 12, // Force ultimate professional header v12
         }
 
     )

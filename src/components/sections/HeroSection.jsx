@@ -25,6 +25,36 @@ const HeroSection = () => {
 
     return (
         <section className={`hero-v4-root layout-${currentData.layout || 'standard'}`}>
+            {/* ELITE GLOBAL HEADER */}
+            <header className="v4-global-header">
+                <div className="v4-header-left">
+                    <button className="v4-menu-trigger">
+                        <span />
+                        <span />
+                    </button>
+                    <nav className="v4-nav-main">
+                        <Link to="/">{tr(t.nav.home)}</Link>
+                        <Link to="/catalog">{tr(t.nav.catalog)}</Link>
+                    </nav>
+                </div>
+
+                <div className="v4-header-center">
+                    <Link to="/" className="v4-logo-l">BESPO</Link>
+                </div>
+
+                <div className="v4-header-right">
+                    <div className="v4-lang-wrap">
+                        <LangSwitcher variant="minimal" />
+                    </div>
+                    <div className="v4-header-actions">
+                        <Link to="/cart" className="v4-cart-link">
+                            <span className="v4-cart-label">CART</span>
+                            <span className="v4-cart-count">0</span>
+                        </Link>
+                    </div>
+                </div>
+            </header>
+
             <AnimatePresence mode="wait">
                 <motion.div
                     key={`${currentSlide}-${currentData.layout}`}
