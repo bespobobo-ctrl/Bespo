@@ -137,7 +137,8 @@ const useSiteStore = create(
                 vision: { name: 'AI Vision (Image)', icon: '👁️', active: true, logs: ["Mahsulot rasmlari avtomatik 4K ga o'tkazilmoqda va fon tozalanmoqda."] },
                 copywriter: { name: 'AI Copywriter (SEO)', icon: '✍️', active: true, logs: ["Premium matnlar va kalit so'zlar siz uchun yozib berishga tayyor."] },
                 theme: { name: 'Dynamic Theme Agent', icon: '🎨', active: true, logs: ["1 soat oldin - Qorong'u (Dark Theme) o'rnatildi"] },
-                monitor: { name: 'AI Health Monitor', icon: '🩺', active: true, logs: ["15 daqiqa oldin - Server barqarorligi tekshirildi (OK)"] }
+                monitor: { name: 'AI Health Monitor', icon: '🩺', active: true, logs: ["15 daqiqa oldin - Server barqarorligi tekshirildi (OK)"] },
+                rebrander: { name: 'AI Style Rebrander', icon: '🎨', active: true, logs: ["Tayyor: Brending trendlari tahlil qilindi.", "Yangi vizual konsepsiyalar tayyor."] }
             },
             analytics: {
                 visitors: [120, 450, 300, 560, 800, 950, 1100],
@@ -270,6 +271,39 @@ const useSiteStore = create(
                     ipWhitelist: state.securitySettings.ipWhitelist.filter(i => i !== ip)
                 }
             })),
+
+            rebrandSite: (styleKey) => {
+                const styles = {
+                    'luxury': {
+                        name: 'Old Money Luxury',
+                        colors: { bg: '#080808', bgCard: '#121212', bgSurface: '#181818', accent: '#D4AF37', textPrimary: '#FFFFFF' }
+                    },
+                    'minimal': {
+                        name: 'Tokyo Minimal',
+                        colors: { bg: '#F2F2F2', bgCard: '#FFFFFF', bgSurface: '#F9F9F9', accent: '#000000', textPrimary: '#1A1A1A' }
+                    },
+                    'cyber': {
+                        name: 'Cyberpunk Neon',
+                        colors: { bg: '#050510', bgCard: '#0A0A1A', bgSurface: '#12122A', accent: '#00FFAA', textPrimary: '#FFFFFF' }
+                    },
+                    'street': {
+                        name: 'NYC Streetwear',
+                        colors: { bg: '#111111', bgCard: '#1A1A1A', bgSurface: '#222222', accent: '#FF4500', textPrimary: '#F0F0F0' }
+                    }
+                };
+
+                const selected = styles[styleKey] || styles['luxury'];
+                set((state) => ({
+                    theme: selected,
+                    agents: {
+                        ...state.agents,
+                        rebrander: {
+                            ...state.agents.rebrander,
+                            logs: [`Hozir: Sayt "${selected.name}" uslubiga o'tkazildi.`, ...state.agents.rebrander.logs]
+                        }
+                    }
+                }));
+            },
 
             resetToDefault: () => set({
                 products: initialProducts,

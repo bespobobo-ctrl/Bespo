@@ -16,7 +16,7 @@ const AdminPage = () => {
         updateAboutSettings, resetToDefault,
         addGlobalSize, removeGlobalSize, addGlobalColor, removeGlobalColor,
         securitySettings, updateSecuritySettings, addIpToWhitelist, removeIpFromWhitelist,
-        addAgentLog, setAgentStatus
+        addAgentLog, setAgentStatus, rebrandSite
     } = useSiteStore();
 
     const [activeTab, setActiveTab] = useState('products');
@@ -317,6 +317,29 @@ const AdminPage = () => {
                                             );
                                         })}
                                     </div>
+                                </div>
+
+                                {/* Row 1 Left - Part 2: Rebranding Agent */}
+                                <div className="admin-card left-col rebranding-hub">
+                                    <div className="ai-hub__header">
+                                        <span className="sparkle-icon">🎨</span>
+                                        <h3>AI Rebranding</h3>
+                                    </div>
+                                    <div className="rebrand-options">
+                                        <button className="rebrand-chip" onClick={() => rebrandSite('luxury')}>
+                                            ⚜️ Luxury
+                                        </button>
+                                        <button className="rebrand-chip" onClick={() => rebrandSite('minimal')}>
+                                            🇯🇵 Minimal
+                                        </button>
+                                        <button className="rebrand-chip" onClick={() => rebrandSite('cyber')}>
+                                            🧪 Cyber
+                                        </button>
+                                        <button className="rebrand-chip" onClick={() => rebrandSite('street')}>
+                                            🛹 Street
+                                        </button>
+                                    </div>
+                                    <p className="rebrand-tip">AI: Trendlarni tahlil qilish asosida bitta bosishda butun sayt uslubini yangilang.</p>
                                 </div>
 
                                 {/* Row 1 Middle: Yangi Mahsulot Form */}
