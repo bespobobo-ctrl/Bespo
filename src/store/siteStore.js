@@ -4,31 +4,44 @@ import { products as initialProducts } from '../data/products';
 
 const defaultHeroSlides = [
     {
-        image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&q=80&w=1200',
-        title: 'Wear Anywhere',
-        subtitle: 'STREET COLLECTION',
-        price: '120.00'
+        image: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&q=80&w=2000',
+        title: 'ARTIC EXPLORER™ 01',
+        subtitle: 'AVANT-GARDE SERIES',
+        price: '899.99',
+        layout: 'avant-garde',
+        description: 'Ekstremal sharoitlar uchun futuristik collection.'
     },
     {
-        image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200',
-        title: 'Urban Style',
-        subtitle: 'LIMITED EDITION',
-        price: '85.00',
-        layout: 'standard'
+        image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=2000',
+        title: 'DIGITAL NOMAD SYSTEM',
+        subtitle: 'URBAN INTELLIGENCE',
+        price: '350.00',
+        layout: 'tech',
+        description: 'Aqlli shahar hayoti uchun maxsus tizim.'
     },
     {
-        image: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&q=80&w=1200',
-        title: 'Pure Comfort',
-        subtitle: 'SIGNATURE LINE',
-        price: '95.00',
-        layout: 'standard'
+        image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&q=80&w=2000',
+        title: 'HERITAGE HOODIE',
+        subtitle: 'CRAFTED PRECISION',
+        price: '240.00',
+        layout: 'editorial',
+        description: 'Har bir chokda mukammallik va dizayn merosi.'
     },
     {
-        image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=1200',
-        title: 'True Vision',
-        subtitle: 'MODERN CLASSIC',
-        price: '110.00',
-        layout: 'standard'
+        image: 'https://images.unsplash.com/photo-1529139513466-429cf64736f8?auto=format&fit=crop&q=80&w=2000',
+        title: 'LIFESTYLE SERIES',
+        subtitle: 'EVERY DAY FASHION',
+        price: '180.00',
+        layout: 'modern-card',
+        description: 'Kundalik hayot uchun minimalizm va qulaylik.'
+    },
+    {
+        image: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&q=80&w=2000',
+        title: 'NIKE_ACG SHIELD',
+        subtitle: 'ELITE PERFORMANCE',
+        price: '520.00',
+        layout: 'clean-functional',
+        description: 'Klinik aniqlik bilan ishlangan himoya qatlami.'
     }
 ];
 
@@ -636,7 +649,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 10, // Force elite redesign v10
+            version: 11, // Force definitive 5-slide elite layout v11
         }
 
     )
