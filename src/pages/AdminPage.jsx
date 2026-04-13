@@ -566,56 +566,65 @@ const AdminPage = () => {
                     )}
 
                     {activeTab === 'security' && (
-                        <motion.div key="security" className="admin-panel-security" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
+                        <motion.div key="security" className="admin-panel-security" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                             <div className="security-bento">
-                                {/* Row 1 Left: AI Security Shield */}
-                                <div className="admin-card security-shield-card">
-                                    <div className="ai-hub__header">
+                                {/* AI SECURITY HUB */}
+                                <div className="admin-card security-hub-full">
+                                    <div className="form-header">
                                         <span className="sparkle-icon">🛡️</span>
-                                        <h3>AI Security Shield</h3>
+                                        <h3>AI SECURITY & DEBUG HUB</h3>
                                     </div>
-                                    <div className="security-shield-card">
-                                        <div className="status-circle-wrap">
-                                            <div className="status-circle" style={{
-                                                borderColor: agents.guard?.status === 'scanning' ? '#f59e0b' : '#10b981',
-                                                boxShadow: agents.guard?.status === 'scanning' ? '0 0 20px rgba(245,158,11,0.3)' : '0 0 20px rgba(16,185,129,0.3)'
-                                            }}></div>
-                                            <div className="status-pulse" style={{ borderColor: agents.guard?.status === 'scanning' ? '#f59e0b' : '#10b981' }}></div>
+                                    <div className="security-audit-grid">
+                                        {/* SOC SECTION */}
+                                        <div className="audit-module soc-module">
+                                            <div className="module-header">
+                                                <h6>AI SECURITY SOC</h6>
+                                                <span className={`status-pill ${agents.guard?.status === 'secure' ? 'green' : 'orange'}`}>
+                                                    {agents.guard?.status === 'scanning' ? 'SCANNING' : 'SECURE'}
+                                                </span>
+                                            </div>
+                                            <div className="terminal-view">
+                                                {agents.guard?.logs.slice(0, 5).map((l, i) => (
+                                                    <p key={i} className="t-line">{l}</p>
+                                                ))}
+                                            </div>
+                                            <button className="audit-btn" onClick={() => runSecurityAudit()} disabled={agents.guard?.status === 'scanning'}>
+                                                {agents.guard?.status === 'scanning' ? 'Tahlil...' : 'Run Security Audit'}
+                                            </button>
                                         </div>
-                                        <div className="status-info">
-                                            <span className="status-label">LOYIHA HOLATI</span>
-                                            <span className="status-value" style={{ color: agents.guard?.status === 'scanning' ? '#f59e0b' : '#10b981' }}>
-                                                {agents.guard?.status === 'scanning' ? 'TEKSHIRILMOQDA...' : 'HIMOYALANGAN: 100%'}
-                                            </span>
-                                        </div>
-                                    </div>
 
-                                    <div className="dual-scan-logs">
-                                        <div className="log-col">
-                                            <h6>🛡️ XAVFSIZLIK</h6>
-                                            {agents.guard?.logs.slice(0, 2).map((log, idx) => (
-                                                <p key={idx} className="mini-log">{log}</p>
-                                            ))}
-                                        </div>
-                                        <div className="log-col">
-                                            <h6>🪲 BUG FINDER</h6>
-                                            {agents.debugger?.logs.slice(0, 2).map((log, idx) => (
-                                                <p key={idx} className="mini-log">{log}</p>
-                                            ))}
+                                        {/* DEBUGGER SECTION */}
+                                        <div className="audit-module debug-module">
+                                            <div className="module-header">
+                                                <h6>AI BUG FINDER</h6>
+                                                <span className={`status-pill ${agents.debugger?.status === 'compromised' ? 'red' : 'green'}`}>
+                                                    {agents.debugger?.status === 'compromised' ? 'ISSUES FOUND' : 'NO BUGS'}
+                                                </span>
+                                            </div>
+                                            <div className="terminal-view debug-v">
+                                                {agents.debugger?.logs.slice(0, 5).map((l, i) => (
+                                                    <p key={i} className="t-line">{l}</p>
+                                                ))}
+                                            </div>
+
+                                            {agents.debugger?.proposedFix ? (
+                                                <div className="ai-fix-card">
+                                                    <p className="fix-desc"><strong>Solution:</strong> {agents.debugger.proposedFix.solution}</p>
+                                                    <code className="fix-code">{agents.debugger.proposedFix.code}</code>
+                                                    <button className="auto-fix-btn" onClick={() => applyAutoFix()}>
+                                                        ✨ APPLY AI AUTO-FIX
+                                                    </button>
+                                                </div>
+                                            ) : (
+                                                <button className="audit-btn" onClick={() => runBugAudit()} disabled={agents.debugger?.status === 'scanning'}>
+                                                    {agents.debugger?.status === 'scanning' ? 'Kodni tahlil qilish...' : 'Run Bug Audit'}
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
-
-                                    <button
-                                        className="primary-submit-btn tiny"
-                                        onClick={() => runSecurityScan()}
-                                        disabled={agents.guard?.status === 'scanning'}
-                                        style={{ background: agents.guard?.status === 'scanning' ? '#444' : '' }}
-                                    >
-                                        {agents.guard?.status === 'scanning' ? 'Skanerlanmoqda...' : 'Global Auditni boshlash'}
-                                    </button>
                                 </div>
 
-                                {/* Row 1 Right: Access Control */}
+                                {/* ACCESS CONTROL & HISTORY combined in bento style if needed, or separate */}
                                 <div className="admin-card access-control-card">
                                     <div className="form-header">
                                         <h3>Kirish Boshqaruvi</h3>
@@ -636,11 +645,11 @@ const AdminPage = () => {
                                         </div>
 
                                         <div className="whitelist-section">
-                                            <label>IP WHITELIST (RUHSAT ETILGANLAR)</label>
+                                            <label>IP WHITELIST</label>
                                             <div className="ip-input-row">
                                                 <input
                                                     type="text"
-                                                    placeholder="IP manzilini kiriting (masalan: 1.1.1.1)"
+                                                    placeholder="IP (masalan: 1.1.1.1)"
                                                     value={newIp}
                                                     onChange={(e) => setNewIp(e.target.value)}
                                                 />
@@ -658,16 +667,15 @@ const AdminPage = () => {
                                     </div>
                                 </div>
 
-                                {/* Row 2 Full: Login History Table */}
-                                <div className="admin-card full-width login-history-card">
+                                <div className="admin-card full-width login-history">
                                     <div className="form-header">
-                                        <h3>Oxirgi Kirishlar Tarixi</h3>
+                                        <h3>Tizimga kirishlar tarixi</h3>
                                     </div>
                                     <table className="orders-table">
                                         <thead>
                                             <tr>
-                                                <th>IP MANZIL</th>
-                                                <th>SANA / VAQT</th>
+                                                <th>IP</th>
+                                                <th>SANA</th>
                                                 <th>QURILMA</th>
                                                 <th>HOLAT</th>
                                             </tr>
@@ -678,11 +686,7 @@ const AdminPage = () => {
                                                     <td><code>{log.ip}</code></td>
                                                     <td>{log.date}</td>
                                                     <td>{log.device}</td>
-                                                    <td>
-                                                        <span className={`h-badge ${log.status === 'Success' ? 'active' : 'sold'}`}>
-                                                            {log.status}
-                                                        </span>
-                                                    </td>
+                                                    <td><span className={`h-badge ${log.status === 'Success' ? 'active' : 'sold'}`}>{log.status}</span></td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -834,7 +838,7 @@ const AdminPage = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
-        </main>
+        </main >
     );
 };
 

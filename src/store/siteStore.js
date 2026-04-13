@@ -140,7 +140,7 @@ const useSiteStore = create(
                 monitor: { name: 'AI Health Monitor', icon: '🩺', logs: ['Sog\'liq holati barqaror.'], active: true, status: 'stable' },
                 rebrander: { name: 'AI Style Rebrander', icon: '🎨', logs: ['Uslub yangilanishga tayyor.'], active: true, status: 'ready' },
                 guard: { name: 'AI Security Guard', icon: '🛡️', logs: ['Xavfsizlik tizimi yoniq.'], active: true, status: 'secure' },
-                debugger: { name: 'AI Bug Finder', icon: '🪲', logs: ['Kodni tekshirishga tayyor.'], active: true, status: 'ready' }
+                debugger: { name: 'AI Bug Finder', icon: '🪲', logs: ['Kodni tekshirishga tayyor.'], active: true, status: 'ready', proposedFix: null }
             },
             analytics: {
                 visitors: [120, 450, 300, 560, 800, 950, 1100],
@@ -316,47 +316,86 @@ const useSiteStore = create(
                 }));
             },
 
-            runSecurityScan: async () => {
-                // 1. Start Guardian
+            runSecurityAudit: async () => {
                 set((state) => ({
                     agents: {
                         ...state.agents,
-                        guard: { ...state.agents.guard, status: 'scanning', logs: ['🛡️ Global Xavfsizlik skanerlash boshlandi...', ...state.agents.guard.logs] },
-                        debugger: { ...state.agents.debugger, status: 'testing', logs: ['🪲 Buglar audit qilinmoqda...', ...state.agents.debugger.logs] }
+                        guard: { ...state.agents.guard, status: 'scanning', logs: ['🛡️ Xavfsizlik auditi boshlandi...', ...state.agents.guard.logs] }
                     }
                 }));
 
-                const securitySteps = [
-                    'Portlar tekshirilmoqda...',
-                    'Firewall filtrlari sinovdan o\'tkazilmoqda...',
-                    'Cloudflare DDoS himoyasi auditi...',
-                    'Zaifliklar: Muvaffaqiyatli o\'tildi (0 ta zaiflik).'
+                const steps = [
+                    'Network traffic tahlil qilinmoqda...',
+                    'Brute-force urinishlari tekshirilmoqda...',
+                    'Firewall qoidalari yangilanmoqda...',
+                    '✅ XAVFSIZLIK: 100%. Hech qanday tahdid topilmadi.'
                 ];
 
-                const bugSteps = [
-                    'Javascript runtime tahlil qilinmoqda...',
-                    'Komponentlar render sifati auditi...',
-                    'Zustand Store barqarorligi tekshirilmoqda...',
-                    '✅ Buglar audit tugadi: 0 ta xatolik topildi.'
-                ];
-
-                // Execute Mixed steps
-                for (let i = 0; i < securitySteps.length; i++) {
+                for (let step of steps) {
                     await new Promise(r => setTimeout(r, 1000));
                     set((state) => ({
                         agents: {
                             ...state.agents,
-                            guard: { ...state.agents.guard, logs: [securitySteps[i], ...state.agents.guard.logs] },
-                            debugger: { ...state.agents.debugger, logs: [bugSteps[i], ...state.agents.debugger.logs] }
+                            guard: { ...state.agents.guard, logs: [step, ...state.agents.guard.logs] }
                         }
                     }));
                 }
 
                 set((state) => ({
+                    agents: { ...state.agents, guard: { ...state.agents.guard, status: 'secure' } }
+                }));
+            },
+
+            runBugAudit: async () => {
+                set((state) => ({
                     agents: {
                         ...state.agents,
-                        guard: { ...state.agents.guard, status: 'secure', logs: ['✅ XAVFSIZLIK: 100%. Sayt himoyalangan.', ...state.agents.guard.logs] },
-                        debugger: { ...state.agents.debugger, status: 'ready', logs: ['✅ BUG FINDER: 0 ta xatolik. Kod ideal holatda.', ...state.agents.debugger.logs] }
+                        debugger: { ...state.agents.debugger, status: 'scanning', logs: ['🪲 Buglarni qidirish boshlandi...', ...state.agents.debugger.logs], proposedFix: null }
+                    }
+                }));
+
+                await new Promise(r => setTimeout(r, 1500));
+
+                // Simulating a critical bug discovery
+                const bugFound = {
+                    title: 'Memory Leak in Image Gallery',
+                    problem: 'useEffect ichida listenerlar to\'g\'ri tozalanmagan.',
+                    solution: 'Gallery komponentida cleanup function qo\'shish lozim.',
+                    code: 'return () => window.removeEventListener("resize", handleResize);'
+                };
+
+                set((state) => ({
+                    agents: {
+                        ...state.agents,
+                        debugger: {
+                            ...state.agents.debugger,
+                            status: 'compromised',
+                            logs: [`❗ BUG TOPILDI: ${bugFound.title}`, ...state.agents.debugger.logs],
+                            proposedFix: bugFound
+                        }
+                    }
+                }));
+            },
+
+            applyAutoFix: async () => {
+                set((state) => ({
+                    agents: {
+                        ...state.agents,
+                        debugger: { ...state.agents.debugger, status: 'fixing', logs: ['🛠️ Avtomatik tuzatish boshlandi...', ...state.agents.debugger.logs] }
+                    }
+                }));
+
+                await new Promise(r => setTimeout(r, 2000));
+
+                set((state) => ({
+                    agents: {
+                        ...state.agents,
+                        debugger: {
+                            ...state.agents.debugger,
+                            status: 'ready',
+                            logs: ['✅ KOD TUZATILDI: Memory leak bartaraf etildi.', ...state.agents.debugger.logs],
+                            proposedFix: null
+                        }
                     }
                 }));
             },
