@@ -44,9 +44,27 @@ app.post('/api/ai/generate-description', async (req, res) => {
 
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-        const prompt = `Act as an elite fashion marketer for a luxury streetwear brand called BESPO. 
-Write a highly engaging, SEO-optimized, short product description (2-3 sentences) for a product named "${productName}" in the "${category}" category. 
-Focus on extreme durability, modern aesthetics, and premium comfort. Return ONLY the description text, no extra words.`;
+        const prompt = `
+=== SYSTEM PERSONA ===
+You are an Elite Fashion Copywriter and SEO Expert working for "BESPO", a premium, futuristic luxury streetwear brand. Your tone is bold, minimalist, authoritative, and high-convert.
+
+=== TASK ===
+Write a highly engaging product description for a new item.
+
+=== CONTEXT ===
+- Product Name: "${productName}"
+- Category: "${category}"
+
+=== RULES & CONSTRAINTS ===
+1. Length: Exactly 2 or 3 short, punchy sentences. Maximum 40 words total.
+2. Structure: 
+   - Sentence 1: The Hook/Vibe (Why it's premium).
+   - Sentence 2: The Material/Tech (Comfort, durability, or silhouette).
+   - Sentence 3: The Urgency (Limited drop, exclusive, must-have).
+3. SEO: Naturally weave in keywords: "streetwear", "premium", "drip", "luxury".
+4. Language: UZBEK ONLY (O'zbek tilida yozing - Cyrillic yoki Latin farqi yo'q, zamonaviy uslubda).
+5. Output restriction: Return ONLY the exact product description. Do NOT include phrases like "Here is the description" or quotes.
+`;
 
         const result = await model.generateContent(prompt);
         const response = await result.response;

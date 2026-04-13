@@ -63,13 +63,29 @@ const AdminPage = () => {
 
     const handleAIGenerateDesc = async () => {
         setIsGeneratingDesc(true);
-        setTimeout(() => {
+        try {
+            // Read current values to send to Gemini
+            const nameInput = document.querySelector('input[name="name"]');
+            const catInput = document.querySelector('input[name="category"]');
+
+            const res = await fetch('/api/ai/generate-description', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    productName: nameInput?.value || 'BESPO Essential',
+                    category: catInput?.value || 'Streetwear'
+                })
+            });
+
+            const data = await res.json();
             const descInput = document.querySelector('textarea[name="description"]');
             if (descInput) {
-                descInput.value = "Premium quality, hand-crafted detail meets modern streetwear. Engineered for comfort and extreme durability. Limited edition release.";
+                descInput.value = data.description || "GenAI serverdan javob qaytmadi.";
             }
-            setIsGeneratingDesc(false);
-        }, 2000);
+        } catch (e) {
+            console.error("AI Error:", e);
+        }
+        setIsGeneratingDesc(false);
     };
 
     const handleSaveProduct = async (e) => {
