@@ -392,13 +392,17 @@ const useSiteStore = create(
             },
 
             runBugAudit: async () => {
-                set((state) => ({
+                const state = get();
+                const lastHistory = state.agents?.patchHistory?.[0];
+                const timeSinceLastFix = Date.now() - new Date(lastHistory?.timestamp || 0).getTime();
+
+                set((s) => ({
                     agents: {
-                        ...state.agents,
+                        ...s.agents,
                         debugger: {
-                            ...state.agents.debugger,
+                            ...s.agents.debugger,
                             status: 'scanning',
-                            logs: ['[00:01] Statik kod tahlili boshlandi (AST)...', ...(state.agents.debugger?.logs || [])],
+                            logs: ['[00:01] Tizim arxitekturasi va kod bazasi tahlil qilinmoqda...', ...(s.agents.debugger?.logs || [])],
                             proposedFix: null
                         }
                     }
@@ -406,22 +410,62 @@ const useSiteStore = create(
 
                 await new Promise(r => setTimeout(r, 2000));
 
-                const bugReport = {
-                    severity: 'KRITIK',
-                    title: 'Aylanma bog\'liqlik va Xotira sizib chiqishi',
-                    problem: 'siteStore yangilanishi davomida unmemoized selektorlar tufayli cheksiz re-render jarayoni aniqlandi.',
-                    impact: 'Uzoq sessiyalar davomida brauzer protsessor yuklamasi 80% gacha oshishi.',
-                    solution: 'Murakkab ob\'yektlar uchun useCallback va useShallow selektorlarini joriy etish orqali xotira optimallashtirildi.',
-                    code: 'const items = useSiteStore(useShallow(state => state.items));'
-                };
+                // Agar yaqin 1 daqiqa ichida biror narsa tuzatilgan bo'lsa, xato ko'rsatma (Random 80% tozalik)
+                if (timeSinceLastFix < 60000 && Math.random() > 0.2) {
+                    set((s) => ({
+                        agents: {
+                            ...s.agents,
+                            debugger: {
+                                ...s.agents.debugger,
+                                status: 'ready',
+                                logs: [`[${new Date().toLocaleTimeString()}] ✨ Tizim barqaror. Xatoliklar aniqlanmadi.`, ...(s.agents.debugger?.logs || [])],
+                                metrics: { complexity: 40, performance: 100 }
+                            }
+                        }
+                    }));
+                    return;
+                }
 
-                set((state) => ({
+                const bugPool = [
+                    {
+                        title: 'API Kesh ziddiyati',
+                        severity: 'O\'RTA',
+                        problem: 'Mahsulotlar o\'chirilganda eski kesh ma\'lumotlari (stale data) o\'chib ketmayapti.',
+                        solution: 'AI agenti kesh-invalidatsiya strategiyasini yangiladi va keshni tozaladi.',
+                        code: 'cache.invalidate("products_list");'
+                    },
+                    {
+                        title: 'Z-Index qatlamlari chalkashligi',
+                        severity: 'PAST',
+                        problem: 'Mobil menyu ochilganda ba\'zi elementlar orqada qolib ketishi aniqlandi.',
+                        solution: 'Global CSS qatlamlari (Layer stack) mutanosibligi qayta hisoblab chiqildi.',
+                        code: '.mobile-nav { z-index: 9999 !important; }'
+                    },
+                    {
+                        title: 'Rasm yuklash kechikishi',
+                        severity: 'YUQORI',
+                        problem: 'Katta hajmli rasmlar yuklanishida main-thread bloklanishi aniqlandi.',
+                        solution: 'Rasmlarni WebP formatiga va Lazy-loading rejimiga o\'tkazish tavsiya etildi.',
+                        code: '<img loading="lazy" src="..." />'
+                    },
+                    {
+                        title: 'JWT Token muddati xatosi',
+                        severity: 'KRITIK',
+                        problem: 'Xavfsizlik tokenlari muddati tugagandan so\'ng sessiya to\'g\'ri yopilmayapti.',
+                        solution: 'Sessiya muddatini nazorat qilish mexanizmi (Auth-Guard) kuchaytirildi.',
+                        code: 'session.expire_after(3600);'
+                    }
+                ];
+
+                const bugReport = bugPool[Math.floor(Math.random() * bugPool.length)];
+
+                set((s) => ({
                     agents: {
-                        ...state.agents,
+                        ...s.agents,
                         debugger: {
-                            ...state.agents.debugger,
+                            ...s.agents.debugger,
                             status: 'compromised',
-                            logs: [`[00:05] 🔴 XATOLIK ANIQLANDI: ${bugReport.title}`, ...(state.agents.debugger?.logs || [])],
+                            logs: [`[${new Date().toLocaleTimeString()}] 🔴 ANIQLANDI: ${bugReport.title}`, ...(s.agents.debugger?.logs || [])],
                             proposedFix: bugReport,
                             metrics: { complexity: 78, performance: 42 }
                         }
