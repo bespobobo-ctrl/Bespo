@@ -1712,3 +1712,91 @@ textarea:focus {
         width: 100%
     }
 }
+
+/* SYSTEM AUDIT HISTORY DESIGN */
+.event-log-v4 {
+    margin-top: 30px !important;
+    background: rgba(255, 255, 255, 0.015) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 20px !important;
+    padding: 25px !important;
+}
+
+.v4-history {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.v4-history th {
+    background: #080808 !important;
+    padding: 12px;
+    text-align: left;
+    font-size: 0.6rem;
+    color: #444;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.h-code {
+    color: #444 !important;
+    font-size: 0.65rem !important;
+}
+
+.h-issue {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.h-title {
+    font-size: 0.85rem;
+    color: #fff;
+    font-weight: 600;
+}
+
+.h-impact {
+    font-size: 0.6rem;
+    color: #ef4444;
+    text-transform: uppercase;
+    font-weight: 800;
+}
+
+.h-date {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.75rem;
+    color: #888;
+}
+
+.h-date small {
+    font-size: 0.65rem;
+    color: #444;
+}
+
+.h-status-check {
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.05);
+    padding: 4px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.v4-history tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.v4-history td {
+    padding: 15px 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
+}

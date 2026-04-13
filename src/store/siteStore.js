@@ -156,7 +156,16 @@ const useSiteStore = create(
                     status: 'ready',
                     proposedFix: null,
                     metrics: { complexity: 0, performance: 100 }
-                }
+                },
+                patchHistory: [
+                    {
+                        id: 'HIST_001',
+                        title: 'Database Connection Pool Optimization',
+                        status: 'RESOLVED',
+                        timestamp: '2026-04-12T14:30:00Z',
+                        impact: 'Low'
+                    }
+                ]
             },
             analytics: {
                 visitors: [120, 450, 300, 560, 800, 950, 1100],
@@ -416,6 +425,8 @@ const useSiteStore = create(
             },
 
             applyAutoFix: async () => {
+                const currentFix = get().agents.debugger.proposedFix;
+
                 set((state) => ({
                     agents: {
                         ...state.agents,
@@ -429,16 +440,25 @@ const useSiteStore = create(
 
                 await new Promise(r => setTimeout(r, 2500));
 
+                const newEvent = {
+                    id: `PATCH_${Date.now()}`,
+                    title: currentFix?.title || 'General System Optimization',
+                    status: 'RESOLVED',
+                    timestamp: new Date().toISOString(),
+                    impact: currentFix?.severity || 'Normal'
+                };
+
                 set((state) => ({
                     agents: {
                         ...state.agents,
                         debugger: {
                             ...state.agents.debugger,
                             status: 'ready',
-                            logs: ['[00:04] ✅ PATCH APPLIED: Runtime stability restored.', ...state.agents.debugger.logs],
+                            logs: [`[00:04] ✅ PATCH APPLIED: ${newEvent.title}`, ...state.agents.debugger.logs],
                             proposedFix: null,
                             metrics: { complexity: 45, performance: 99 }
-                        }
+                        },
+                        patchHistory: [newEvent, ...state.agents.patchHistory]
                     }
                 }));
             },

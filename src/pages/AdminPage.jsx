@@ -757,34 +757,48 @@ const AdminPage = () => {
                                         </div>
                                     </div>
 
-                                    {/* LOGIN TELEMETRY */}
-                                    <div className="admin-card full-width login-telemetry">
+                                    {/* SYSTEM AUDIT HISTORY */}
+                                    <div className="admin-card full-width event-log-v4">
                                         <div className="card-header-v4">
                                             <div className="title-group">
-                                                <h6>TRAFFIC_ENTRY_LOGS</h6>
-                                                <h3>LOGIN TELEMETRY</h3>
+                                                <h6>AI_DIAGNOSTIC_HISTORY</h6>
+                                                <h3>TIZIM AUDITI VA TUZATISHLAR TARIXI</h3>
                                             </div>
                                         </div>
-                                        <table className="telemetry-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>SOURCE_IP</th>
-                                                    <th>TIMESTAMP</th>
-                                                    <th>ENVIRONMENT</th>
-                                                    <th>STATUS</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {securitySettings.loginHistory.map(log => (
-                                                    <tr key={log.id}>
-                                                        <td><code>{log.ip}</code></td>
-                                                        <td>{log.date}</td>
-                                                        <td>{log.device}</td>
-                                                        <td><span className={`status-tag ${log.status.toLowerCase()}`}>{log.status}</span></td>
+                                        <div className="event-scroller">
+                                            <table className="telemetry-table v4-history">
+                                                <thead>
+                                                    <tr>
+                                                        <th>VOQEA ID</th>
+                                                        <th>ANIQLANGAN MUAMMO</th>
+                                                        <th>SANA VA VAQT</th>
+                                                        <th>HOLAT</th>
                                                     </tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    {agents.patchHistory?.map(event => (
+                                                        <tr key={event.id}>
+                                                            <td><code className="h-code">{event.id.substring(0, 10)}</code></td>
+                                                            <td>
+                                                                <div className="h-issue">
+                                                                    <span className="h-title">{event.title}</span>
+                                                                    <span className="h-impact">Impact: {event.impact}</span>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div className="h-date">
+                                                                    {new Date(event.timestamp).toLocaleDateString('uz-UZ')}
+                                                                    <small>{new Date(event.timestamp).toLocaleTimeString('uz-UZ')}</small>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span className="h-status-check">✅ TUZATILDI</span>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
