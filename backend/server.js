@@ -35,6 +35,11 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+// Health check for AI Moderator
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', engine: 'Gemini-1.5-Flash', timestamp: new Date() });
+});
+
 // --- AI ENDPOINTS ---
 
 // 1. AI Copywriter (Gemini) endpoint
