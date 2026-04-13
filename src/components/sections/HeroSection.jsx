@@ -33,111 +33,146 @@ const HeroSection = () => {
     const currentData = slideImages[currentSlide];
 
     return (
-        <section className="hero-v2">
-            <div className="hero-v2__bg-decor">
-                <span className="hero-v2__bg-text">BESPO</span>
-                <div className="hero-v2__bg-mesh" />
-            </div>
-
-            <aside className="hero-v2__sidebar">
-                <div className="hero-v2__sidebar-lang">
-                    <LangSwitcher variant="sidebar" />
-                </div>
-                <div className="hero-v2__sidebar-social">
-                    <div className="hero-v2__social-label">{tr(t.hero.follow)}</div>
-                    <div className="hero-v2__social-line" />
-                    <div className="hero-v2__social-links">
-                        <a href="#" aria-label="Instagram">IG</a>
-                        <a href="#" aria-label="Twitter">TW</a>
+        <section className={`hero-v4-root layout-${currentData.layout || 'standard'}`}>
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={`${currentSlide}-${currentData.layout}`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="hero-v4-container"
+                >
+                    {/* 1. LAYER: BACKGROUND DECOR */}
+                    <div className="v4-bg-overlay">
+                        <img src={currentData.image} alt="" className="v4-main-bg-img" />
+                        <div className="v4-glass-mask" />
                     </div>
-                </div>
-            </aside>
 
-            <div className="hero-v2__content">
-                <div className="hero-v2__top-bar">
-                    <div className="hero-v2__top-left">
-                        <div className="hero-v2__status">
-                            <span className="hero-v2__status-dot" />
-                            <span className="hero-v2__status-text">ONLINE</span>
+                    {/* 2. LAYER: INTERACTIVE SIDEBAR & NAV */}
+                    <aside className="v4-side-meta">
+                        <div className="v4-rot-label">BESPO_STUDIO // SS26</div>
+                        <div className="v4-social-min">
+                            <a href="#">IG</a>
+                            <a href="#">TW</a>
                         </div>
-                    </div>
+                    </aside>
 
-                    <div className="hero-v2__top-center">
-                        <div className="hero-v2__main-info">
-                            <div className="hero-v2__counter-pill">
-                                <span className="hero-v2__count-val">{String(currentSlide + 1).padStart(2, '0')}</span>
-                                <span className="hero-v2__count-sep">/</span>
-                                <span className="hero-v2__count-total">{String(slideImages.length).padStart(2, '0')}</span>
+                    {/* 3. LAYER: DYNAMIC CONTENT BASED ON LAYOUT */}
+                    <div className="v4-main-viewport">
+                        {/* AVANT-GARDE LAYOUT (Image Centered, Technical Info) */}
+                        {currentData.layout === 'avant-garde' && (
+                            <div className="layout-wrap avant-garde">
+                                <div className="ag-left-tags">
+                                    <span className="tag-blob">〔 SERIES: STAGES P4 〕</span>
+                                    <span className="tag-blob">〔 STATUS: ACTIVE 〕</span>
+                                </div>
+                                <div className="ag-main-content">
+                                    <motion.h1 initial={{ x: -50 }} animate={{ x: 0 }}>
+                                        {currentData.title}
+                                    </motion.h1>
+                                    <div className="ag-specs">
+                                        <div className="spec-row"><span>SIZE</span> <span>S M L XL</span></div>
+                                        <div className="spec-row"><span>COLOUR</span> <span className="gold-text">SILVER</span></div>
+                                    </div>
+                                    <div className="ag-actions">
+                                        <button className="ag-buy-btn">
+                                            ADD TO CART — ${currentData.price}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div className="ag-img-portal">
+                                    <img src={currentData.image} alt="" />
+                                    <div className="portal-overlay" />
+                                </div>
                             </div>
-                        </div>
-                    </div>
+                        )}
 
-                    <div className="hero-v2__top-right">
-                        <div className="hero-v2__header-coll">
-                            <AnimatePresence mode="wait">
-                                <motion.div key={currentSlide} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }}>
-                                    <h4 className="hero-v2__header-title">{currentData.subtitle}</h4>
-                                    <p className="hero-v2__header-edition">SS26 EDITION • ${currentData.price}</p>
-                                </motion.div>
-                            </AnimatePresence>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="hero-v2__center">
-                    <div className="hero-v2__image-container">
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={currentSlide}
-                                initial={{ clipPath: 'inset(100% 0% 0% 0%)' }}
-                                animate={{ clipPath: 'inset(0% 0% 0% 0%)' }}
-                                exit={{ clipPath: 'inset(0% 0% 100% 0%)' }}
-                                transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-                                className="hero-v2__image-wrap"
-                            >
-                                <img src={currentData.image} alt="Collection" className="hero-v2__image" />
-                                <div className="hero-v2__image-overlay" />
-                            </motion.div>
-                        </AnimatePresence>
-
-                        <motion.div
-                            className="hero__text-content"
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
-                            key={`text-${currentSlide}`}
-                        >
-                            <span className="hero__subtitle text-label">{currentData.subtitle}</span>
-                            <h2 className="hero__title">
-                                {currentData.title.split(' ').map((word, i) => (
-                                    <span key={i} className="hero__title-word">{word} </span>
-                                ))}
-                            </h2>
-                            <p className="hero__desc">{tr(t.hero.subtitle)}</p>
-
-                            <div className="hero__actions">
-                                <Link to="/catalog" className="hero__cta-btn">
-                                    <span className="hero__cta-text">
-                                        {tr(t.hero.addToCart)} — ${currentData.price}
-                                    </span>
-                                </Link>
+                        {/* EDITORIAL LAYOUT (Magazine Style, Large Bold Text) */}
+                        {currentData.layout === 'editorial' && (
+                            <div className="layout-wrap editorial">
+                                <div className="ed-header">
+                                    <span className="brand-l">BESPO</span>
+                                    <div className="nav-min">
+                                        <span>products</span>
+                                        <span>story</span>
+                                    </div>
+                                </div>
+                                <div className="ed-body">
+                                    <div className="ed-text-hero">
+                                        <motion.h2 initial={{ y: 100 }} animate={{ y: 0 }}>
+                                            {currentData.title}
+                                        </motion.h2>
+                                        <p>{currentData.description}</p>
+                                        <button className="ed-btn-dark">Watch Intro</button>
+                                    </div>
+                                    <div className="ed-img-hero">
+                                        <img src={currentData.image} alt="" />
+                                        <div className="ed-badge-float">01 / 02</div>
+                                    </div>
+                                </div>
                             </div>
-                        </motion.div>
-                    </div>
-                </div>
+                        )}
 
-                <div className="hero-v2__bottom-bar">
-                    <div className="hero-v2__bars">
-                        {slideImages.map((_, i) => (
-                            <button
-                                key={i}
-                                onClick={() => setCurrentSlide(i)}
-                                className={`hero-v2__bar-item ${currentSlide === i ? 'hero-v2__bar-item--active' : ''}`}
-                            />
-                        ))}
+                        {/* TECH LAYOUT (Cyberpunk, Glitch, Data Points) */}
+                        {currentData.layout === 'tech' && (
+                            <div className="layout-wrap tech">
+                                <div className="tech-glitch-header">
+                                    <h3>{currentData.subtitle}</h3>
+                                    <div className="tech-id">SYSTEM_ID: 9942-X</div>
+                                </div>
+                                <div className="tech-main-grid">
+                                    <div className="tech-visual">
+                                        <img src={currentData.image} alt="" />
+                                        <div className="scan-line" />
+                                    </div>
+                                    <div className="tech-info-panel">
+                                        <h1>{currentData.title}</h1>
+                                        <div className="tech-stats">
+                                            <div className="stat-node"><span>DENSITY</span> <span>HIGH</span></div>
+                                            <div className="stat-node"><span>THERMAL</span> <span>ACTIVE</span></div>
+                                        </div>
+                                        <p>{currentData.description}</p>
+                                        <button className="tech-btn-neon">DEPLOY_SYSTEM (${currentData.price})</button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* STANDARD FALLBACK */}
+                        {(!currentData.layout || currentData.layout === 'standard') && (
+                            <div className="layout-wrap standard">
+                                <div className="std-content">
+                                    <h6>{currentData.subtitle}</h6>
+                                    <h1>{currentData.title}</h1>
+                                    <p>${currentData.price}</p>
+                                    <Link to="/catalog" className="std-btn">Shop Collection</Link>
+                                </div>
+                                <div className="std-img">
+                                    <img src={currentData.image} alt="" />
+                                </div>
+                            </div>
+                        )}
                     </div>
-                </div>
-            </div>
+
+                    {/* 4. LAYER: UI CONTROLS */}
+                    <div className="v4-bottom-nav">
+                        <div className="v4-progress-dots">
+                            {slideImages.map((_, i) => (
+                                <div
+                                    key={i}
+                                    className={`dot ${currentSlide === i ? 'active' : ''}`}
+                                    onClick={() => setCurrentSlide(i)}
+                                />
+                            ))}
+                        </div>
+                        <div className="v4-slide-count">
+                            <span>{String(currentSlide + 1).padStart(2, '0')}</span>
+                            <div className="sep-line" />
+                            <span>{String(slideImages.length).padStart(2, '0')}</span>
+                        </div>
+                    </div>
+                </motion.div>
+            </AnimatePresence>
         </section>
     );
 };

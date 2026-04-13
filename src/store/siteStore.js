@@ -13,19 +13,22 @@ const defaultHeroSlides = [
         image: 'https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1200',
         title: 'Urban Style',
         subtitle: 'LIMITED EDITION',
-        price: '85.00'
+        price: '85.00',
+        layout: 'standard'
     },
     {
         image: 'https://images.unsplash.com/photo-1618354691373-d851c5c3a990?auto=format&fit=crop&q=80&w=1200',
         title: 'Pure Comfort',
         subtitle: 'SIGNATURE LINE',
-        price: '95.00'
+        price: '95.00',
+        layout: 'standard'
     },
     {
         image: 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=1200',
         title: 'True Vision',
         subtitle: 'MODERN CLASSIC',
-        price: '110.00'
+        price: '110.00',
+        layout: 'standard'
     }
 ];
 
@@ -101,24 +104,30 @@ const useSiteStore = create(
             recommendedHeroSlides: [
                 {
                     id: 'rec1',
-                    title: 'URBAN AVANT-GARDE',
-                    subtitle: 'STREET WEAR 2026',
-                    description: 'Ko\'cha uslubining yuqori modaga aylanishi. Chegaralarni buzing.',
-                    image: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&q=80&w=2000'
+                    title: 'COLLECTION ARTIC 01™',
+                    subtitle: 'ARCTIC EXPLORER',
+                    description: 'Shimoliy qutb ruhida yaratilgan futuristik collection. 4K Vision va ekstremal chidamlilik.',
+                    image: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&q=80&w=2000',
+                    layout: 'avant-garde',
+                    price: '899.99'
                 },
                 {
                     id: 'rec2',
-                    title: 'CRAFTED PRECISION',
-                    subtitle: 'HAND-MADE QUALITY',
-                    description: 'Sifat va detallarga bo\'lgan e\'tibor. Har bir chok - san\'at asari.',
-                    image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&q=80&w=2000'
+                    title: 'MODERN HOODIE SYSTEM',
+                    subtitle: 'CRAFTED PRECISION',
+                    description: 'Har bir detalda mukammallik. High-density mato va premium editorial dizayn.',
+                    image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&q=80&w=2000',
+                    layout: 'editorial',
+                    price: '240.00'
                 },
                 {
                     id: 'rec3',
-                    title: 'DIGITAL NOMAD',
-                    subtitle: 'TECH & STYLE',
-                    description: 'Texnologiya va zamonaviy yashash tarzi uyg\'unligi.',
-                    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=2000'
+                    title: 'DIGITAL TECH NOMAD',
+                    subtitle: 'URBAN INTELLIGENCE',
+                    description: 'Aqlli shahar hayoti uchun maxsus tizim. Funksionallik va futuristik estetika.',
+                    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=2000',
+                    layout: 'tech',
+                    price: '350.00'
                 }
             ],
 
@@ -609,7 +618,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 5, // Force refresh v5 - All new editorial content will appear
+            version: 6, // Force refresh v6 - Multi-Layout support activated
         }
 
     )

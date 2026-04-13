@@ -46,7 +46,9 @@ const AdminPage = () => {
                 title: rec.title,
                 subtitle: rec.subtitle,
                 description: rec.description,
-                image: rec.image
+                image: rec.image,
+                layout: rec.layout,
+                price: rec.price || '0.00'
             }]
         });
         setAiStatusMessage(`'${rec.title}' slaydi muvaffaqiyatli o'rnatildi!`);
