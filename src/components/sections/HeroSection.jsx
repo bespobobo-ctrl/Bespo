@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useT } from '../../hooks/useTranslation';
 import useSiteStore from '../../store/siteStore';
+import LangSwitcher from '../ui/LangSwitcher';
 import './HeroSection.css';
 
 const HeroSection = () => {
