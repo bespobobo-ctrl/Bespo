@@ -586,7 +586,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 4, // Force refresh to apply new AI Audit structure v4
+            version: 5, // Force refresh v5 - All new editorial content will appear
         }
 
     )
