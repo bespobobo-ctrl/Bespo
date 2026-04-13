@@ -137,8 +137,9 @@ const useSiteStore = create(
                 vision: { name: 'AI Vision (Image)', icon: '👁️', active: true, logs: ["Mahsulot rasmlari avtomatik 4K ga o'tkazilmoqda va fon tozalanmoqda."] },
                 copywriter: { name: 'AI Copywriter (SEO)', icon: '✍️', active: true, logs: ["Premium matnlar va kalit so'zlar siz uchun yozib berishga tayyor."] },
                 theme: { name: 'Dynamic Theme Agent', icon: '🎨', active: true, logs: ["1 soat oldin - Qorong'u (Dark Theme) o'rnatildi"] },
-                monitor: { name: 'AI Health Monitor', icon: '🩺', active: true, logs: ["15 daqiqa oldin - Server barqarorligi tekshirildi (OK)"] },
-                rebrander: { name: 'AI Style Rebrander', icon: '🎨', active: true, logs: ["Tayyor: Brending trendlari tahlil qilindi.", "Yangi vizual konsepsiyalar tayyor."] }
+                monitor: { name: 'AI Health Monitor', icon: '🩺', logs: ['Sog\'liq holati barqaror.'], active: true, status: 'stable' },
+                rebrander: { name: 'AI Style Rebrander', icon: '🎨', logs: ['Uslub yangilanishga tayyor.'], active: true, status: 'ready' },
+                guard: { name: 'AI Security Guard', icon: '🛡️', logs: ['Xavfsizlik tizimi yoniq.'], active: true, status: 'secure' }
             },
             analytics: {
                 visitors: [120, 450, 300, 560, 800, 950, 1100],
@@ -309,6 +310,50 @@ const useSiteStore = create(
                         rebrander: {
                             ...state.agents.rebrander,
                             logs: [`✅ Sayt "${selected.name}" uslubiga o'tkazildi.`, ...(state.agents.rebrander?.logs || [])]
+                        }
+                    }
+                }));
+            },
+
+            runSecurityScan: async (addLog) => {
+                set((state) => ({
+                    agents: {
+                        ...state.agents,
+                        guard: {
+                            ...state.agents.guard,
+                            status: 'scanning',
+                            logs: ['Yangi diagnostika boshlandi...', ...state.agents.guard.logs]
+                        }
+                    }
+                }));
+
+                const scanSteps = [
+                    'Portlar tekshirilmoqda...',
+                    'Zaifliklar (Vulnerabilities) qidirilmoqda...',
+                    'DDoS va SQLi filtrlari audit qilinmoqda...',
+                    'Barcha tizimlar xavfsiz. Buglar topilmadi.'
+                ];
+
+                for (let step of scanSteps) {
+                    await new Promise(r => setTimeout(r, 1200));
+                    set((state) => ({
+                        agents: {
+                            ...state.agents,
+                            guard: {
+                                ...state.agents.guard,
+                                logs: [step, ...state.agents.guard.logs]
+                            }
+                        }
+                    }));
+                }
+
+                set((state) => ({
+                    agents: {
+                        ...state.agents,
+                        guard: {
+                            ...state.agents.guard,
+                            status: 'secure',
+                            logs: ['✅ Skanerlash tugadi. Sayt 100% himoyalangan.', ...state.agents.guard.logs]
                         }
                     }
                 }));

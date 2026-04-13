@@ -574,22 +574,35 @@ const AdminPage = () => {
                                         <span className="sparkle-icon">🛡️</span>
                                         <h3>AI Security Shield</h3>
                                     </div>
-                                    <div className="shield-status">
+                                    <div className="security-shield-card">
                                         <div className="status-circle-wrap">
-                                            <div className="status-circle active"></div>
-                                            <div className="status-pulse"></div>
+                                            <div className="status-circle" style={{
+                                                borderColor: agents.guard?.status === 'scanning' ? '#f59e0b' : '#10b981',
+                                                boxShadow: agents.guard?.status === 'scanning' ? '0 0 20px rgba(245,158,11,0.3)' : '0 0 20px rgba(16,185,129,0.3)'
+                                            }}></div>
+                                            <div className="status-pulse" style={{ borderColor: agents.guard?.status === 'scanning' ? '#f59e0b' : '#10b981' }}></div>
                                         </div>
                                         <div className="status-info">
                                             <span className="status-label">LOYIHA HOLATI</span>
-                                            <span className="status-value">XAVFSIZLIK: 100%</span>
+                                            <span className="status-value" style={{ color: agents.guard?.status === 'scanning' ? '#f59e0b' : '#10b981' }}>
+                                                {agents.guard?.status === 'scanning' ? 'SKANERLANMOQDA...' : 'XAVFSIZLIK: 100%'}
+                                            </span>
                                         </div>
                                     </div>
                                     <div className="shield-logs">
-                                        <p>✅ Firewall: Aktiv</p>
-                                        <p>✅ SSL: Muvaffaqiyatli</p>
-                                        <p>✅ DDoS Himoya: Aktiv</p>
+                                        {agents.guard?.logs.slice(0, 3).map((log, idx) => (
+                                            <p key={idx} style={{ color: log.startsWith('✅') ? '#10b981' : '#888' }}>
+                                                {log.startsWith('✅') || log.startsWith('Yangi') || log.startsWith('Barcha') ? log : `🔍 ${log}`}
+                                            </p>
+                                        ))}
                                     </div>
-                                    <button className="primary-submit-btn tiny">Skanerlashni boshlash</button>
+                                    <button
+                                        className="primary-submit-btn tiny"
+                                        onClick={() => runSecurityScan()}
+                                        disabled={agents.guard?.status === 'scanning'}
+                                    >
+                                        {agents.guard?.status === 'scanning' ? 'Agent ishlamoqda...' : 'Skanerlashni boshlash'}
+                                    </button>
                                 </div>
 
                                 {/* Row 1 Right: Access Control */}
