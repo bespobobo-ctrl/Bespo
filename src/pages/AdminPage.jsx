@@ -16,7 +16,7 @@ const AdminPage = () => {
         updateAboutSettings, resetToDefault,
         addGlobalSize, removeGlobalSize, addGlobalColor, removeGlobalColor,
         securitySettings, updateSecuritySettings, addIpToWhitelist, removeIpFromWhitelist,
-        addAgentLog, setAgentStatus, rebrandSite
+        addAgentLog, setAgentStatus, rebrandSite, runSecurityScan
     } = useSiteStore();
 
     const [activeTab, setActiveTab] = useState('products');
