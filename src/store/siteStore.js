@@ -104,18 +104,18 @@ const useSiteStore = create(
             recommendedHeroSlides: [
                 {
                     id: 'rec1',
-                    title: 'COLLECTION ARTIC 01™',
-                    subtitle: 'ARCTIC EXPLORER',
-                    description: 'Shimoliy qutb ruhida yaratilgan futuristik collection. 4K Vision va ekstremal chidamlilik.',
+                    title: 'ARTIC EXPLORER™ 01',
+                    subtitle: 'AVANT-GARDE SERIES',
+                    description: 'Shimoliy qutb ruhida yaratilgan futuristik collection. 460G Yuqori zichlikdagi mato va ekstremal chidamlilik.',
                     image: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&q=80&w=2000',
                     layout: 'avant-garde',
                     price: '899.99'
                 },
                 {
                     id: 'rec2',
-                    title: 'MODERN HOODIE SYSTEM',
+                    title: 'HERITAGE HOODIE SYSTEM',
                     subtitle: 'CRAFTED PRECISION',
-                    description: 'Har bir detalda mukammallik. High-density mato va premium editorial dizayn.',
+                    description: 'Har bir chokda mukammallik. High-density premium paxta va tahririyat darajasidagi dizayn merosi.',
                     image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&q=80&w=2000',
                     layout: 'editorial',
                     price: '240.00'
@@ -124,25 +124,25 @@ const useSiteStore = create(
                     id: 'rec3',
                     title: 'DIGITAL TECH NOMAD',
                     subtitle: 'URBAN INTELLIGENCE',
-                    description: 'Aqlli shahar hayoti uchun maxsus tizim. Funksionallik va futuristik estetika.',
+                    description: 'Aqlli shahar hayoti uchun maxsus tizim. Funksionallik va futuristik estetikadan iborat texnologik kiyim.',
                     image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=2000',
                     layout: 'tech',
                     price: '350.00'
                 },
                 {
                     id: 'rec4',
-                    title: 'FASHION FOR EVERY DAY',
-                    subtitle: 'LIFESTYLE SERIES',
-                    description: 'Har kuni uchun qulay va zamonaviy uslub. O\'zingizni ifoda eting.',
+                    title: 'LIFESTYLE COLLECTION',
+                    subtitle: 'EVERY DAY FASHION',
+                    description: 'Kundalik hayot uchun minimalizm va qulaylik uyg\'unligi. Zamonaviy shahar uslubini tanlang.',
                     image: 'https://images.unsplash.com/photo-1529139513466-429cf64736f8?auto=format&fit=crop&q=80&w=2000',
                     layout: 'modern-card',
                     price: '180.00'
                 },
                 {
                     id: 'rec5',
-                    title: 'BESPO ACG SHIELD',
-                    subtitle: 'FUNCTIONAL GEAR',
-                    description: 'Ekstremal sharoitlar uchun minimalist va funksional himoya.',
+                    title: 'NIKE_ACG SHIELD X',
+                    subtitle: 'ELITE PERFORMANCE',
+                    description: 'Ekstremal sharoitlar uchun klinik aniqlik bilan ishlangan himoya qatlami. To\'liq suv o\'tkazmaydigan tizim.',
                     image: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&q=80&w=2000',
                     layout: 'clean-functional',
                     price: '520.00'
@@ -636,7 +636,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 8, // Force refresh v8 - 5 Elite Layouts active
+            version: 10, // Force elite redesign v10
         }
 
     )
