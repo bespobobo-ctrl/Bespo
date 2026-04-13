@@ -215,7 +215,24 @@ const useSiteStore = create(
             addAgentLog: (agentId, logMsg) => set((state) => ({
                 agents: {
                     ...state.agents,
-                    [agentId]: { ...state.agents[agentId], logs: [logMsg, ...state.agents[agentId].logs] }
+                    [agentId]: {
+                        ...state.agents[agentId],
+                        logs: [logMsg, ...state.agents[agentId].logs].slice(0, 10)
+                    }
+                }
+            })),
+
+            setAgentStatus: (agentId, isActive) => set((state) => ({
+                agents: {
+                    ...state.agents,
+                    [agentId]: { ...state.agents[agentId], active: isActive }
+                }
+            })),
+
+            clearAgentLogs: (agentId) => set((state) => ({
+                agents: {
+                    ...state.agents,
+                    [agentId]: { ...state.agents[agentId], logs: [] }
                 }
             })),
 
