@@ -128,6 +128,24 @@ const useSiteStore = create(
                     image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=2000',
                     layout: 'tech',
                     price: '350.00'
+                },
+                {
+                    id: 'rec4',
+                    title: 'FASHION FOR EVERY DAY',
+                    subtitle: 'LIFESTYLE SERIES',
+                    description: 'Har kuni uchun qulay va zamonaviy uslub. O\'zingizni ifoda eting.',
+                    image: 'https://images.unsplash.com/photo-1529139513466-429cf64736f8?auto=format&fit=crop&q=80&w=2000',
+                    layout: 'modern-card',
+                    price: '180.00'
+                },
+                {
+                    id: 'rec5',
+                    title: 'BESPO ACG SHIELD',
+                    subtitle: 'FUNCTIONAL GEAR',
+                    description: 'Ekstremal sharoitlar uchun minimalist va funksional himoya.',
+                    image: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&q=80&w=2000',
+                    layout: 'clean-functional',
+                    price: '520.00'
                 }
             ],
 
@@ -618,7 +636,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 7, // Force definitive refresh v7 - Layout engine 100% active
+            version: 8, // Force refresh v8 - 5 Elite Layouts active
         }
 
     )

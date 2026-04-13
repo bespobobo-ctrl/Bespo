@@ -123,7 +123,43 @@ const HeroSection = () => {
                             </div>
                         )}
 
-                        {/* 4. STANDARD FALLBACK */}
+                        {/* 4. MODERN CARD LAYOUT */}
+                        {currentData.layout === 'modern-card' && (
+                            <div className="layout-wrap modern-card">
+                                <motion.div className="mc-card-box" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
+                                    <div className="mc-left">
+                                        <h1>{currentData.title}</h1>
+                                        <p>{currentData.description}</p>
+                                        <button className="mc-pill-btn">Shop Now <span className="arrow">↗</span></button>
+                                    </div>
+                                    <div className="mc-right">
+                                        <img src={currentData.image} alt="" />
+                                        <div className="mc-bg-shape" />
+                                    </div>
+                                </motion.div>
+                            </div>
+                        )}
+
+                        {/* 5. CLEAN FUNCTIONAL LAYOUT */}
+                        {currentData.layout === 'clean-functional' && (
+                            <div className="layout-wrap clean-functional">
+                                <div className="cf-sidebar">
+                                    <span className="cf-cat">Men's Gear</span>
+                                    <h1>{currentData.title}</h1>
+                                    <div className="cf-price">${currentData.price}</div>
+                                    <div className="cf-sizes">S / M / L / XL</div>
+                                    <p>{currentData.description}</p>
+                                    <button className="cf-add-btn">Add to Bag</button>
+                                </div>
+                                <div className="cf-main-img">
+                                    <img src={currentData.image} alt="" />
+                                    <div className="cf-hotspot" style={{ top: '30%', right: '20%' }}>+</div>
+                                    <div className="cf-hotspot" style={{ bottom: '20%', left: '40%' }}>+</div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* 6. STANDARD FALLBACK */}
                         {(!currentData.layout || currentData.layout === 'standard') && (
                             <div className="layout-wrap standard">
                                 <div className="std-content">
