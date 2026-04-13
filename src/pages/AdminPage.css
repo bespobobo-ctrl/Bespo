@@ -1269,9 +1269,17 @@ textarea:focus {
 }
 
 /* --- AI COMMAND CENTER ELITE UI --- */
-.admin-command-center {
+.admin-command-center.v_2026_PRO {
     padding: 20px;
     background: radial-gradient(circle at top right, rgba(20, 25, 30, 0.4), transparent);
+}
+
+.version-id {
+    font-size: 0.55rem;
+    color: rgba(255, 255, 255, 0.2);
+    font-family: monospace;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
 }
 
 .command-grid {

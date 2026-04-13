@@ -566,7 +566,8 @@ const AdminPage = () => {
                     )}
 
                     {activeTab === 'security' && (
-                        <motion.div key="security" className="admin-command-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                        <motion.div key="security" className="admin-command-center v_2026_PRO" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                            <div className="version-id">V3.0.1_STABLE_AI_SOC</div>
                             <div className="command-grid">
                                 {/* SYSTEM METRICS ROW */}
                                 <div className="metrics-summary">
