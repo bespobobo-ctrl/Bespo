@@ -16,7 +16,8 @@ const AdminPage = () => {
         updateAboutSettings, resetToDefault,
         addGlobalSize, removeGlobalSize, addGlobalColor, removeGlobalColor,
         securitySettings, updateSecuritySettings, addIpToWhitelist, removeIpFromWhitelist,
-        addAgentLog, setAgentStatus, rebrandSite, runSecurityAudit, runBugAudit, applyAutoFix
+        addAgentLog, setAgentStatus, rebrandSite, runSecurityAudit, runBugAudit, applyAutoFix,
+        recommendedHeroSlides
     } = useSiteStore();
 
     const [activeTab, setActiveTab] = useState('products');
@@ -36,6 +37,21 @@ const AdminPage = () => {
     const [agentTestResults, setAgentTestResults] = useState({});
     const [isTestRunning, setIsTestRunning] = useState(false);
     const [selectedHistoryItem, setSelectedHistoryItem] = useState(null);
+
+    const handleApplyRecommendation = (rec) => {
+        // Asosiy slaydlarni tanlangan tavsiya bilan almashtirish
+        updateHeroSettings({
+            slides: [{
+                id: Date.now(),
+                title: rec.title,
+                subtitle: rec.subtitle,
+                description: rec.description,
+                image: rec.image
+            }]
+        });
+        setAiStatusMessage(`'${rec.title}' slaydi muvaffaqiyatli o'rnatildi!`);
+        setTimeout(() => setAiStatusMessage(''), 3000);
+    };
 
     const runAgentTests = async () => {
         setIsTestRunning(true);
@@ -504,10 +520,6 @@ const AdminPage = () => {
                                             <span className="tip-dot"></span>
                                             <p>AI tavsiyasi: Slayder rasmlari 21:9 nisbatda eng yaxshi ko'rinadi.</p>
                                         </div>
-                                        <div className="tip-item">
-                                            <span className="tip-dot"></span>
-                                            <p>Trend: Hozirda minimalist sarlavhalar (3-4 so'z) yuqori konversiya bermoqda.</p>
-                                        </div>
                                     </div>
                                     <button className="primary-submit-btn tiny" onClick={handleNewSlide}>+ Yangi Slayd Qo'shish</button>
                                 </div>
@@ -541,17 +553,6 @@ const AdminPage = () => {
                                                                 }}
                                                             />
                                                         </div>
-                                                        <div className="input-group">
-                                                            <label>NARX ($)</label>
-                                                            <input
-                                                                defaultValue={s.price}
-                                                                onBlur={(e) => {
-                                                                    const newSlides = [...heroSettings.slides];
-                                                                    newSlides[i].price = e.target.value;
-                                                                    updateHeroSettings({ slides: newSlides });
-                                                                }}
-                                                            />
-                                                        </div>
                                                     </div>
                                                     <div className="slide-v-actions">
                                                         <button className="ai-btn-small">✨ AI Optimize</button>
@@ -561,6 +562,35 @@ const AdminPage = () => {
                                             </motion.div>
                                         ))}
                                     </div>
+                                </div>
+                            </div>
+
+                            {/* AI RECOMMENDATIONS GALLERY */}
+                            <div className="hero-recommendations-v4">
+                                <div className="v4-section-header">
+                                    <div className="title-info">
+                                        <h6>AI_EDITORIAL_SUGGESTIONS</h6>
+                                        <h2>PREMIUM SLAYD TAFSIYALARI</h2>
+                                    </div>
+                                    <AnimatePresence>
+                                        {aiStatusMessage && <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="v4-success-toast">{aiStatusMessage}</motion.span>}
+                                    </AnimatePresence>
+                                </div>
+                                <div className="rec-grid-v4">
+                                    {recommendedHeroSlides?.map(rec => (
+                                        <div key={rec.id} className="rec-card-v4">
+                                            <div className="rec-img-container">
+                                                <img src={rec.image} alt={rec.title} />
+                                                <div className="rec-overlay">
+                                                    <button className="apply-rec-btn" onClick={() => handleApplyRecommendation(rec)}>ASOSIY QILISH</button>
+                                                </div>
+                                            </div>
+                                            <div className="rec-details">
+                                                <div className="rec-meta"><h3>{rec.title}</h3></div>
+                                                <p>{rec.description}</p>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         </motion.div>

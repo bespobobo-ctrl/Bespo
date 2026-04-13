@@ -1720,6 +1720,103 @@ textarea:focus {
     }
 }
 
+/* --- HERO RECOMMENDATIONS V4 --- */
+.hero-recommendations-v4 {
+    margin-top: 40px;
+    padding: 30px;
+    background: rgba(20, 20, 22, 0.4);
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+.v4-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 30px;
+}
+
+.v4-success-toast {
+    background: #C8A87C;
+    color: #000;
+    padding: 8px 16px;
+    border-radius: 40px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.rec-grid-v4 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.rec-card-v4 {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.rec-card-v4:hover {
+    transform: translateY(-8px);
+    border-color: var(--color-accent);
+}
+
+.rec-img-container {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+}
+
+.rec-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.rec-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.rec-card-v4:hover .rec-overlay {
+    opacity: 1;
+}
+
+.apply-rec-btn {
+    background: var(--color-accent);
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 40px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.rec-details {
+    padding: 15px;
+}
+
+.rec-meta h3 {
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.rec-details p {
+    font-size: 0.8rem;
+    color: #999;
+}
+
 .clickable-row {
     cursor: pointer;
     transition: 0.3s;
