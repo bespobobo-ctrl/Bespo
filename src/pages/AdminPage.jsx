@@ -255,29 +255,29 @@ const AdminPage = () => {
                                             );
                                         })}
                                     </div>
-                                </div>
 
-                                {/* AI Rebranding Widget */}
-                                <div className="admin-card left-col" style={{ marginTop: '20px' }}>
-                                    <div className="ai-hub__header">
-                                        <span className="sparkle-icon">🎨</span>
-                                        <h3>AI Rebranding</h3>
+                                    {/* AI Rebranding — inside left column */}
+                                    <div className="rebrand-section">
+                                        <div className="ai-hub__header" style={{ marginTop: '25px' }}>
+                                            <span className="sparkle-icon">🎨</span>
+                                            <h3>AI Rebranding</h3>
+                                        </div>
+                                        <div className="rebrand-options">
+                                            <button className="rebrand-chip" onClick={() => rebrandSite('luxury')}>
+                                                ⚜️ Luxury
+                                            </button>
+                                            <button className="rebrand-chip" onClick={() => rebrandSite('minimal')}>
+                                                🇯🇵 Minimal
+                                            </button>
+                                            <button className="rebrand-chip" onClick={() => rebrandSite('cyber')}>
+                                                🧪 Cyber
+                                            </button>
+                                            <button className="rebrand-chip" onClick={() => rebrandSite('street')}>
+                                                🛹 Street
+                                            </button>
+                                        </div>
+                                        <p className="rebrand-tip">AI trendlar asosida sayt uslubini yangilang.</p>
                                     </div>
-                                    <div className="rebrand-options">
-                                        <button className="rebrand-chip" onClick={() => rebrandSite('luxury')}>
-                                            ⚜️ Luxury
-                                        </button>
-                                        <button className="rebrand-chip" onClick={() => rebrandSite('minimal')}>
-                                            🇯🇵 Minimal
-                                        </button>
-                                        <button className="rebrand-chip" onClick={() => rebrandSite('cyber')}>
-                                            🧪 Cyber
-                                        </button>
-                                        <button className="rebrand-chip" onClick={() => rebrandSite('street')}>
-                                            🛹 Street
-                                        </button>
-                                    </div>
-                                    <p className="rebrand-tip">AI trendlar tahlili asosida bitta bosishda butun sayt uslubini yangilang.</p>
                                 </div>
 
                                 {/* Row 1 Middle: Yangi Mahsulot Form */}

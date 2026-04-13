@@ -976,6 +976,12 @@
 }
 
 /* --- AI REBRANDING WIDGET --- */
+.rebrand-section {
+    border-top: 1px solid var(--border-subtle);
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
 .rebrand-options {
     display: grid;
     grid-template-columns: 1fr 1fr;
