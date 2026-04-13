@@ -388,21 +388,76 @@ const AdminPage = () => {
                     )}
 
                     {activeTab === 'hero' && (
-                        <motion.div key="hero" className="admin-panel" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                            <div className="admin-card form-card">
-                                <div className="admin-card__header-flex"><h3>Slayderlar ({heroSettings.slides.length})</h3><button onClick={handleNewSlide}>+ Yangi</button></div>
-                                <div className="hero-slides-grid">
-                                    {heroSettings.slides.map((s, i) => (
-                                        <div key={i} className="hero-slide-edit">
-                                            <div className="slide-top"><span>Slayd {i + 1}</span><button onClick={() => deleteHeroSlide(i)}>×</button></div>
-                                            <img src={s.image} alt="" className="slide-preview" />
-                                            <div className="slide-inputs">
-                                                <input name={`title${i}`} defaultValue={s.title} placeholder="Title" />
-                                                <input name={`price${i}`} defaultValue={s.price} placeholder="Price" />
-                                                <input type="file" onChange={(e) => handleFileChange(i, e)} />
-                                            </div>
+                        <motion.div key="hero" className="admin-panel-hero" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
+                            <div className="hero-bento">
+                                {/* Left: AI Slide Assistant */}
+                                <div className="admin-card ai-slide-assistant">
+                                    <div className="ai-hub__header">
+                                        <span className="sparkle-icon">✨</span>
+                                        <h3>Slide AI Assistant</h3>
+                                    </div>
+                                    <div className="ai-tips">
+                                        <div className="tip-item">
+                                            <span className="tip-dot"></span>
+                                            <p>AI tavsiyasi: Slayder rasmlari 21:9 nisbatda eng yaxshi ko'rinadi.</p>
                                         </div>
-                                    ))}
+                                        <div className="tip-item">
+                                            <span className="tip-dot"></span>
+                                            <p>Trend: Hozirda minimalist sarlavhalar (3-4 so'z) yuqori konversiya bermoqda.</p>
+                                        </div>
+                                    </div>
+                                    <button className="primary-submit-btn tiny" onClick={handleNewSlide}>+ Yangi Slayd Qo'shish</button>
+                                </div>
+
+                                {/* Right: Active Slides List */}
+                                <div className="admin-card slides-list-view">
+                                    <div className="form-header">
+                                        <h3>Faol Slayderlar</h3>
+                                        <span className="smart-badge">{heroSettings.slides.length} SLIDES ACTIVE</span>
+                                    </div>
+                                    <div className="slides-v-grid">
+                                        {heroSettings.slides.map((s, i) => (
+                                            <motion.div key={i} className="slide-v-item" layout>
+                                                <div className="slide-v-preview">
+                                                    <img src={s.image} alt="" />
+                                                    <div className="slide-v-overlay">
+                                                        <input type="file" onChange={(e) => handleFileChange(i, e)} />
+                                                        <span>📸 Rasm almashtirish</span>
+                                                    </div>
+                                                </div>
+                                                <div className="slide-v-info">
+                                                    <div className="input-row-v">
+                                                        <div className="input-group">
+                                                            <label>SARLAVHA</label>
+                                                            <input
+                                                                defaultValue={s.title}
+                                                                onBlur={(e) => {
+                                                                    const newSlides = [...heroSettings.slides];
+                                                                    newSlides[i].title = e.target.value;
+                                                                    updateHeroSettings({ slides: newSlides });
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className="input-group">
+                                                            <label>NARX ($)</label>
+                                                            <input
+                                                                defaultValue={s.price}
+                                                                onBlur={(e) => {
+                                                                    const newSlides = [...heroSettings.slides];
+                                                                    newSlides[i].price = e.target.value;
+                                                                    updateHeroSettings({ slides: newSlides });
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="slide-v-actions">
+                                                        <button className="ai-btn-small">✨ AI Optimize</button>
+                                                        <button className="del-btn-sq" onClick={() => deleteHeroSlide(i)}>🗑️</button>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
