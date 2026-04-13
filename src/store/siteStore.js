@@ -618,7 +618,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 6, // Force refresh v6 - Multi-Layout support activated
+            version: 7, // Force definitive refresh v7 - Layout engine 100% active
         }
 
     )

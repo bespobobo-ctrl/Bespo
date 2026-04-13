@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useT } from '../../hooks/useTranslation';
-import LangSwitcher from '../ui/LangSwitcher';
 import useSiteStore from '../../store/siteStore';
 import './HeroSection.css';
 
@@ -12,21 +11,13 @@ const HeroSection = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const { tr, t } = useT();
 
-    const nextSlide = () => {
-        setCurrentSlide((prev) => (prev + 1) % slideImages.length);
-    };
-
+    // Avtomatik almashinish
     useEffect(() => {
-        const timer = setInterval(nextSlide, 8000);
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % slideImages.length);
+        }, 10000);
         return () => clearInterval(timer);
     }, [slideImages.length]);
-
-    // Handle case where slides might be empty or index out of bounds after deletion
-    useEffect(() => {
-        if (currentSlide >= slideImages.length) {
-            setCurrentSlide(0);
-        }
-    }, [slideImages.length, currentSlide]);
 
     if (!slideImages || slideImages.length === 0) return null;
 
@@ -42,13 +33,13 @@ const HeroSection = () => {
                     exit={{ opacity: 0 }}
                     className="hero-v4-container"
                 >
-                    {/* 1. LAYER: BACKGROUND DECOR */}
+                    {/* LAYOUT: BACKGROUND */}
                     <div className="v4-bg-overlay">
                         <img src={currentData.image} alt="" className="v4-main-bg-img" />
                         <div className="v4-glass-mask" />
                     </div>
 
-                    {/* 2. LAYER: INTERACTIVE SIDEBAR & NAV */}
+                    {/* LAYOUT: SIDE META */}
                     <aside className="v4-side-meta">
                         <div className="v4-rot-label">BESPO_STUDIO // SS26</div>
                         <div className="v4-social-min">
@@ -57,9 +48,10 @@ const HeroSection = () => {
                         </div>
                     </aside>
 
-                    {/* 3. LAYER: DYNAMIC CONTENT BASED ON LAYOUT */}
+                    {/* DYNAMIC CONTENT VIEWPORT */}
                     <div className="v4-main-viewport">
-                        {/* AVANT-GARDE LAYOUT (Image Centered, Technical Info) */}
+
+                        {/* 1. AVANT-GARDE LAYOUT */}
                         {currentData.layout === 'avant-garde' && (
                             <div className="layout-wrap avant-garde">
                                 <div className="ag-left-tags">
@@ -67,18 +59,14 @@ const HeroSection = () => {
                                     <span className="tag-blob">〔 STATUS: ACTIVE 〕</span>
                                 </div>
                                 <div className="ag-main-content">
-                                    <motion.h1 initial={{ x: -50 }} animate={{ x: 0 }}>
+                                    <motion.h1 initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
                                         {currentData.title}
                                     </motion.h1>
                                     <div className="ag-specs">
                                         <div className="spec-row"><span>SIZE</span> <span>S M L XL</span></div>
                                         <div className="spec-row"><span>COLOUR</span> <span className="gold-text">SILVER</span></div>
                                     </div>
-                                    <div className="ag-actions">
-                                        <button className="ag-buy-btn">
-                                            ADD TO CART — ${currentData.price}
-                                        </button>
-                                    </div>
+                                    <button className="ag-buy-btn">ADD TO CART — ${currentData.price}</button>
                                 </div>
                                 <div className="ag-img-portal">
                                     <img src={currentData.image} alt="" />
@@ -87,19 +75,16 @@ const HeroSection = () => {
                             </div>
                         )}
 
-                        {/* EDITORIAL LAYOUT (Magazine Style, Large Bold Text) */}
+                        {/* 2. EDITORIAL LAYOUT */}
                         {currentData.layout === 'editorial' && (
                             <div className="layout-wrap editorial">
                                 <div className="ed-header">
                                     <span className="brand-l">BESPO</span>
-                                    <div className="nav-min">
-                                        <span>products</span>
-                                        <span>story</span>
-                                    </div>
+                                    <div className="nav-min"><span>products</span><span>story</span></div>
                                 </div>
                                 <div className="ed-body">
                                     <div className="ed-text-hero">
-                                        <motion.h2 initial={{ y: 100 }} animate={{ y: 0 }}>
+                                        <motion.h2 initial={{ y: 50, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
                                             {currentData.title}
                                         </motion.h2>
                                         <p>{currentData.description}</p>
@@ -113,7 +98,7 @@ const HeroSection = () => {
                             </div>
                         )}
 
-                        {/* TECH LAYOUT (Cyberpunk, Glitch, Data Points) */}
+                        {/* 3. TECH LAYOUT */}
                         {currentData.layout === 'tech' && (
                             <div className="layout-wrap tech">
                                 <div className="tech-glitch-header">
@@ -138,13 +123,13 @@ const HeroSection = () => {
                             </div>
                         )}
 
-                        {/* STANDARD FALLBACK */}
+                        {/* 4. STANDARD FALLBACK */}
                         {(!currentData.layout || currentData.layout === 'standard') && (
                             <div className="layout-wrap standard">
                                 <div className="std-content">
-                                    <h6>{currentData.subtitle}</h6>
-                                    <h1>{currentData.title}</h1>
-                                    <p>${currentData.price}</p>
+                                    <motion.h6 initial={{ opacity: 0 }} animate={{ opacity: 1 }}>{currentData.subtitle}</motion.h6>
+                                    <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>{currentData.title}</motion.h1>
+                                    <p className="std-price">${currentData.price}</p>
                                     <Link to="/catalog" className="std-btn">Shop Collection</Link>
                                 </div>
                                 <div className="std-img">
@@ -154,7 +139,7 @@ const HeroSection = () => {
                         )}
                     </div>
 
-                    {/* 4. LAYER: UI CONTROLS */}
+                    {/* UI NAVIGATION CONTROLS */}
                     <div className="v4-bottom-nav">
                         <div className="v4-progress-dots">
                             {slideImages.map((_, i) => (
