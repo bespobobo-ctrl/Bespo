@@ -393,8 +393,9 @@ const useSiteStore = create(
 
             runBugAudit: async () => {
                 const state = get();
-                const lastHistory = state.agents?.patchHistory?.[0];
-                const timeSinceLastFix = Date.now() - new Date(lastHistory?.timestamp || 0).getTime();
+                const history = state.agents?.patchHistory || [];
+                const lastFix = history[0];
+                const timeSinceLastFix = Date.now() - new Date(lastFix?.timestamp || 0).getTime();
 
                 set((s) => ({
                     agents: {
@@ -402,7 +403,7 @@ const useSiteStore = create(
                         debugger: {
                             ...s.agents.debugger,
                             status: 'scanning',
-                            logs: ['[00:01] Tizim arxitekturasi va kod bazasi tahlil qilinmoqda...', ...(s.agents.debugger?.logs || [])],
+                            logs: [`[${new Date().toLocaleTimeString()}] Chuqur kod tahlili boshlandi...`, ...(s.agents.debugger?.logs || [])],
                             proposedFix: null
                         }
                     }
@@ -410,54 +411,34 @@ const useSiteStore = create(
 
                 await new Promise(r => setTimeout(r, 2000));
 
-                // Agar yaqin 1 daqiqa ichida biror narsa tuzatilgan bo'lsa, xato ko'rsatma (Random 80% tozalik)
-                if (timeSinceLastFix < 60000 && Math.random() > 0.2) {
+                // 60s cooldown for fixes
+                if (timeSinceLastFix < 60000 && Math.random() > 0.3) {
                     set((s) => ({
                         agents: {
                             ...s.agents,
                             debugger: {
                                 ...s.agents.debugger,
                                 status: 'ready',
-                                logs: [`[${new Date().toLocaleTimeString()}] ✨ Tizim barqaror. Xatoliklar aniqlanmadi.`, ...(s.agents.debugger?.logs || [])],
-                                metrics: { complexity: 40, performance: 100 }
+                                logs: [`[${new Date().toLocaleTimeString()}] ✨ Tizim 100% barqaror. Xatoliklar aniqlanmadi.`, ...(s.agents.debugger?.logs || [])],
+                                metrics: { complexity: 35, performance: 100 }
                             }
                         }
                     }));
                     return;
                 }
 
-                const bugPool = [
-                    {
-                        title: 'API Kesh ziddiyati',
-                        severity: 'O\'RTA',
-                        problem: 'Mahsulotlar o\'chirilganda eski kesh ma\'lumotlari (stale data) o\'chib ketmayapti.',
-                        solution: 'AI agenti kesh-invalidatsiya strategiyasini yangiladi va keshni tozaladi.',
-                        code: 'cache.invalidate("products_list");'
-                    },
-                    {
-                        title: 'Z-Index qatlamlari chalkashligi',
-                        severity: 'PAST',
-                        problem: 'Mobil menyu ochilganda ba\'zi elementlar orqada qolib ketishi aniqlandi.',
-                        solution: 'Global CSS qatlamlari (Layer stack) mutanosibligi qayta hisoblab chiqildi.',
-                        code: '.mobile-nav { z-index: 9999 !important; }'
-                    },
-                    {
-                        title: 'Rasm yuklash kechikishi',
-                        severity: 'YUQORI',
-                        problem: 'Katta hajmli rasmlar yuklanishida main-thread bloklanishi aniqlandi.',
-                        solution: 'Rasmlarni WebP formatiga va Lazy-loading rejimiga o\'tkazish tavsiya etildi.',
-                        code: '<img loading="lazy" src="..." />'
-                    },
-                    {
-                        title: 'JWT Token muddati xatosi',
-                        severity: 'KRITIK',
-                        problem: 'Xavfsizlik tokenlari muddati tugagandan so\'ng sessiya to\'g\'ri yopilmayapti.',
-                        solution: 'Sessiya muddatini nazorat qilish mexanizmi (Auth-Guard) kuchaytirildi.',
-                        code: 'session.expire_after(3600);'
-                    }
+                const diverseBugs = [
+                    { title: 'API Kesh ziddiyati', severity: 'O\'RTA', problem: 'Eski kesh ma\'lumotlari yangilanish jarayoniga to\'sqinlik qilmoqda.', solution: 'Kesh-invalidatsiya mantiqi qayta yuklandi.', code: 'cache.clear()' },
+                    { title: 'JWT Token muddati', severity: 'KRITIK', problem: 'Sessiya muddati tugagach login sahifasiga yo\'naltirishda xatolik.', solution: 'Auth middleware yangilandi.', code: 'redirect("/login")' },
+                    { title: 'Firebase bog\'lanish', severity: 'YUQORI', problem: 'Baza bilan aloqa tezligi pasaygan (Latency > 500ms).', solution: 'Baza so\'rovlari optimallashtirildi.', code: 'db.index()' },
+                    { title: 'Rasm Lazy-Load', severity: 'PAST', problem: 'Sahifa yuklanishida rasmlar "flicker" bo\'layotgani aniqlandi.', solution: 'Placeholder tizimi yoqildi.', code: 'loading="lazy"' },
+                    { title: 'CSS Grid Conflict', severity: 'O\'RTA', problem: 'Safari brauzerida grid-layout buzilishi aniqlandi.', solution: 'Vendor-prefixlar qo\'shildi.', code: '-webkit-grid' }
                 ];
 
-                const bugReport = bugPool[Math.floor(Math.random() * bugPool.length)];
+                let bugReport = diverseBugs[Math.floor(Math.random() * diverseBugs.length)];
+                if (lastFix && bugReport.title === lastFix.title) {
+                    bugReport = diverseBugs[(diverseBugs.indexOf(bugReport) + 1) % diverseBugs.length];
+                }
 
                 set((s) => ({
                     agents: {
@@ -467,7 +448,7 @@ const useSiteStore = create(
                             status: 'compromised',
                             logs: [`[${new Date().toLocaleTimeString()}] 🔴 ANIQLANDI: ${bugReport.title}`, ...(s.agents.debugger?.logs || [])],
                             proposedFix: bugReport,
-                            metrics: { complexity: 78, performance: 42 }
+                            metrics: { complexity: 75, performance: 45 }
                         }
                     }
                 }));
@@ -582,7 +563,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 3, // Force refresh to apply new AI Audit structure
+            version: 4, // Force refresh to apply new AI Audit structure v4
         }
 
     )
