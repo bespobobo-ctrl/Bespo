@@ -1282,10 +1282,17 @@ textarea:focus {
     letter-spacing: 2px;
 }
 
-.command-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+.command-bento-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+@media (max-width: 1200px) {
+    .command-bento-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* METRICS BAR */

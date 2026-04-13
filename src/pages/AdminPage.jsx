@@ -567,7 +567,7 @@ const AdminPage = () => {
 
                     {activeTab === 'security' && (
                         <motion.div key="security" className="admin-command-center v_2026_PRO" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                            <div className="version-id">V3.0.1_STABLE_AI_SOC</div>
+                            <div className="version-id">V3.1.0_BENTO_SOC</div>
                             <div className="command-grid">
                                 {/* SYSTEM METRICS ROW */}
                                 <div className="metrics-summary">
@@ -593,12 +593,12 @@ const AdminPage = () => {
                                     </div>
                                 </div>
 
-                                <div className="audit-main-layout">
-                                    {/* AI SECURITY HUB */}
+                                <div className="command-bento-grid">
+                                    {/* 1. AI SECURITY SOC */}
                                     <div className="admin-card soc-terminal-card">
                                         <div className="card-header-v4">
                                             <div className="title-group">
-                                                <h6>SYSTEM_GUARDIAN_LOGS_V3</h6>
+                                                <h6>SYSTEM_GUARDIAN_LOGS</h6>
                                                 <h3>AI SECURITY SOC</h3>
                                             </div>
                                             <button className="soc-run-btn" onClick={() => runSecurityAudit()} disabled={agents.guard?.status === 'scanning'}>
@@ -617,7 +617,7 @@ const AdminPage = () => {
                                         </div>
                                     </div>
 
-                                    {/* AI BUG FINDER */}
+                                    {/* 2. AI BUG FINDER */}
                                     <div className="admin-card debug-terminal-card">
                                         <div className="card-header-v4">
                                             <div className="title-group">
@@ -628,12 +628,10 @@ const AdminPage = () => {
                                                 {agents.debugger?.status === 'scanning' ? 'STATIC_SCAN...' : 'RUN DEBUGGER'}
                                             </button>
                                         </div>
-
                                         <div className="debug-telemetry">
                                             <div className="tel-item">Complexity: <span>{agents.debugger?.metrics.complexity || 0}</span></div>
                                             <div className="tel-item">Leaks: <span>{agents.debugger?.status === 'compromised' ? '1' : '0'}</span></div>
                                         </div>
-
                                         <div className="terminal-v4 debug-theme">
                                             <div className="terminal-body">
                                                 {agents.debugger?.logs.map((l, i) => (
@@ -643,23 +641,74 @@ const AdminPage = () => {
                                                 ))}
                                             </div>
                                         </div>
-
                                         {agents.debugger?.proposedFix && (
                                             <motion.div className="engineering-report" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
                                                 <div className="report-header">
                                                     <span className="severity">SEVERITY: {agents.debugger.proposedFix.severity}</span>
                                                     <h4>{agents.debugger.proposedFix.title}</h4>
                                                 </div>
-                                                <p className="report-problem">{agents.debugger.proposedFix.problem}</p>
-                                                <div className="code-block-v4">
-                                                    <div className="code-header">PATCH_CODE::FIX_V1</div>
-                                                    <pre><code>{agents.debugger.proposedFix.code}</code></pre>
-                                                </div>
                                                 <button className="engineering-fix-btn" onClick={() => applyAutoFix()}>
                                                     AUTO-DEPLOY PATCH
                                                 </button>
                                             </motion.div>
                                         )}
+                                    </div>
+
+                                    {/* 3. ACCESS CONTROL */}
+                                    <div className="admin-card access-control-bento">
+                                        <div className="card-header-v4">
+                                            <div className="title-group">
+                                                <h6>IDENTITY_CORE_V4</h6>
+                                                <h3>KIRISH BOSHQARUVI</h3>
+                                            </div>
+                                        </div>
+                                        <div className="security-controls-v4">
+                                            <div className="toggle-item-v4">
+                                                <div className="t-info">
+                                                    <span className="t-name">Double-Auth (2FA)</span>
+                                                    <span className="t-status">{securitySettings.twoFactor ? 'FAOL' : 'FAOL EMAS'}</span>
+                                                </div>
+                                                <label className="switch">
+                                                    <input type="checkbox" checked={securitySettings.twoFactor} onChange={() => updateSecuritySettings({ twoFactor: !securitySettings.twoFactor })} />
+                                                    <span className="slider round"></span>
+                                                </label>
+                                            </div>
+                                            <div className="whitelist-v4">
+                                                <label>IP WHITE-LIST</label>
+                                                <div className="ip-entry">
+                                                    <input type="text" placeholder="Add IP..." value={newIp} onChange={(e) => setNewIp(e.target.value)} />
+                                                    <button onClick={() => { if (newIp) { addIpToWhitelist(newIp); setNewIp(''); } }}>+</button>
+                                                </div>
+                                                <div className="ip-scroller">
+                                                    {securitySettings.ipWhitelist.map(ip => (
+                                                        <div key={ip} className="ip-chip"><span>{ip}</span><button onClick={() => removeIpFromWhitelist(ip)}>×</button></div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* 4. PATCH HISTORY */}
+                                    <div className="admin-card event-log-v4">
+                                        <div className="card-header-v4">
+                                            <div className="title-group">
+                                                <h6>PATCH_REGISTRY</h6>
+                                                <h3>TUZATISHLAR TARIXI</h3>
+                                            </div>
+                                        </div>
+                                        <div className="event-scroller">
+                                            <table className="telemetry-table v4-history">
+                                                <tbody>
+                                                    {agents.patchHistory?.map(event => (
+                                                        <tr key={event.id}>
+                                                            <td><div className="h-issue"><span className="h-title">{event.title}</span><span className="h-impact">Impact: {event.impact}</span></div></td>
+                                                            <td><div className="h-date">{new Date(event.timestamp).toLocaleDateString()}<small>{new Date(event.timestamp).toLocaleTimeString()}</small></div></td>
+                                                            <td><span className="h-status-check">OK</span></td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -712,94 +761,6 @@ const AdminPage = () => {
                                             </div>
                                         );
                                     })}
-                                    {/* ACCESS CONTROL */}
-                                    <div className="admin-card access-control-v4">
-                                        <div className="card-header-v4">
-                                            <div className="title-group">
-                                                <h6>SECURE_ACCESS_PROTOCOL</h6>
-                                                <h3>ACCESS CONTROL</h3>
-                                            </div>
-                                        </div>
-                                        <div className="security-controls-v4">
-                                            <div className="toggle-item-v4">
-                                                <div className="t-info">
-                                                    <span className="t-name">Double-Auth (2FA)</span>
-                                                    <span className="t-status">{securitySettings.twoFactor ? 'ENABLED' : 'DISABLED'}</span>
-                                                </div>
-                                                <input
-                                                    type="checkbox"
-                                                    className="modern-toggle"
-                                                    checked={securitySettings.twoFactor}
-                                                    onChange={() => updateSecuritySettings({ twoFactor: !securitySettings.twoFactor })}
-                                                />
-                                            </div>
-
-                                            <div className="whitelist-v4">
-                                                <label>IP WHITE-LIST</label>
-                                                <div className="ip-entry">
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Add IP..."
-                                                        value={newIp}
-                                                        onChange={(e) => setNewIp(e.target.value)}
-                                                    />
-                                                    <button onClick={() => { if (newIp) { addIpToWhitelist(newIp); setNewIp(''); } }}>+</button>
-                                                </div>
-                                                <div className="ip-scroller">
-                                                    {securitySettings.ipWhitelist.map(ip => (
-                                                        <div key={ip} className="ip-chip">
-                                                            <span>{ip}</span>
-                                                            <button onClick={() => removeIpFromWhitelist(ip)}>×</button>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {/* SYSTEM AUDIT HISTORY */}
-                                    <div className="admin-card full-width event-log-v4">
-                                        <div className="card-header-v4">
-                                            <div className="title-group">
-                                                <h6>AI_DIAGNOSTIC_HISTORY</h6>
-                                                <h3>TIZIM AUDITI VA TUZATISHLAR TARIXI</h3>
-                                            </div>
-                                        </div>
-                                        <div className="event-scroller">
-                                            <table className="telemetry-table v4-history">
-                                                <thead>
-                                                    <tr>
-                                                        <th>VOQEA ID</th>
-                                                        <th>ANIQLANGAN MUAMMO</th>
-                                                        <th>SANA VA VAQT</th>
-                                                        <th>HOLAT</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {agents.patchHistory?.map(event => (
-                                                        <tr key={event.id}>
-                                                            <td><code className="h-code">{event.id.substring(0, 10)}</code></td>
-                                                            <td>
-                                                                <div className="h-issue">
-                                                                    <span className="h-title">{event.title}</span>
-                                                                    <span className="h-impact">Impact: {event.impact}</span>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div className="h-date">
-                                                                    {new Date(event.timestamp).toLocaleDateString('uz-UZ')}
-                                                                    <small>{new Date(event.timestamp).toLocaleTimeString('uz-UZ')}</small>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <span className="h-status-check">✅ TUZATILDI</span>
-                                                            </td>
-                                                        </tr>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </motion.div>
