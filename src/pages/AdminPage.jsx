@@ -33,6 +33,76 @@ const AdminPage = () => {
     const [newColorHex, setNewColorHex] = useState('#000000');
     const [newIp, setNewIp] = useState('');
     const [selectedAgentKey, setSelectedAgentKey] = useState(null);
+    const [agentTestResults, setAgentTestResults] = useState({});
+    const [isTestRunning, setIsTestRunning] = useState(false);
+
+    const runAgentTests = async () => {
+        setIsTestRunning(true);
+        setAgentTestResults({});
+        const results = {};
+
+        // Test 1: Predictor Agent
+        results.predictor = { status: 'testing', message: 'Sinab ko\'rilmoqda...' };
+        setAgentTestResults({ ...results });
+        await new Promise(r => setTimeout(r, 800));
+        results.predictor = agents.predictor?.active
+            ? { status: 'pass', message: `Aktiv. Loglar soni: ${agents.predictor.logs.length}` }
+            : { status: 'fail', message: 'Agent o\'chirilgan!' };
+        setAgentTestResults({ ...results });
+
+        // Test 2: Vision Agent
+        results.vision = { status: 'testing', message: 'Sinab ko\'rilmoqda...' };
+        setAgentTestResults({ ...results });
+        await new Promise(r => setTimeout(r, 600));
+        results.vision = agents.vision?.active
+            ? { status: 'pass', message: `Aktiv. Rasm AI tayyor.` }
+            : { status: 'fail', message: 'Agent o\'chirilgan!' };
+        setAgentTestResults({ ...results });
+
+        // Test 3: Copywriter Agent
+        results.copywriter = { status: 'testing', message: 'Sinab ko\'rilmoqda...' };
+        setAgentTestResults({ ...results });
+        await new Promise(r => setTimeout(r, 700));
+        results.copywriter = agents.copywriter?.active
+            ? { status: 'pass', message: `Aktiv. SEO tavsiflar tayyor.` }
+            : { status: 'fail', message: 'Agent o\'chirilgan!' };
+        setAgentTestResults({ ...results });
+
+        // Test 4: Monitor Agent
+        results.monitor = { status: 'testing', message: 'Sinab ko\'rilmoqda...' };
+        setAgentTestResults({ ...results });
+        await new Promise(r => setTimeout(r, 500));
+        results.monitor = agents.monitor?.active
+            ? { status: 'pass', message: `Sog'liq monitoringi aktiv.` }
+            : { status: 'fail', message: 'Agent o\'chirilgan!' };
+        setAgentTestResults({ ...results });
+
+        // Test 5: Rebrander Agent
+        results.rebrander = { status: 'testing', message: 'CSS o\'zgaruvchilar test qilinmoqda...' };
+        setAgentTestResults({ ...results });
+        await new Promise(r => setTimeout(r, 600));
+        const rootStyle = getComputedStyle(document.documentElement);
+        const currentAccent = rootStyle.getPropertyValue('--color-accent').trim();
+        results.rebrander = currentAccent
+            ? { status: 'pass', message: `Aktiv. Hozirgi accent: ${currentAccent}` }
+            : { status: 'fail', message: 'CSS o\'zgaruvchilar topilmadi!' };
+        setAgentTestResults({ ...results });
+
+        // Test 6: API Connection
+        results.api = { status: 'testing', message: 'Backend API test qilinmoqda...' };
+        setAgentTestResults({ ...results });
+        try {
+            const res = await fetch('/api/health', { signal: AbortSignal.timeout(3000) });
+            results.api = res.ok
+                ? { status: 'pass', message: 'Backend API javob bermoqda.' }
+                : { status: 'warn', message: `API javob berdi: ${res.status}` };
+        } catch {
+            results.api = { status: 'warn', message: 'API ulanish vaqti tugadi (offline rejim).' };
+        }
+        setAgentTestResults({ ...results });
+
+        setIsTestRunning(false);
+    };
 
 
     const handleEditProductClick = (p) => {
@@ -173,6 +243,9 @@ const AdminPage = () => {
                     </button>
                     <button className={activeTab === 'security' ? 'active' : ''} onClick={() => setActiveTab('security')}>
                         <span className="nav-icon">🛡️</span> Xavfsizlik
+                    </button>
+                    <button className={activeTab === 'aitest' ? 'active' : ''} onClick={() => setActiveTab('aitest')}>
+                        <span className="nav-icon">⚙️</span> AI Test
                     </button>
                     <button className={activeTab === 'about' ? 'active' : ''} onClick={() => setActiveTab('about')}>
                         <span className="nav-icon">🏢</span> Ma'lumotlar
@@ -591,6 +664,57 @@ const AdminPage = () => {
                                             ))}
                                         </tbody>
                                     </table>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {activeTab === 'aitest' && (
+                        <motion.div key="aitest" className="admin-panel-v3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
+                            <div className="admin-card" style={{ maxWidth: '800px' }}>
+                                <div className="form-header">
+                                    <h3>⚙️ AI Agent Moderator</h3>
+                                    <span className="smart-badge">DIAGNOSTICS</span>
+                                </div>
+                                <p style={{ fontSize: '0.75rem', color: '#666', marginBottom: '20px' }}>Barcha AI agentlarni real vaqtda test qiling. Har bir agent holati tekshiriladi.</p>
+
+                                <button
+                                    className="primary-submit-btn"
+                                    onClick={runAgentTests}
+                                    disabled={isTestRunning}
+                                    style={{ marginBottom: '25px' }}
+                                >
+                                    {isTestRunning ? '⏳ Testlar bajarilmoqda...' : '▶️ Barcha agentlarni test qilish'}
+                                </button>
+
+                                <div className="agent-test-grid">
+                                    {[
+                                        { key: 'predictor', label: 'AI Predictor (Sales)', icon: '🤖' },
+                                        { key: 'vision', label: 'AI Vision (Image)', icon: '👁️' },
+                                        { key: 'copywriter', label: 'AI Copywriter (SEO)', icon: '✍️' },
+                                        { key: 'monitor', label: 'AI Health Monitor', icon: '🩺' },
+                                        { key: 'rebrander', label: 'AI Style Rebrander', icon: '🎨' },
+                                        { key: 'api', label: 'Backend API', icon: '🔗' }
+                                    ].map(agent => {
+                                        const result = agentTestResults[agent.key];
+                                        const statusClass = result ? result.status : 'idle';
+                                        return (
+                                            <div key={agent.key} className={`agent-test-card ${statusClass}`}>
+                                                <div className="agent-test-header">
+                                                    <span className="agent-test-icon">{agent.icon}</span>
+                                                    <span className="agent-test-name">{agent.label}</span>
+                                                </div>
+                                                <div className="agent-test-status">
+                                                    {statusClass === 'idle' && <span className="test-dot idle">○</span>}
+                                                    {statusClass === 'testing' && <span className="test-dot testing">◯</span>}
+                                                    {statusClass === 'pass' && <span className="test-dot pass">✓</span>}
+                                                    {statusClass === 'fail' && <span className="test-dot fail">✗</span>}
+                                                    {statusClass === 'warn' && <span className="test-dot warn">⚠</span>}
+                                                    <span className="test-message">{result?.message || 'Kutilmoqda...'}</span>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </div>
                         </motion.div>

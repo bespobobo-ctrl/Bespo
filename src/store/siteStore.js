@@ -293,13 +293,22 @@ const useSiteStore = create(
                 };
 
                 const selected = styles[styleKey] || styles['luxury'];
+
+                // REAL CSS VARIABLE APPLICATION
+                const root = document.documentElement;
+                root.style.setProperty('--color-bg', selected.colors.bg);
+                root.style.setProperty('--color-bg-card', selected.colors.bgCard);
+                root.style.setProperty('--color-bg-surface', selected.colors.bgSurface);
+                root.style.setProperty('--color-accent', selected.colors.accent);
+                root.style.setProperty('--color-text-primary', selected.colors.textPrimary);
+
                 set((state) => ({
                     theme: selected,
                     agents: {
                         ...state.agents,
                         rebrander: {
                             ...state.agents.rebrander,
-                            logs: [`Hozir: Sayt "${selected.name}" uslubiga o'tkazildi.`, ...state.agents.rebrander.logs]
+                            logs: [`✅ Sayt "${selected.name}" uslubiga o'tkazildi.`, ...(state.agents.rebrander?.logs || [])]
                         }
                     }
                 }));
