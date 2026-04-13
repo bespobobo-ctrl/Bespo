@@ -224,6 +224,14 @@ const AdminPage = () => {
                                             <div className="alert-header"><span>✍️ AI Copywriter (SEO)</span> 🟢 Active</div>
                                             <p>Premium matnlar va kalit so'zlar siz uchun yozib berishga tayyor.</p>
                                         </div>
+                                        <div className="ai-alert premium" style={{ borderColor: 'rgba(16, 185, 129, 0.4)' }}>
+                                            <div className="alert-header"><span style={{ color: '#10b981' }}>🎨 Dynamic Theme Agent</span> 🟢 Active</div>
+                                            <p>Avtonom dizayner: Sizning so'rovingiz bo'yicha saytning jami ranglar kaskadini (CSS) Real-time rejimda o'rnatadi.</p>
+                                        </div>
+                                        <div className="ai-alert premium" style={{ borderColor: 'rgba(16, 185, 129, 0.4)' }}>
+                                            <div className="alert-header"><span style={{ color: '#10b981' }}>🩺 AI Health Monitor</span> 🟢 Active</div>
+                                            <p>Kuzatuvchi datchik: Loglar arxitekturasini nazorat qilish va xatolik chiqqanda "Self-Healing" tahlil qilish uchun o'rnatildi.</p>
+                                        </div>
                                     </div>
                                 </div>
 
