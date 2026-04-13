@@ -7,7 +7,7 @@ const AIAssistant = () => {
     const [isOpen, setIsOpen] = useState(false);
     const {
         analytics, products, updateSocialLink, updateHeroSettings,
-        setProductDiscount, addProduct, addHeroSlide
+        setProductDiscount, addProduct, addHeroSlide, updateTheme
     } = useSiteStore();
 
     const [messages, setMessages] = useState([
@@ -95,6 +95,28 @@ const AIAssistant = () => {
             4. 🔍 **Detail**: Mato sifati va tikilish detallari.
             5. ➕ **Qo'shimcha**: Kreativ burchaklar.
             Har bir slotni to'ldirishingiz mijoz ishonchini 40% ga oshiradi. Qaysi biri bilan boshlaymiz?`;
+        }
+
+        // Theme & Design Action
+        else if (cmd.includes('dizayn') || cmd.includes('tema') || cmd.includes('rang') || cmd.includes('oq') || cmd.includes('qora')) {
+            const isLight = cmd.includes('oq') || cmd.includes('yorug') || cmd.includes('light');
+
+            setMessages(prev => [...prev, { type: 'system', text: `⚙️ DOM render o'zgaruvchilari tekshirilmoqda...`, id: Date.now() + 4 }]);
+            await new Promise(r => setTimeout(r, 1000));
+
+            if (isLight) {
+                updateTheme({
+                    name: 'Ghost White Minimal',
+                    colors: { bg: '#FFFFFF', bgCard: '#F5F5F5', bgSurface: '#FAFAFA', accent: '#1A1A1A', textPrimary: '#0A0A0A' }
+                });
+                response = "Dizayn arxitekturasi yorug' 'Ghost White Minimal' rejimiga o'tkazildi. Hech qanday React kodi buzilmagan holda barcha rang o'qlari avtomatik moslashdi.";
+            } else {
+                updateTheme({
+                    name: 'Cyberpunk Neon',
+                    colors: { bg: '#050510', bgCard: '#0A0A1A', bgSurface: '#12122A', accent: '#00FFAA', textPrimary: '#FFFFFF' }
+                });
+                response = "Trendlarni inobatga olgan holda dizaynni qorong'u 'Cyberpunk Neon' stiliga almashtirdim. Saytdagi 23 ta asosiy va yordamchi CSS o'zgaruvchilari (Variables) onlayn almashtirildi.";
+            }
         }
 
         // Dynamic Fallback

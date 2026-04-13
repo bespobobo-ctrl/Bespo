@@ -122,6 +122,16 @@ const useSiteStore = create(
             ],
 
             // New Analytics & AI State
+            theme: {
+                name: 'Warm Earth Luxury',
+                colors: {
+                    bg: '#0A0A0A',
+                    bgCard: '#141416',
+                    bgSurface: '#1E1E22',
+                    accent: '#C8A87C',
+                    textPrimary: '#F5F0E8'
+                }
+            },
             analytics: {
                 visitors: [120, 450, 300, 560, 800, 950, 1100],
                 popularProducts: [1, 3],
@@ -173,6 +183,10 @@ const useSiteStore = create(
 
             updateAboutSettings: (settings) => set((state) => ({
                 aboutSettings: { ...state.aboutSettings, ...settings }
+            })),
+
+            updateTheme: (themePayload) => set((state) => ({
+                theme: { ...state.theme, ...themePayload }
             })),
 
             // Global Attribute Actions

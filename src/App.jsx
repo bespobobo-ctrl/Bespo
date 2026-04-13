@@ -9,6 +9,7 @@ import CatalogPage from './pages/CatalogPage';
 import ProductPage from './pages/ProductPage';
 import AdminPage from './pages/AdminPage';
 import Cursor from './components/ui/Cursor';
+import ThemeProvider from './components/layout/ThemeProvider';
 
 import './styles/globals.css';
 import './styles/animations.css';
@@ -69,12 +70,14 @@ function MainLayout({ children }) {
 
 function App() {
   return (
-    <Router>
-      <Cursor />
-      <MainLayout>
-        <AnimatedRoutes />
-      </MainLayout>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <Cursor />
+        <MainLayout>
+          <AnimatedRoutes />
+        </MainLayout>
+      </Router>
+    </ThemeProvider>
   );
 }
 
