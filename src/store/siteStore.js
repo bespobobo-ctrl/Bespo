@@ -425,42 +425,48 @@ const useSiteStore = create(
             },
 
             applyAutoFix: async () => {
-                const currentFix = get().agents.debugger.proposedFix;
+                const state = get();
+                const currentFix = state.agents?.debugger?.proposedFix;
 
-                set((state) => ({
+                // 1. Start Phase
+                set((s) => ({
                     agents: {
-                        ...state.agents,
+                        ...s.agents,
                         debugger: {
-                            ...state.agents.debugger,
+                            ...s.agents.debugger,
                             status: 'fixing',
-                            logs: ['[00:01] Injecting Hot-fix into production runtime...', ...state.agents.debugger.logs]
+                            logs: ['[00:01] Injecting Hot-fix into production runtime...', ...(s.agents.debugger?.logs || [])]
                         }
                     }
                 }));
 
-                await new Promise(r => setTimeout(r, 2500));
+                await new Promise(r => setTimeout(r, 2000));
 
-                const newEvent = {
-                    id: `PATCH_${Date.now()}`,
-                    title: currentFix?.title || 'General System Optimization',
+                // 2. Completion Phase (Atomic update)
+                const newEntry = {
+                    id: `P${Math.floor(Math.random() * 10000)}`,
+                    title: currentFix?.title || 'System Stability Patch',
                     status: 'RESOLVED',
                     timestamp: new Date().toISOString(),
                     impact: currentFix?.severity || 'Normal'
                 };
 
-                set((state) => ({
-                    agents: {
-                        ...state.agents,
-                        debugger: {
-                            ...state.agents.debugger,
-                            status: 'ready',
-                            logs: [`[00:04] ✅ PATCH APPLIED: ${newEvent.title}`, ...state.agents.debugger.logs],
-                            proposedFix: null,
-                            metrics: { complexity: 45, performance: 99 }
-                        },
-                        patchHistory: [newEvent, ...state.agents.patchHistory]
-                    }
-                }));
+                set((s) => {
+                    const history = s.agents?.patchHistory || [];
+                    return {
+                        agents: {
+                            ...s.agents,
+                            debugger: {
+                                ...s.agents.debugger,
+                                status: 'ready',
+                                logs: [`[00:04] ✅ PATCH APPLIED: ${newEntry.title}`, ...(s.agents.debugger?.logs || [])],
+                                proposedFix: null,
+                                metrics: { complexity: 45, performance: 99 }
+                            },
+                            patchHistory: [newEntry, ...history]
+                        }
+                    };
+                });
             },
 
             resetToDefault: () => set({
