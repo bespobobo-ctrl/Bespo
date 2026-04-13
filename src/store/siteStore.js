@@ -148,6 +148,15 @@ const useSiteStore = create(
                 ],
                 lastUpdate: '2026-04-10'
             },
+            securitySettings: {
+                twoFactor: false,
+                ipWhitelist: ['127.0.0.1', '161.35.196.164'],
+                lastLogin: new Date().toISOString(),
+                loginHistory: [
+                    { id: 1, ip: '161.35.196.164', date: '2026-04-13 14:20', device: 'Chrome / Windows', status: 'Success' },
+                    { id: 2, ip: '94.232.22.11', date: '2026-04-12 09:15', device: 'Safari / iPhone', status: 'Blocked (Unknown IP)' }
+                ]
+            },
 
             // Actions
             updateProduct: (updatedProduct) => set((state) => ({
@@ -225,6 +234,24 @@ const useSiteStore = create(
 
             removeGlobalColor: (colorHex) => set((state) => ({
                 globalColors: state.globalColors.filter(c => c.hex !== colorHex)
+            })),
+
+            updateSecuritySettings: (settings) => set((state) => ({
+                securitySettings: { ...state.securitySettings, ...settings }
+            })),
+
+            addIpToWhitelist: (ip) => set((state) => ({
+                securitySettings: {
+                    ...state.securitySettings,
+                    ipWhitelist: [...state.securitySettings.ipWhitelist, ip]
+                }
+            })),
+
+            removeIpFromWhitelist: (ip) => set((state) => ({
+                securitySettings: {
+                    ...state.securitySettings,
+                    ipWhitelist: state.securitySettings.ipWhitelist.filter(i => i !== ip)
+                }
             })),
 
             resetToDefault: () => set({

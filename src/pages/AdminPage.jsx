@@ -14,7 +14,8 @@ const AdminPage = () => {
         updateProduct, addProduct, deleteProduct, toggleSoldOut,
         updateHeroSettings, addHeroSlide, deleteHeroSlide,
         updateAboutSettings, resetToDefault,
-        addGlobalSize, removeGlobalSize, addGlobalColor, removeGlobalColor
+        addGlobalSize, removeGlobalSize, addGlobalColor, removeGlobalColor,
+        securitySettings, updateSecuritySettings, addIpToWhitelist, removeIpFromWhitelist
     } = useSiteStore();
 
     const [activeTab, setActiveTab] = useState('products');
@@ -29,6 +30,7 @@ const AdminPage = () => {
     const [newSize, setNewSize] = useState('');
     const [newColorName, setNewColorName] = useState('');
     const [newColorHex, setNewColorHex] = useState('#000000');
+    const [newIp, setNewIp] = useState('');
     const [selectedAgentKey, setSelectedAgentKey] = useState(null);
 
 
@@ -167,6 +169,9 @@ const AdminPage = () => {
                     </button>
                     <button className={activeTab === 'hero' ? 'active' : ''} onClick={() => setActiveTab('hero')}>
                         <span className="nav-icon">🖼️</span> Slayderlar
+                    </button>
+                    <button className={activeTab === 'security' ? 'active' : ''} onClick={() => setActiveTab('security')}>
+                        <span className="nav-icon">🛡️</span> Xavfsizlik
                     </button>
                     <button className={activeTab === 'about' ? 'active' : ''} onClick={() => setActiveTab('about')}>
                         <span className="nav-icon">🏢</span> Ma'lumotlar
@@ -458,6 +463,110 @@ const AdminPage = () => {
                                             </motion.div>
                                         ))}
                                     </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {activeTab === 'security' && (
+                        <motion.div key="security" className="admin-panel-security" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }}>
+                            <div className="security-bento">
+                                {/* Row 1 Left: AI Security Shield */}
+                                <div className="admin-card security-shield-card">
+                                    <div className="ai-hub__header">
+                                        <span className="sparkle-icon">🛡️</span>
+                                        <h3>AI Security Shield</h3>
+                                    </div>
+                                    <div className="shield-status">
+                                        <div className="status-circle-wrap">
+                                            <div className="status-circle active"></div>
+                                            <div className="status-pulse"></div>
+                                        </div>
+                                        <div className="status-info">
+                                            <span className="status-label">LOYIHA HOLATI</span>
+                                            <span className="status-value">XAVFSIZLIK: 100%</span>
+                                        </div>
+                                    </div>
+                                    <div className="shield-logs">
+                                        <p>✅ Firewall: Aktiv</p>
+                                        <p>✅ SSL: Muvaffaqiyatli</p>
+                                        <p>✅ DDoS Himoya: Aktiv</p>
+                                    </div>
+                                    <button className="primary-submit-btn tiny">Skanerlashni boshlash</button>
+                                </div>
+
+                                {/* Row 1 Right: Access Control */}
+                                <div className="admin-card access-control-card">
+                                    <div className="form-header">
+                                        <h3>Kirish Boshqaruvi</h3>
+                                        <span className="smart-badge">LOCK SECURE</span>
+                                    </div>
+                                    <div className="security-controls">
+                                        <div className="security-toggle-item">
+                                            <div className="toggle-text">
+                                                <span className="t-title">Ikki bosqichli autentifikatsiya (2FA)</span>
+                                                <span className="t-desc">Tizimga kirishda SMS yoki Telegram kod so'raladi.</span>
+                                            </div>
+                                            <input
+                                                type="checkbox"
+                                                className="modern-toggle"
+                                                checked={securitySettings.twoFactor}
+                                                onChange={() => updateSecuritySettings({ twoFactor: !securitySettings.twoFactor })}
+                                            />
+                                        </div>
+
+                                        <div className="whitelist-section">
+                                            <label>IP WHITELIST (RUHSAT ETILGANLAR)</label>
+                                            <div className="ip-input-row">
+                                                <input
+                                                    type="text"
+                                                    placeholder="IP manzilini kiriting (masalan: 1.1.1.1)"
+                                                    value={newIp}
+                                                    onChange={(e) => setNewIp(e.target.value)}
+                                                />
+                                                <button onClick={() => { if (newIp) { addIpToWhitelist(newIp); setNewIp(''); } }}>Qo'shish</button>
+                                            </div>
+                                            <div className="ip-tags">
+                                                {securitySettings.ipWhitelist.map(ip => (
+                                                    <div key={ip} className="ip-tag">
+                                                        <span>{ip}</span>
+                                                        <button onClick={() => removeIpFromWhitelist(ip)}>×</button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Row 2 Full: Login History Table */}
+                                <div className="admin-card full-width login-history-card">
+                                    <div className="form-header">
+                                        <h3>Oxirgi Kirishlar Tarixi</h3>
+                                    </div>
+                                    <table className="orders-table">
+                                        <thead>
+                                            <tr>
+                                                <th>IP MANZIL</th>
+                                                <th>SANA / VAQT</th>
+                                                <th>QURILMA</th>
+                                                <th>HOLAT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {securitySettings.loginHistory.map(log => (
+                                                <tr key={log.id}>
+                                                    <td><code>{log.ip}</code></td>
+                                                    <td>{log.date}</td>
+                                                    <td>{log.device}</td>
+                                                    <td>
+                                                        <span className={`h-badge ${log.status === 'Success' ? 'active' : 'sold'}`}>
+                                                            {log.status}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </motion.div>
