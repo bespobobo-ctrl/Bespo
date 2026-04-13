@@ -539,41 +539,104 @@ const AdminPage = () => {
                     >
                         <motion.div
                             className="agent-modal-content admin-card"
-                            initial={{ scale: 0.9, y: 20 }}
-                            animate={{ scale: 1, y: 0 }}
-                            exit={{ scale: 0.9, y: 20 }}
+                            initial={{ scale: 0.95, opacity: 0, y: 30 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.95, opacity: 0, y: 30 }}
                             onClick={(e) => e.stopPropagation()}
-                            style={{ maxWidth: '400px', width: '100%', position: 'relative' }}
+                            style={{ maxWidth: '800px', width: '100%', position: 'relative', overflow: 'hidden' }}
                         >
-                            <button onClick={() => setSelectedAgentKey(null)} style={{ position: 'absolute', top: '15px', right: '15px', background: 'transparent', color: '#fff', fontSize: '1.2rem', cursor: 'pointer' }}>×</button>
+                            <button onClick={() => setSelectedAgentKey(null)} style={{ position: 'absolute', top: '20px', right: '20px', background: 'rgba(255,255,255,0.05)', border: 'none', color: '#fff', width: '30px', height: '30px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', zIndex: 10 }}>×</button>
 
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
-                                <span style={{ fontSize: '2.5rem' }}>{agents[selectedAgentKey].icon}</span>
-                                <div>
-                                    <h3 style={{ margin: 0, fontSize: '1.2rem' }}>{agents[selectedAgentKey].name}</h3>
-                                    <span style={{ fontSize: '0.7rem', color: agents[selectedAgentKey].active ? '#10b981' : '#d4453b', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 'bold' }}>
-                                        {agents[selectedAgentKey].active ? 'STATUS: ONLINE' : 'STATUS: OFFLINE'}
-                                    </span>
+                            <div style={{ padding: '0 0 25px 0', borderBottom: '1px solid #1a1a1e', marginBottom: '25px', display: 'flex', alignItems: 'center', gap: '20px' }}>
+                                <div style={{ width: '60px', height: '60px', background: 'rgba(181, 150, 107, 0.1)', border: '1px solid rgba(181, 150, 107, 0.3)', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem' }}>
+                                    {agents[selectedAgentKey].icon}
+                                </div>
+                                <div style={{ flex: 1 }}>
+                                    <h2 style={{ margin: '0 0 5px 0', fontSize: '1.5rem', fontFamily: 'var(--font-heading)' }}>{agents[selectedAgentKey].name}</h2>
+                                    <div style={{ display: 'flex', gap: '15px' }}>
+                                        <span style={{ fontSize: '0.7rem', background: agents[selectedAgentKey].active ? 'rgba(16, 185, 129, 0.1)' : 'rgba(212, 69, 59, 0.1)', color: agents[selectedAgentKey].active ? '#10b981' : '#d4453b', padding: '4px 10px', borderRadius: '20px', fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                            {agents[selectedAgentKey].active ? '● Core Online' : '○ Core Offline'}
+                                        </span>
+                                        <span style={{ fontSize: '0.7rem', color: '#888', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                            <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ffaa00' }}></span>
+                                            v2.4 Model
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div style={{ background: '#0a0a0c', border: '1px solid #1a1a1e', borderRadius: '12px', padding: '15px', marginBottom: '20px', maxHeight: '200px', overflowY: 'auto' }}>
-                                <h4 style={{ fontSize: '0.7rem', color: '#666', textTransform: 'uppercase', marginBottom: '10px' }}>Oxirgi Arxiv (Logs)</h4>
-                                <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                    {agents[selectedAgentKey].logs.map((log, i) => (
-                                        <li key={i} style={{ fontSize: '0.75rem', color: '#bbb', paddingBottom: '10px', borderBottom: '1px dashed #222' }}>
-                                            <span style={{ color: 'var(--color-accent)', marginRight: '5px' }}>›</span> {log}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr', gap: '30px' }}>
+                                {/* Left: Telemetry & Config */}
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
+                                    <div>
+                                        <h4 style={{ margin: '0 0 15px 0', fontSize: '0.7rem', color: '#666', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Hardware Telemetry</h4>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', padding: '8px 12px', background: '#0a0a0c', border: '1px solid #1a1a1e', borderRadius: '8px' }}>
+                                                <span style={{ color: '#888' }}>CPU Load</span>
+                                                <span style={{ color: '#fff', fontWeight: '600' }}>{agents[selectedAgentKey].active ? '24.5%' : '0.1%'}</span>
+                                            </div>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', padding: '8px 12px', background: '#0a0a0c', border: '1px solid #1a1a1e', borderRadius: '8px' }}>
+                                                <span style={{ color: '#888' }}>VRAM Usage</span>
+                                                <span style={{ color: '#fff', fontWeight: '600' }}>{agents[selectedAgentKey].active ? '1.8 / 16 GB' : 'Idle'}</span>
+                                            </div>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', padding: '8px 12px', background: '#0a0a0c', border: '1px solid #1a1a1e', borderRadius: '8px' }}>
+                                                <span style={{ color: '#888' }}>Latency</span>
+                                                <span style={{ color: '#10b981', fontWeight: '600' }}>{agents[selectedAgentKey].active ? '45ms' : '--'}</span>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            <button
-                                onClick={() => toggleAgent(selectedAgentKey)}
-                                style={{ width: '100%', padding: '15px', borderRadius: '12px', background: agents[selectedAgentKey].active ? 'rgba(212, 69, 59, 0.1)' : 'rgba(16, 185, 129, 0.1)', color: agents[selectedAgentKey].active ? '#d4453b' : '#10b981', border: `1px solid ${agents[selectedAgentKey].active ? 'rgba(212, 69, 59, 0.3)' : 'rgba(16, 185, 129, 0.3)'}`, fontWeight: 'bold', cursor: 'pointer' }}
-                            >
-                                {agents[selectedAgentKey].active ? 'AGENTNI TO\'XTATIB TURISH' : 'AGENTNI ISHGA TUSHIRISH'}
-                            </button>
+                                    <div>
+                                        <h4 style={{ margin: '0 0 15px 0', fontSize: '0.7rem', color: '#666', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Neural Logic Config</h4>
+                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', opacity: agents[selectedAgentKey].active ? 1 : 0.4, pointerEvents: agents[selectedAgentKey].active ? 'auto' : 'none' }}>
+                                            <div>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', color: '#888', marginBottom: '5px' }}><span>Temperature</span><span>0.7</span></div>
+                                                <div style={{ width: '100%', height: '4px', background: '#1a1a1e', borderRadius: '2px' }}><div style={{ width: '70%', height: '100%', background: 'var(--color-accent)', borderRadius: '2px' }}></div></div>
+                                            </div>
+                                            <div>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', color: '#888', marginBottom: '5px' }}><span>Top-K Sampling</span><span>40</span></div>
+                                                <div style={{ width: '100%', height: '4px', background: '#1a1a1e', borderRadius: '2px' }}><div style={{ width: '40%', height: '100%', background: '#666', borderRadius: '2px' }}></div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        onClick={() => toggleAgent(selectedAgentKey)}
+                                        style={{ marginTop: 'auto', width: '100%', padding: '16px', borderRadius: '12px', background: agents[selectedAgentKey].active ? 'rgba(212, 69, 59, 0.1)' : 'rgba(16, 185, 129, 0.1)', color: agents[selectedAgentKey].active ? '#d4453b' : '#10b981', border: `1px solid ${agents[selectedAgentKey].active ? 'rgba(212, 69, 59, 0.3)' : 'rgba(16, 185, 129, 0.3)'}`, fontWeight: '800', letterSpacing: '0.05em', cursor: 'pointer', transition: '0.3s' }}
+                                    >
+                                        {agents[selectedAgentKey].active ? 'TERMINATE AGENT' : 'INITIALIZE AGENT'}
+                                    </button>
+                                </div>
+
+                                {/* Right: Terminal Logs */}
+                                <div style={{ background: '#050505', border: '1px solid #1a1a1e', borderRadius: '12px', padding: '20px', display: 'flex', flexDirection: 'column' }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #1a1a1e', paddingBottom: '15px', marginBottom: '15px' }}>
+                                        <h4 style={{ margin: 0, fontSize: '0.7rem', color: '#666', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Live Console stream</h4>
+                                        <div style={{ display: 'flex', gap: '5px' }}>
+                                            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#444' }}></span>
+                                            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#444' }}></span>
+                                            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#444' }}></span>
+                                        </div>
+                                    </div>
+                                    <div style={{ flex: 1, maxHeight: '280px', overflowY: 'auto', fontFamily: 'monospace', fontSize: '0.75rem', lineHeight: '1.6', color: '#a8a8a8', paddingRight: '10px' }}>
+                                        <div style={{ color: '#666', marginBottom: '10px' }}>[SYSTEM] Connection standard established. Protocol v3.</div>
+                                        {agents[selectedAgentKey].logs.map((log, i) => (
+                                            <div key={i} style={{ marginBottom: '8px', borderLeft: '2px solid rgba(181, 150, 107, 0.5)', paddingLeft: '10px' }}>
+                                                <span style={{ color: '#3b82f6', marginRight: '8px' }}>[INFO]</span>
+                                                <span style={{ color: '#fff' }}>{log.split(' - ')[0]}</span>
+                                                <span style={{ color: '#888' }}> — {log.split(' - ')[1] || ''}</span>
+                                            </div>
+                                        ))}
+                                        {agents[selectedAgentKey].active && (
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginTop: '15px' }}>
+                                                <span style={{ color: '#10b981' }}>›</span>
+                                                <span style={{ color: '#10b981' }}>Awaiting pipeline execution</span>
+                                                <span className="pulse" style={{ background: '#10b981', display: 'inline-block', width: '6px', height: '14px', animation: 'blink 1s step-end infinite' }}></span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
                         </motion.div>
                     </motion.div>
                 )}
