@@ -184,8 +184,9 @@
 /* Bento Layout */
 .admin-v3__bento-grid {
     display: grid;
-    grid-template-columns: 280px 1fr 340px;
-    gap: 25px;
+    grid-template-columns: 320px 1fr 340px;
+    gap: 24px;
+    align-items: start;
     margin-bottom: 40px;
 }
 
@@ -194,7 +195,17 @@
     border: 1px solid var(--border-subtle);
     border-radius: 20px;
     padding: 25px;
+    box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
+.admin-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-accent);
+}
+
+
 
 /* Left Column: AI Agents */
 .ai-hub__header {
@@ -296,12 +307,18 @@
 .input-group select,
 .input-group textarea {
     width: 100%;
-    background: #000;
-    border: 1px solid #1a1a1e;
-    color: #fff;
-    padding: 12px 15px;
-    border-radius: 10px;
+    background: var(--color-bg-surface);
+    border: 1px solid var(--border-subtle);
+    color: var(--color-text-primary);
+    padding: 12px 18px;
+    border-radius: 12px;
     font-size: 0.85rem;
+    transition: 0.3s;
+}
+
+.input-group input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 1px var(--color-accent);
 }
 
 /* Storyboard */
@@ -319,18 +336,18 @@
 
 .storyboard-slot-sq {
     aspect-ratio: 1;
-    background: #000;
-    border: 1px solid #1a1a1e;
-    border-radius: 8px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
     position: relative;
     overflow: hidden;
 }
 
 .storyboard-large-slot {
     aspect-ratio: 0.8;
-    background: #000;
-    border: 1px solid #1a1a1e;
-    border-radius: 8px;
+    background: var(--color-bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
     position: relative;
     overflow: hidden;
 }
@@ -975,46 +992,78 @@
     color: var(--color-accent);
 }
 
-/* --- AI REBRANDING WIDGET --- */
+/* --- REBRANDING DESIGN V5 --- */
 .rebrand-section {
     border-top: 1px solid var(--border-subtle);
-    padding-top: 10px;
-    margin-top: 10px;
+    padding-top: 20px;
+    margin-top: 20px;
 }
 
 .rebrand-options {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 15px;
 }
 
 .rebrand-chip {
-    background: #000;
-    border: 1px solid var(--border-subtle);
-    color: #fff;
-    padding: 10px 12px;
-    border-radius: 10px;
-    font-size: 0.7rem;
-    font-weight: 600;
+    background: transparent;
+    border: 1.5px solid var(--border-subtle);
+    color: var(--color-text-primary);
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
 }
 
 .rebrand-chip:hover {
-    background: var(--color-bg-surface);
     border-color: var(--color-accent);
+    background: var(--color-accent);
+    color: var(--color-bg);
+    transform: scale(1.02);
+}
+
+.rebrand-chip:active {
+    transform: scale(0.98);
+}
+
+/* Inputs Polish for Light/Dark Modes */
+input,
+select,
+textarea {
+    background: rgba(128, 128, 128, 0.05) !important;
+    border: 1px solid var(--border-subtle) !important;
+    color: var(--color-text-primary) !important;
+    border-radius: 12px !important;
+    padding: 14px 18px !important;
+    font-size: 0.85rem !important;
+    width: 100%;
+    transition: 0.3s;
+}
+
+input:focus,
+textarea:focus {
+    border-color: var(--color-accent) !important;
+    background: rgba(128, 128, 128, 0.1) !important;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--color-accent-rgb, 212, 175, 55), 0.1);
 }
 
 .rebrand-tip {
-    font-size: 0.6rem;
-    color: #555;
-    line-height: 1.5;
-    margin: 0;
+    font-size: 0.65rem;
+    color: #888;
+    line-height: 1.6;
+    margin-top: 10px;
+    font-style: italic;
 }
 
 /* --- AI AGENT MODERATOR TEST --- */
@@ -1091,6 +1140,14 @@
 
 .test-dot.idle {
     color: #333;
+}
+
+.test-dot.testing {
+    color: #3b82f6;
+}
+
+.test-dot.idle {
+    color: #888;
 }
 
 .test-dot.testing {
