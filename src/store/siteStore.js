@@ -139,8 +139,24 @@ const useSiteStore = create(
                 theme: { name: 'Dynamic Theme Agent', icon: '🎨', active: true, logs: ["1 soat oldin - Qorong'u (Dark Theme) o'rnatildi"] },
                 monitor: { name: 'AI Health Monitor', icon: '🩺', logs: ['Sog\'liq holati barqaror.'], active: true, status: 'stable' },
                 rebrander: { name: 'AI Style Rebrander', icon: '🎨', logs: ['Uslub yangilanishga tayyor.'], active: true, status: 'ready' },
-                guard: { name: 'AI Security Guard', icon: '🛡️', logs: ['Xavfsizlik tizimi yoniq.'], active: true, status: 'secure' },
-                debugger: { name: 'AI Bug Finder', icon: '🪲', logs: ['Kodni tekshirishga tayyor.'], active: true, status: 'ready', proposedFix: null }
+                guard: {
+                    name: 'AI Security Guard',
+                    icon: '🛡️',
+                    logs: ['Tizim himoya ostida.'],
+                    active: true,
+                    status: 'secure',
+                    healthScore: 100,
+                    lastReport: null
+                },
+                debugger: {
+                    name: 'AI Bug Finder',
+                    icon: '🪲',
+                    logs: ['Kodni tahlil qilishga tayyor.'],
+                    active: true,
+                    status: 'ready',
+                    proposedFix: null,
+                    metrics: { complexity: 0, performance: 100 }
+                }
             },
             analytics: {
                 visitors: [120, 450, 300, 560, 800, 950, 1100],
@@ -320,29 +336,44 @@ const useSiteStore = create(
                 set((state) => ({
                     agents: {
                         ...state.agents,
-                        guard: { ...state.agents.guard, status: 'scanning', logs: ['🛡️ Xavfsizlik auditi boshlandi...', ...state.agents.guard.logs] }
+                        guard: {
+                            ...state.agents.guard,
+                            status: 'scanning',
+                            logs: ['[00:01] Deep Security Audit initiated...', ...state.agents.guard.logs]
+                        }
                     }
                 }));
 
-                const steps = [
-                    'Network traffic tahlil qilinmoqda...',
-                    'Brute-force urinishlari tekshirilmoqda...',
-                    'Firewall qoidalari yangilanmoqda...',
-                    '✅ XAVFSIZLIK: 100%. Hech qanday tahdid topilmadi.'
+                const phases = [
+                    { msg: '[00:04] Analyzing HTTP Security Headers (CORS, HSTS, CSP)...', score: 98 },
+                    { msg: '[00:08] Scanning for OWASP Top 10 Vulnerabilities...', score: 95 },
+                    { msg: '[00:12] Auditing SSL/TLS Certificate Chains...', score: 100 },
+                    { msg: '[00:15] Stress Testing API Gateways (Rate-Limit Check)...', score: 92 }
                 ];
 
-                for (let step of steps) {
-                    await new Promise(r => setTimeout(r, 1000));
+                for (let phase of phases) {
+                    await new Promise(r => setTimeout(r, 1200));
                     set((state) => ({
                         agents: {
                             ...state.agents,
-                            guard: { ...state.agents.guard, logs: [step, ...state.agents.guard.logs] }
+                            guard: {
+                                ...state.agents.guard,
+                                logs: [phase.msg, ...state.agents.guard.logs],
+                                healthScore: phase.score
+                            }
                         }
                     }));
                 }
 
                 set((state) => ({
-                    agents: { ...state.agents, guard: { ...state.agents.guard, status: 'secure' } }
+                    agents: {
+                        ...state.agents,
+                        guard: {
+                            ...state.agents.guard,
+                            status: 'secure',
+                            lastReport: { timestamp: new Date().toISOString(), threatLevel: 'Low', auditedEndpoints: 14 }
+                        }
+                    }
                 }));
             },
 
@@ -350,18 +381,24 @@ const useSiteStore = create(
                 set((state) => ({
                     agents: {
                         ...state.agents,
-                        debugger: { ...state.agents.debugger, status: 'scanning', logs: ['🪲 Buglarni qidirish boshlandi...', ...state.agents.debugger.logs], proposedFix: null }
+                        debugger: {
+                            ...state.agents.debugger,
+                            status: 'scanning',
+                            logs: ['[00:01] Static Code Analysis (AST) started...', ...state.agents.debugger.logs],
+                            proposedFix: null
+                        }
                     }
                 }));
 
-                await new Promise(r => setTimeout(r, 1500));
+                await new Promise(r => setTimeout(r, 2000));
 
-                // Simulating a critical bug discovery
-                const bugFound = {
-                    title: 'Memory Leak in Image Gallery',
-                    problem: 'useEffect ichida listenerlar to\'g\'ri tozalanmagan.',
-                    solution: 'Gallery komponentida cleanup function qo\'shish lozim.',
-                    code: 'return () => window.removeEventListener("resize", handleResize);'
+                const bugReport = {
+                    severity: 'CRITICAL',
+                    title: 'Circular Dependency & Memory Leak',
+                    problem: 'Infinite re-render detected in siteStore update cycle due to unmemoized selector.',
+                    impact: 'Browser CPU usage spike up to 80% on long sessions.',
+                    solution: 'Implement useCallback and useShallow for complex objects in state selectors.',
+                    code: 'const items = useSiteStore(useShallow(state => state.items));'
                 };
 
                 set((state) => ({
@@ -370,8 +407,9 @@ const useSiteStore = create(
                         debugger: {
                             ...state.agents.debugger,
                             status: 'compromised',
-                            logs: [`❗ BUG TOPILDI: ${bugFound.title}`, ...state.agents.debugger.logs],
-                            proposedFix: bugFound
+                            logs: [`[00:05] 🔴 EXCEPTION FOUND: ${bugReport.title}`, ...state.agents.debugger.logs],
+                            proposedFix: bugReport,
+                            metrics: { complexity: 78, performance: 42 }
                         }
                     }
                 }));
@@ -381,11 +419,15 @@ const useSiteStore = create(
                 set((state) => ({
                     agents: {
                         ...state.agents,
-                        debugger: { ...state.agents.debugger, status: 'fixing', logs: ['🛠️ Avtomatik tuzatish boshlandi...', ...state.agents.debugger.logs] }
+                        debugger: {
+                            ...state.agents.debugger,
+                            status: 'fixing',
+                            logs: ['[00:01] Injecting Hot-fix into production runtime...', ...state.agents.debugger.logs]
+                        }
                     }
                 }));
 
-                await new Promise(r => setTimeout(r, 2000));
+                await new Promise(r => setTimeout(r, 2500));
 
                 set((state) => ({
                     agents: {
@@ -393,8 +435,9 @@ const useSiteStore = create(
                         debugger: {
                             ...state.agents.debugger,
                             status: 'ready',
-                            logs: ['✅ KOD TUZATILDI: Memory leak bartaraf etildi.', ...state.agents.debugger.logs],
-                            proposedFix: null
+                            logs: ['[00:04] ✅ PATCH APPLIED: Runtime stability restored.', ...state.agents.debugger.logs],
+                            proposedFix: null,
+                            metrics: { complexity: 45, performance: 99 }
                         }
                     }
                 }));

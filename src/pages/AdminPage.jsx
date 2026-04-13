@@ -566,131 +566,100 @@ const AdminPage = () => {
                     )}
 
                     {activeTab === 'security' && (
-                        <motion.div key="security" className="admin-panel-security" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                            <div className="security-bento">
-                                {/* AI SECURITY HUB */}
-                                <div className="admin-card security-hub-full">
-                                    <div className="form-header">
-                                        <span className="sparkle-icon">🛡️</span>
-                                        <h3>AI SECURITY & DEBUG HUB</h3>
+                        <motion.div key="security" className="admin-command-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                            <div className="command-grid">
+                                {/* SYSTEM METRICS ROW */}
+                                <div className="metrics-summary">
+                                    <div className="metric-box">
+                                        <label>SECURITY HEALTH</label>
+                                        <div className="metric-val">
+                                            <span className="number">{agents.guard?.healthScore || 100}%</span>
+                                            <div className="mini-progress"><div className="p-fill" style={{ width: `${agents.guard?.healthScore || 100}%` }}></div></div>
+                                        </div>
                                     </div>
-                                    <div className="security-audit-grid">
-                                        {/* SOC SECTION */}
-                                        <div className="audit-module soc-module">
-                                            <div className="module-header">
-                                                <h6>AI SECURITY SOC</h6>
-                                                <span className={`status-pill ${agents.guard?.status === 'secure' ? 'green' : 'orange'}`}>
-                                                    {agents.guard?.status === 'scanning' ? 'SCANNING' : 'SECURE'}
-                                                </span>
-                                            </div>
-                                            <div className="terminal-view">
-                                                {agents.guard?.logs.slice(0, 5).map((l, i) => (
-                                                    <p key={i} className="t-line">{l}</p>
-                                                ))}
-                                            </div>
-                                            <button className="audit-btn" onClick={() => runSecurityAudit()} disabled={agents.guard?.status === 'scanning'}>
-                                                {agents.guard?.status === 'scanning' ? 'Tahlil...' : 'Run Security Audit'}
-                                            </button>
+                                    <div className="metric-box">
+                                        <label>RUNTIME STABILITY</label>
+                                        <div className="metric-val">
+                                            <span className="number">{agents.debugger?.metrics.performance || 100}%</span>
+                                            <div className="mini-progress"><div className="p-fill blue" style={{ width: `${agents.debugger?.metrics.performance || 100}%` }}></div></div>
                                         </div>
-
-                                        {/* DEBUGGER SECTION */}
-                                        <div className="audit-module debug-module">
-                                            <div className="module-header">
-                                                <h6>AI BUG FINDER</h6>
-                                                <span className={`status-pill ${agents.debugger?.status === 'compromised' ? 'red' : 'green'}`}>
-                                                    {agents.debugger?.status === 'compromised' ? 'ISSUES FOUND' : 'NO BUGS'}
-                                                </span>
-                                            </div>
-                                            <div className="terminal-view debug-v">
-                                                {agents.debugger?.logs.slice(0, 5).map((l, i) => (
-                                                    <p key={i} className="t-line">{l}</p>
-                                                ))}
-                                            </div>
-
-                                            {agents.debugger?.proposedFix ? (
-                                                <div className="ai-fix-card">
-                                                    <p className="fix-desc"><strong>Solution:</strong> {agents.debugger.proposedFix.solution}</p>
-                                                    <code className="fix-code">{agents.debugger.proposedFix.code}</code>
-                                                    <button className="auto-fix-btn" onClick={() => applyAutoFix()}>
-                                                        ✨ APPLY AI AUTO-FIX
-                                                    </button>
-                                                </div>
-                                            ) : (
-                                                <button className="audit-btn" onClick={() => runBugAudit()} disabled={agents.debugger?.status === 'scanning'}>
-                                                    {agents.debugger?.status === 'scanning' ? 'Kodni tahlil qilish...' : 'Run Bug Audit'}
-                                                </button>
-                                            )}
-                                        </div>
+                                    </div>
+                                    <div className="metric-box">
+                                        <label>THREAT LEVEL</label>
+                                        <span className={`status-text ${agents.guard?.status === 'secure' ? 'safe' : 'alert'}`}>
+                                            {agents.guard?.status === 'scanning' ? 'ANALYZING...' : (agents.guard?.lastReport?.threatLevel || 'MINIMAL')}
+                                        </span>
                                     </div>
                                 </div>
 
-                                {/* ACCESS CONTROL & HISTORY combined in bento style if needed, or separate */}
-                                <div className="admin-card access-control-card">
-                                    <div className="form-header">
-                                        <h3>Kirish Boshqaruvi</h3>
-                                        <span className="smart-badge">LOCK SECURE</span>
-                                    </div>
-                                    <div className="security-controls">
-                                        <div className="security-toggle-item">
-                                            <div className="toggle-text">
-                                                <span className="t-title">Ikki bosqichli autentifikatsiya (2FA)</span>
-                                                <span className="t-desc">Tizimga kirishda SMS yoki Telegram kod so'raladi.</span>
+                                <div className="audit-main-layout">
+                                    {/* AI SECURITY HUB */}
+                                    <div className="admin-card soc-terminal-card">
+                                        <div className="card-header-v4">
+                                            <div className="title-group">
+                                                <h6>SYSTEM_GUARDIAN_LOGS_V3</h6>
+                                                <h3>AI SECURITY SOC</h3>
                                             </div>
-                                            <input
-                                                type="checkbox"
-                                                className="modern-toggle"
-                                                checked={securitySettings.twoFactor}
-                                                onChange={() => updateSecuritySettings({ twoFactor: !securitySettings.twoFactor })}
-                                            />
+                                            <button className="soc-run-btn" onClick={() => runSecurityAudit()} disabled={agents.guard?.status === 'scanning'}>
+                                                {agents.guard?.status === 'scanning' ? 'AUDITING...' : 'RUN DEEP SCAN'}
+                                            </button>
                                         </div>
-
-                                        <div className="whitelist-section">
-                                            <label>IP WHITELIST</label>
-                                            <div className="ip-input-row">
-                                                <input
-                                                    type="text"
-                                                    placeholder="IP (masalan: 1.1.1.1)"
-                                                    value={newIp}
-                                                    onChange={(e) => setNewIp(e.target.value)}
-                                                />
-                                                <button onClick={() => { if (newIp) { addIpToWhitelist(newIp); setNewIp(''); } }}>Qo'shish</button>
-                                            </div>
-                                            <div className="ip-tags">
-                                                {securitySettings.ipWhitelist.map(ip => (
-                                                    <div key={ip} className="ip-tag">
-                                                        <span>{ip}</span>
-                                                        <button onClick={() => removeIpFromWhitelist(ip)}>×</button>
+                                        <div className="terminal-v4">
+                                            <div className="terminal-body">
+                                                {agents.guard?.logs.map((l, i) => (
+                                                    <div key={i} className="log-entry">
+                                                        <span className="timestamp">[{new Date().toLocaleTimeString()}]</span>
+                                                        <span className="msg">{l}</span>
                                                     </div>
                                                 ))}
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div className="admin-card full-width login-history">
-                                    <div className="form-header">
-                                        <h3>Tizimga kirishlar tarixi</h3>
+                                    {/* AI BUG FINDER */}
+                                    <div className="admin-card debug-terminal-card">
+                                        <div className="card-header-v4">
+                                            <div className="title-group">
+                                                <h6>LINT_ENGINE_PRO_2026</h6>
+                                                <h3>AI BUG DEBUGGER</h3>
+                                            </div>
+                                            <button className="debug-run-btn" onClick={() => runBugAudit()} disabled={agents.debugger?.status === 'scanning'}>
+                                                {agents.debugger?.status === 'scanning' ? 'STATIC_SCAN...' : 'RUN DEBUGGER'}
+                                            </button>
+                                        </div>
+
+                                        <div className="debug-telemetry">
+                                            <div className="tel-item">Complexity: <span>{agents.debugger?.metrics.complexity || 0}</span></div>
+                                            <div className="tel-item">Leaks: <span>{agents.debugger?.status === 'compromised' ? '1' : '0'}</span></div>
+                                        </div>
+
+                                        <div className="terminal-v4 debug-theme">
+                                            <div className="terminal-body">
+                                                {agents.debugger?.logs.map((l, i) => (
+                                                    <div key={i} className="log-entry">
+                                                        <span className="msg">{l}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {agents.debugger?.proposedFix && (
+                                            <motion.div className="engineering-report" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
+                                                <div className="report-header">
+                                                    <span className="severity">SEVERITY: {agents.debugger.proposedFix.severity}</span>
+                                                    <h4>{agents.debugger.proposedFix.title}</h4>
+                                                </div>
+                                                <p className="report-problem">{agents.debugger.proposedFix.problem}</p>
+                                                <div className="code-block-v4">
+                                                    <div className="code-header">PATCH_CODE::FIX_V1</div>
+                                                    <pre><code>{agents.debugger.proposedFix.code}</code></pre>
+                                                </div>
+                                                <button className="engineering-fix-btn" onClick={() => applyAutoFix()}>
+                                                    AUTO-DEPLOY PATCH
+                                                </button>
+                                            </motion.div>
+                                        )}
                                     </div>
-                                    <table className="orders-table">
-                                        <thead>
-                                            <tr>
-                                                <th>IP</th>
-                                                <th>SANA</th>
-                                                <th>QURILMA</th>
-                                                <th>HOLAT</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {securitySettings.loginHistory.map(log => (
-                                                <tr key={log.id}>
-                                                    <td><code>{log.ip}</code></td>
-                                                    <td>{log.date}</td>
-                                                    <td>{log.device}</td>
-                                                    <td><span className={`h-badge ${log.status === 'Success' ? 'active' : 'sold'}`}>{log.status}</span></td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </motion.div>
@@ -742,6 +711,80 @@ const AdminPage = () => {
                                             </div>
                                         );
                                     })}
+                                    {/* ACCESS CONTROL */}
+                                    <div className="admin-card access-control-v4">
+                                        <div className="card-header-v4">
+                                            <div className="title-group">
+                                                <h6>SECURE_ACCESS_PROTOCOL</h6>
+                                                <h3>ACCESS CONTROL</h3>
+                                            </div>
+                                        </div>
+                                        <div className="security-controls-v4">
+                                            <div className="toggle-item-v4">
+                                                <div className="t-info">
+                                                    <span className="t-name">Double-Auth (2FA)</span>
+                                                    <span className="t-status">{securitySettings.twoFactor ? 'ENABLED' : 'DISABLED'}</span>
+                                                </div>
+                                                <input
+                                                    type="checkbox"
+                                                    className="modern-toggle"
+                                                    checked={securitySettings.twoFactor}
+                                                    onChange={() => updateSecuritySettings({ twoFactor: !securitySettings.twoFactor })}
+                                                />
+                                            </div>
+
+                                            <div className="whitelist-v4">
+                                                <label>IP WHITE-LIST</label>
+                                                <div className="ip-entry">
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Add IP..."
+                                                        value={newIp}
+                                                        onChange={(e) => setNewIp(e.target.value)}
+                                                    />
+                                                    <button onClick={() => { if (newIp) { addIpToWhitelist(newIp); setNewIp(''); } }}>+</button>
+                                                </div>
+                                                <div className="ip-scroller">
+                                                    {securitySettings.ipWhitelist.map(ip => (
+                                                        <div key={ip} className="ip-chip">
+                                                            <span>{ip}</span>
+                                                            <button onClick={() => removeIpFromWhitelist(ip)}>×</button>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* LOGIN TELEMETRY */}
+                                    <div className="admin-card full-width login-telemetry">
+                                        <div className="card-header-v4">
+                                            <div className="title-group">
+                                                <h6>TRAFFIC_ENTRY_LOGS</h6>
+                                                <h3>LOGIN TELEMETRY</h3>
+                                            </div>
+                                        </div>
+                                        <table className="telemetry-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>SOURCE_IP</th>
+                                                    <th>TIMESTAMP</th>
+                                                    <th>ENVIRONMENT</th>
+                                                    <th>STATUS</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {securitySettings.loginHistory.map(log => (
+                                                    <tr key={log.id}>
+                                                        <td><code>{log.ip}</code></td>
+                                                        <td>{log.date}</td>
+                                                        <td>{log.device}</td>
+                                                        <td><span className={`status-tag ${log.status.toLowerCase()}`}>{log.status}</span></td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
