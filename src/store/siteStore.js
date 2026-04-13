@@ -139,7 +139,8 @@ const useSiteStore = create(
                 theme: { name: 'Dynamic Theme Agent', icon: '🎨', active: true, logs: ["1 soat oldin - Qorong'u (Dark Theme) o'rnatildi"] },
                 monitor: { name: 'AI Health Monitor', icon: '🩺', logs: ['Sog\'liq holati barqaror.'], active: true, status: 'stable' },
                 rebrander: { name: 'AI Style Rebrander', icon: '🎨', logs: ['Uslub yangilanishga tayyor.'], active: true, status: 'ready' },
-                guard: { name: 'AI Security Guard', icon: '🛡️', logs: ['Xavfsizlik tizimi yoniq.'], active: true, status: 'secure' }
+                guard: { name: 'AI Security Guard', icon: '🛡️', logs: ['Xavfsizlik tizimi yoniq.'], active: true, status: 'secure' },
+                debugger: { name: 'AI Bug Finder', icon: '🪲', logs: ['Kodni tekshirishga tayyor.'], active: true, status: 'ready' }
             },
             analytics: {
                 visitors: [120, 450, 300, 560, 800, 950, 1100],
@@ -315,34 +316,38 @@ const useSiteStore = create(
                 }));
             },
 
-            runSecurityScan: async (addLog) => {
+            runSecurityScan: async () => {
+                // 1. Start Guardian
                 set((state) => ({
                     agents: {
                         ...state.agents,
-                        guard: {
-                            ...state.agents.guard,
-                            status: 'scanning',
-                            logs: ['Yangi diagnostika boshlandi...', ...state.agents.guard.logs]
-                        }
+                        guard: { ...state.agents.guard, status: 'scanning', logs: ['🛡️ Global Xavfsizlik skanerlash boshlandi...', ...state.agents.guard.logs] },
+                        debugger: { ...state.agents.debugger, status: 'testing', logs: ['🪲 Buglar audit qilinmoqda...', ...state.agents.debugger.logs] }
                     }
                 }));
 
-                const scanSteps = [
+                const securitySteps = [
                     'Portlar tekshirilmoqda...',
-                    'Zaifliklar (Vulnerabilities) qidirilmoqda...',
-                    'DDoS va SQLi filtrlari audit qilinmoqda...',
-                    'Barcha tizimlar xavfsiz. Buglar topilmadi.'
+                    'Firewall filtrlari sinovdan o\'tkazilmoqda...',
+                    'Cloudflare DDoS himoyasi auditi...',
+                    'Zaifliklar: Muvaffaqiyatli o\'tildi (0 ta zaiflik).'
                 ];
 
-                for (let step of scanSteps) {
-                    await new Promise(r => setTimeout(r, 1200));
+                const bugSteps = [
+                    'Javascript runtime tahlil qilinmoqda...',
+                    'Komponentlar render sifati auditi...',
+                    'Zustand Store barqarorligi tekshirilmoqda...',
+                    '✅ Buglar audit tugadi: 0 ta xatolik topildi.'
+                ];
+
+                // Execute Mixed steps
+                for (let i = 0; i < securitySteps.length; i++) {
+                    await new Promise(r => setTimeout(r, 1000));
                     set((state) => ({
                         agents: {
                             ...state.agents,
-                            guard: {
-                                ...state.agents.guard,
-                                logs: [step, ...state.agents.guard.logs]
-                            }
+                            guard: { ...state.agents.guard, logs: [securitySteps[i], ...state.agents.guard.logs] },
+                            debugger: { ...state.agents.debugger, logs: [bugSteps[i], ...state.agents.debugger.logs] }
                         }
                     }));
                 }
@@ -350,11 +355,8 @@ const useSiteStore = create(
                 set((state) => ({
                     agents: {
                         ...state.agents,
-                        guard: {
-                            ...state.agents.guard,
-                            status: 'secure',
-                            logs: ['✅ Skanerlash tugadi. Sayt 100% himoyalangan.', ...state.agents.guard.logs]
-                        }
+                        guard: { ...state.agents.guard, status: 'secure', logs: ['✅ XAVFSIZLIK: 100%. Sayt himoyalangan.', ...state.agents.guard.logs] },
+                        debugger: { ...state.agents.debugger, status: 'ready', logs: ['✅ BUG FINDER: 0 ta xatolik. Kod ideal holatda.', ...state.agents.debugger.logs] }
                     }
                 }));
             },

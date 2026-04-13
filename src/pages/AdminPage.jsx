@@ -585,23 +585,33 @@ const AdminPage = () => {
                                         <div className="status-info">
                                             <span className="status-label">LOYIHA HOLATI</span>
                                             <span className="status-value" style={{ color: agents.guard?.status === 'scanning' ? '#f59e0b' : '#10b981' }}>
-                                                {agents.guard?.status === 'scanning' ? 'SKANERLANMOQDA...' : 'XAVFSIZLIK: 100%'}
+                                                {agents.guard?.status === 'scanning' ? 'TEKSHIRILMOQDA...' : 'HIMOYALANGAN: 100%'}
                                             </span>
                                         </div>
                                     </div>
-                                    <div className="shield-logs">
-                                        {agents.guard?.logs.slice(0, 3).map((log, idx) => (
-                                            <p key={idx} style={{ color: log.startsWith('✅') ? '#10b981' : '#888' }}>
-                                                {log.startsWith('✅') || log.startsWith('Yangi') || log.startsWith('Barcha') ? log : `🔍 ${log}`}
-                                            </p>
-                                        ))}
+
+                                    <div className="dual-scan-logs">
+                                        <div className="log-col">
+                                            <h6>🛡️ XAVFSIZLIK</h6>
+                                            {agents.guard?.logs.slice(0, 2).map((log, idx) => (
+                                                <p key={idx} className="mini-log">{log}</p>
+                                            ))}
+                                        </div>
+                                        <div className="log-col">
+                                            <h6>🪲 BUG FINDER</h6>
+                                            {agents.debugger?.logs.slice(0, 2).map((log, idx) => (
+                                                <p key={idx} className="mini-log">{log}</p>
+                                            ))}
+                                        </div>
                                     </div>
+
                                     <button
                                         className="primary-submit-btn tiny"
                                         onClick={() => runSecurityScan()}
                                         disabled={agents.guard?.status === 'scanning'}
+                                        style={{ background: agents.guard?.status === 'scanning' ? '#444' : '' }}
                                     >
-                                        {agents.guard?.status === 'scanning' ? 'Agent ishlamoqda...' : 'Skanerlashni boshlash'}
+                                        {agents.guard?.status === 'scanning' ? 'Skanerlanmoqda...' : 'Global Auditni boshlash'}
                                     </button>
                                 </div>
 

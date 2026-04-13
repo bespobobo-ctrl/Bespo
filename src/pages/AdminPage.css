@@ -643,6 +643,35 @@
     gap: 10px;
 }
 
+/* Security Dual Logs */
+.dual-scan-logs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border-subtle);
+}
+
+.log-col h6 {
+    font-size: 0.6rem;
+    color: var(--color-accent);
+    margin: 0 0 10px 0;
+    letter-spacing: 1px;
+}
+
+.mini-log {
+    font-size: 0.65rem;
+    color: #888;
+    margin-bottom: 5px;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .edit-btn-s,
 .del-btn-s {
     background: #000;
