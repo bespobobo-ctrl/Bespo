@@ -132,6 +132,13 @@ const useSiteStore = create(
                     textPrimary: '#F5F0E8'
                 }
             },
+            agents: {
+                predictor: { name: 'AI Predictor (Sales)', icon: '🤖', active: true, logs: ["12:45 - 2 ta hoodie tugash arafi haqida ogohlantirish berildi", "09:30 - Trend 80% o'sishi aniqlandi"] },
+                vision: { name: 'AI Vision (Image)', icon: '👁️', active: true, logs: ["10:15 - 'Aurora Puffer' rasm foni tozalandi", "Kecha - Rasmlar avtomatik 4K ga o'tkazildi"] },
+                copywriter: { name: 'AI Copywriter (SEO)', icon: '✍️', active: true, logs: ["08:20 - Premium ko'ylak uchun SEO tavsif yozildi"] },
+                theme: { name: 'Dynamic Theme Agent', icon: '🎨', active: true, logs: ["1 soat oldin - Qorong'u (Dark Theme) o'rnatildi", "Kecha - Yorug'lik (Light) tekshiruvi"] },
+                monitor: { name: 'AI Health Monitor', icon: '🩺', active: true, logs: ["15 daqiqa oldin - Server barqarorligi tekshirildi (OK)", "Kecha - Memory xatoliklarni kuzatuvdan o'tkazdi"] }
+            },
             analytics: {
                 visitors: [120, 450, 300, 560, 800, 950, 1100],
                 popularProducts: [1, 3],
@@ -187,6 +194,20 @@ const useSiteStore = create(
 
             updateTheme: (themePayload) => set((state) => ({
                 theme: { ...state.theme, ...themePayload }
+            })),
+
+            toggleAgent: (agentId) => set((state) => ({
+                agents: {
+                    ...state.agents,
+                    [agentId]: { ...state.agents[agentId], active: !state.agents[agentId].active, logs: [`Hozir - Agent ${!state.agents[agentId].active ? 'faollashtirildi' : 'o\'chirildi'}`, ...state.agents[agentId].logs] }
+                }
+            })),
+
+            addAgentLog: (agentId, logMsg) => set((state) => ({
+                agents: {
+                    ...state.agents,
+                    [agentId]: { ...state.agents[agentId], logs: [logMsg, ...state.agents[agentId].logs] }
+                }
             })),
 
             // Global Attribute Actions

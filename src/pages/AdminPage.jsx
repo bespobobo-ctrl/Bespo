@@ -10,7 +10,7 @@ import './AdminPage.css';
 const AdminPage = () => {
     const {
         products, heroSettings, aboutSettings,
-        globalSizes, globalColors,
+        globalSizes, globalColors, agents, toggleAgent,
         updateProduct, addProduct, deleteProduct, toggleSoldOut,
         updateHeroSettings, addHeroSlide, deleteHeroSlide,
         updateAboutSettings, resetToDefault,
@@ -29,6 +29,7 @@ const AdminPage = () => {
     const [newSize, setNewSize] = useState('');
     const [newColorName, setNewColorName] = useState('');
     const [newColorHex, setNewColorHex] = useState('#000000');
+    const [selectedAgentKey, setSelectedAgentKey] = useState(null);
 
 
     const handleEditProductClick = (p) => {
@@ -212,26 +213,22 @@ const AdminPage = () => {
                                         <h3>Core AI Agents</h3>
                                     </div>
                                     <div className="ai-hub__alerts">
-                                        <div className="ai-alert premium">
-                                            <div className="alert-header"><span>🤖 AI Predictor (Sales)</span> 🟢 Active</div>
-                                            <p>2 ta qora hoodie modeli tugash arafasida. Yangi xarid qilishni tavsiya qilamiz (Trend 80% yuqori).</p>
-                                        </div>
-                                        <div className="ai-alert premium">
-                                            <div className="alert-header"><span>👁️ AI Vision (Image)</span> 🟢 Active</div>
-                                            <p>Mahsulot rasmlari avtomatik 4K ga o'tkazilmoqda va fon tozalanmoqda.</p>
-                                        </div>
-                                        <div className="ai-alert premium">
-                                            <div className="alert-header"><span>✍️ AI Copywriter (SEO)</span> 🟢 Active</div>
-                                            <p>Premium matnlar va kalit so'zlar siz uchun yozib berishga tayyor.</p>
-                                        </div>
-                                        <div className="ai-alert premium" style={{ borderColor: 'rgba(16, 185, 129, 0.4)' }}>
-                                            <div className="alert-header"><span style={{ color: '#10b981' }}>🎨 Dynamic Theme Agent</span> 🟢 Active</div>
-                                            <p>Avtonom dizayner: Sizning so'rovingiz bo'yicha saytning jami ranglar kaskadini (CSS) Real-time rejimda o'rnatadi.</p>
-                                        </div>
-                                        <div className="ai-alert premium" style={{ borderColor: 'rgba(16, 185, 129, 0.4)' }}>
-                                            <div className="alert-header"><span style={{ color: '#10b981' }}>🩺 AI Health Monitor</span> 🟢 Active</div>
-                                            <p>Kuzatuvchi datchik: Loglar arxitekturasini nazorat qilish va xatolik chiqqanda "Self-Healing" tahlil qilish uchun o'rnatildi.</p>
-                                        </div>
+                                        {Object.entries(agents).map(([key, agent]) => (
+                                            <div
+                                                key={key}
+                                                className={`ai-alert premium ${!agent.active ? 'inactive' : ''}`}
+                                                style={{ borderColor: agent.active ? 'rgba(16, 185, 129, 0.4)' : 'rgba(212, 69, 59, 0.4)', cursor: 'pointer', opacity: agent.active ? 1 : 0.6 }}
+                                                onClick={() => setSelectedAgentKey(key)}
+                                            >
+                                                <div className="alert-header">
+                                                    <span>{agent.icon} {agent.name}</span>
+                                                    <span style={{ color: agent.active ? '#10b981' : '#d4453b' }}>
+                                                        {agent.active ? '🟢 Active' : '🔴 Paused'}
+                                                    </span>
+                                                </div>
+                                                <p style={{ fontSize: '0.65rem' }}>Bossangiz sozlamalar va arxivni ko'rishingiz mumkin.</p>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
 
@@ -513,6 +510,58 @@ const AdminPage = () => {
                 </AnimatePresence>
             </section>
             <AIAssistant />
+
+            <AnimatePresence>
+                {selectedAgentKey && (
+                    <motion.div
+                        className="agent-modal-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setSelectedAgentKey(null)}
+                        style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.8)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}
+                    >
+                        <motion.div
+                            className="agent-modal-content admin-card"
+                            initial={{ scale: 0.9, y: 20 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.9, y: 20 }}
+                            onClick={(e) => e.stopPropagation()}
+                            style={{ maxWidth: '400px', width: '100%', position: 'relative' }}
+                        >
+                            <button onClick={() => setSelectedAgentKey(null)} style={{ position: 'absolute', top: '15px', right: '15px', background: 'transparent', color: '#fff', fontSize: '1.2rem', cursor: 'pointer' }}>×</button>
+
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '20px' }}>
+                                <span style={{ fontSize: '2.5rem' }}>{agents[selectedAgentKey].icon}</span>
+                                <div>
+                                    <h3 style={{ margin: 0, fontSize: '1.2rem' }}>{agents[selectedAgentKey].name}</h3>
+                                    <span style={{ fontSize: '0.7rem', color: agents[selectedAgentKey].active ? '#10b981' : '#d4453b', textTransform: 'uppercase', letterSpacing: '0.1em', fontWeight: 'bold' }}>
+                                        {agents[selectedAgentKey].active ? 'STATUS: ONLINE' : 'STATUS: OFFLINE'}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div style={{ background: '#0a0a0c', border: '1px solid #1a1a1e', borderRadius: '12px', padding: '15px', marginBottom: '20px', maxHeight: '200px', overflowY: 'auto' }}>
+                                <h4 style={{ fontSize: '0.7rem', color: '#666', textTransform: 'uppercase', marginBottom: '10px' }}>Oxirgi Arxiv (Logs)</h4>
+                                <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                    {agents[selectedAgentKey].logs.map((log, i) => (
+                                        <li key={i} style={{ fontSize: '0.75rem', color: '#bbb', paddingBottom: '10px', borderBottom: '1px dashed #222' }}>
+                                            <span style={{ color: 'var(--color-accent)', marginRight: '5px' }}>›</span> {log}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+
+                            <button
+                                onClick={() => toggleAgent(selectedAgentKey)}
+                                style={{ width: '100%', padding: '15px', borderRadius: '12px', background: agents[selectedAgentKey].active ? 'rgba(212, 69, 59, 0.1)' : 'rgba(16, 185, 129, 0.1)', color: agents[selectedAgentKey].active ? '#d4453b' : '#10b981', border: `1px solid ${agents[selectedAgentKey].active ? 'rgba(212, 69, 59, 0.3)' : 'rgba(16, 185, 129, 0.3)'}`, fontWeight: 'bold', cursor: 'pointer' }}
+                            >
+                                {agents[selectedAgentKey].active ? 'AGENTNI TO\'XTATIB TURISH' : 'AGENTNI ISHGA TUSHIRISH'}
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </main>
     );
 };
