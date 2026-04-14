@@ -26,27 +26,6 @@ const HeroSection = () => {
 
     return (
         <section className="hero-v4-root">
-            {/* 1. SUPREME GLOBAL HEADER */}
-            <header className="v4-global-header">
-                <div className="v4-header-left">
-                    <nav className="v4-nav-main">
-                        <Link to="/">{tr(t.nav.home)}</Link>
-                        <Link to="/catalog">{tr(t.nav.catalog)}</Link>
-                    </nav>
-                </div>
-
-                <div className="v4-header-center">
-                    <Link to="/" className="v4-logo-l">BESPO</Link>
-                </div>
-
-                <div className="v4-header-right">
-                    <LangSwitcher variant="minimal" />
-                    <Link to="/cart" className="v4-cart-link">
-                        CART (0)
-                    </Link>
-                </div>
-            </header>
-
             {/* 2. DYNAMIC BACKGROUND ENGINE */}
             <div className="v4-bg-overlay">
                 <AnimatePresence mode="wait">

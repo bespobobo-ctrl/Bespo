@@ -135,7 +135,7 @@
 .navbar__actions {
     display: flex;
     align-items: center;
-    gap: var(--space-xl);
+    gap: 30px;
 }
 
 .navbar__cart {

@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import useCartStore from '../../store/cartStore';
 import NavMenu from './NavMenu';
 import { useT } from '../../hooks/useTranslation';
+import LangSwitcher from '../ui/LangSwitcher';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -52,6 +53,8 @@ const Navbar = () => {
                             ))}
                         </div>
                         <div className="navbar__actions">
+                            <LangSwitcher variant="minimal" />
+
                             <button className="navbar__cart" onClick={toggleCart} id="cart-button" aria-label="Open cart">
                                 {tr(t.nav.cart)}
                                 {cartCount > 0 && (
