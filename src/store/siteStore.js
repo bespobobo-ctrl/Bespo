@@ -4,44 +4,44 @@ import { products as initialProducts } from '../data/products';
 
 const defaultHeroSlides = [
     {
-        image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=2000',
-        title: 'PRO-CARBON™ SERIES',
-        subtitle: 'PERFORMANCE ELITE',
-        price: '420.00',
-        layout: 'avant-garde',
-        description: 'Professional sportchilar uchun maksimal samaradorlik va uglerod tolali chidamlilik.'
-    },
-    {
         image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=2000',
-        title: 'DATA-GEN GYM™',
-        subtitle: 'SMART TRAINING',
-        price: '280.00',
+        title: 'CARBON_PRO™ ELITE',
+        subtitle: 'BEYOND PERFORMANCE',
+        price: '450.00',
+        layout: 'avant-garde',
+        description: 'Professional darajadagi uglerod tolali texnologiya. Maksimal tezlik va barqarorlik uchun yaratilgan.'
+    },
+    {
+        image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=2000',
+        title: 'SMART_TECH SYSTEM',
+        subtitle: 'URBAN INTELLIGENCE',
+        price: '299.99',
         layout: 'tech',
-        description: 'Mashg\'ulotlaringizni aqlli datchiklar va biometrik matolar bilan boshqaring.'
-    },
-    {
-        image: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=2000',
-        title: 'OLYMPUS TRACK 01',
-        subtitle: 'HERITAGE LUXURY',
-        price: '550.00',
-        layout: 'editorial',
-        description: 'Sport merosi va zamonaviy dabdaba. Jismoniy kamolot cho\'qqisida.'
-    },
-    {
-        image: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=2000',
-        title: 'URBAN PACER',
-        subtitle: 'ACTIVE LIFESTYLE',
-        price: '190.00',
-        layout: 'modern-card',
-        description: 'Shahar ko\'chalari uchun tezkor, qulay va minimalist sport uslubi.'
+        description: 'Biometrik datchiklar bilan jihozlangan aqlli libos. Har bir harakatingizni tahlil qiling.'
     },
     {
         image: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=2000',
-        title: 'STORM-TECH ACG',
-        subtitle: 'EXTREME ELEMENTS',
-        price: '680.00',
+        title: 'OLYMPUS HERITAGE',
+        subtitle: 'LEGACY OF POWER',
+        price: '599.00',
+        layout: 'editorial',
+        description: 'Klassik sport estetikasi va yuqori darajadagi dabdaba uyg\'unligi. Cheksiz imkoniyatlar ramzi.'
+    },
+    {
+        image: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=2000',
+        title: 'STREET RACER COLLECTION',
+        subtitle: 'ALWAYS ACTIVE',
+        price: '185.00',
+        layout: 'modern-card',
+        description: 'Shahar ko\'chalarida erkin harakatlanish uchun yengil va zamonaviy sport uslubi.'
+    },
+    {
+        image: 'https://images.unsplash.com/photo-1530541930197-ff16ac917b0e?auto=format&fit=crop&q=80&w=2000',
+        title: 'STORM_SHIELD X',
+        subtitle: 'SUPREME PROTECTION',
+        price: '720.00',
         layout: 'clean-functional',
-        description: 'Har qanday ob-havo sharoitida maksimal himoya va harakat erkinligi.'
+        description: 'Har qanday ob-havoda 100% suv o\'tkazmaydigan va nafas oluvchi texnologik qatlam.'
     }
 ];
 
@@ -649,7 +649,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 15, // Force Men's Sports Wear Overhaul v15
+            version: 20, // Final Supreme Overhaul v20
         }
 
     )

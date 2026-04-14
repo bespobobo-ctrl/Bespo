@@ -1,252 +1,234 @@
-/* --- V4 GLOBAL HEADER (LUXURY NAV) --- */
-.v4-global-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    padding: 0 60px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 1000;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+/* --- SUPREME UI/UX DESIGN SYSTEM 2026 --- */
+:root {
+    --supreme-accent: #E2FF00;
+    --supreme-ease: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.v4-logo-l {
-    font-size: 2.2rem;
-    font-weight: 950;
-    letter-spacing: -0.05em;
-    color: #fff;
-    text-decoration: none;
-    -webkit-background-clip: text;
-    background-clip: text;
-    background: linear-gradient(to bottom, #fff, #aaa);
-    -webkit-text-fill-color: transparent;
-}
-
-/* ENSURE CONTENT IS VISIBLE */
 .hero-v4-root {
-    background: #050505;
+    background: #000;
     width: 100%;
     height: 100vh;
     position: relative;
     overflow: hidden;
+    font-family: 'Inter', sans-serif;
 }
 
-.hero-v4-container {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    display: flex;
-}
-
-.v4-main-viewport {
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    position: relative;
-    padding: 100px 100px 40px 100px;
-}
-
+/* --- OVERLAY LOGIC (FIXED BLACK EKRANS) --- */
 .v4-bg-overlay {
     position: absolute;
     inset: 0;
     z-index: 1;
-    opacity: 1;
 }
 
 .v4-main-bg-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(0.6) contrast(1.1);
-}
-
-@keyframes slow-zoom {
-    from {
-        transform: scale(1);
-    }
-
-    to {
-        transform: scale(1.1);
-    }
+    filter: brightness(0.5) contrast(1.2);
 }
 
 .v4-glass-mask {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.8) 100%);
-    backdrop-filter: blur(1px);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), transparent, rgba(0, 0, 0, 0.8));
+    z-index: 2;
 }
 
-/* --- SIDE NAVIGATION (ELITE MINIMALISM) --- */
-.v4-side-meta {
+/* --- SUPREME HEADER (ULTRA SLIM) --- */
+.v4-global-header {
     position: absolute;
-    left: 40px;
+    top: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 80px;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+}
+
+.v4-logo-l {
+    font-size: 2.2rem;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    color: #fff;
+    text-decoration: none;
+}
+
+.v4-nav-main a {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    margin: 0 20px;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.v4-nav-main a:hover {
+    opacity: 1;
+}
+
+/* --- VIEWPORT CORE --- */
+.hero-v4-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+.v4-main-viewport {
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 60px 0;
-    z-index: 100;
+    padding: 100px 80px 40px 80px;
 }
 
-.v4-rot-label {
-    writing-mode: vertical-lr;
-    transform: rotate(180deg);
-    font-size: 0.65rem;
-    font-weight: 800;
-    letter-spacing: 0.6em;
-    color: rgba(255, 255, 255, 0.4);
-    text-transform: uppercase;
+.layout-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }
 
-/* --- 1. AVANT-GARDE (HIGH-TECH EDITORIAL) --- */
-.layout-avant-garde {
-    background: #080808;
+/* --- 1. AVANT-GARDE --- */
+.avant-garde {
+    justify-content: flex-start;
 }
 
 .ag-main-content h1 {
-    font-size: clamp(4rem, 10vw, 8rem);
-    font-weight: 950;
+    font-size: 8rem;
+    font-weight: 900;
+    line-height: 0.85;
     letter-spacing: -0.05em;
-    margin-top: 20px;
-    background: linear-gradient(to bottom, #fff 40%, rgba(255, 255, 255, 0.2));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #fff;
+    margin-bottom: 40px;
 }
 
-.ag-img-portal {
+.ag-buy-btn {
+    background: var(--supreme-accent);
+    color: #000;
     border: none;
-    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
-    background: #000;
-}
-
-.portal-overlay {
-    position: absolute;
-    inset: 0;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 0 50px rgba(0, 0, 0, 1);
-}
-
-/* --- 2. EDITORIAL (MAGAZINE MASTERPIECE) --- */
-.editorial .ed-text-hero h2 {
-    font-size: clamp(5rem, 15vw, 14rem);
-    letter-spacing: -0.08em;
+    padding: 20px 60px;
     font-weight: 900;
     text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* --- 2. EDITORIAL --- */
+.editorial {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+}
+
+.ed-text-hero h2 {
+    font-size: 10rem;
+    font-weight: 900;
+    line-height: 0.8;
     color: #fff;
-    mix-blend-mode: difference;
 }
 
-.ed-btn-dark {
-    padding: 20px 40px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    border-radius: 0;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: transparent;
-    overflow: hidden;
-    position: relative;
-    transition: 0.4s;
+.ed-img-hero img {
+    width: 100%;
+    height: 60vh;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.ed-btn-dark:hover {
-    background: #fff;
-    color: #000;
-    border-color: #fff;
-}
-
-/* --- 3. TECH (CYBERPUNK PRECISION) --- */
-.tech-glitch-header h3 {
-    font-family: 'Space Mono', monospace;
-    color: var(--hero-accent);
-    font-weight: 400;
-    letter-spacing: 0.4em;
+/* --- 3. TECH --- */
+.tech {
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .tech-info-panel h1 {
     font-size: 6rem;
+    color: var(--supreme-accent);
     font-weight: 900;
-    text-shadow: 0 0 30px rgba(226, 255, 0, 0.3);
+    text-shadow: 0 0 30px rgba(226, 255, 0, 0.4);
 }
 
-.tech-btn-neon {
-    background: var(--hero-accent);
-    border-radius: 0;
-    transition: 0.4s;
-    position: relative;
-}
-
-.tech-btn-neon::after {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    background: var(--hero-accent);
-    filter: blur(20px);
-    opacity: 0.3;
-    z-index: -1;
-}
-
-/* --- 4. MODERN CARD (APPLE LUXURY) --- */
-.layout-modern-card .hero-v4-container {
-    background: #000;
+/* --- 4. MODERN CARD (STABILIZED) --- */
+.modern-card {
+    justify-content: center;
 }
 
 .mc-card-box {
+    width: 90%;
+    height: 70vh;
     background: #fff;
-    box-shadow: 0 60px 120px rgba(0, 0, 0, 0.4);
-    transition: 0.8s var(--hero-ease);
+    border-radius: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.5);
 }
 
-.mc-left h1 {
-    font-family: 'Outfit', sans-serif;
+.mc-left {
+    padding: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     color: #000;
 }
 
-.mc-pill-btn {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+.mc-left h1 {
+    font-size: 5rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    line-height: 1;
 }
 
-/* --- 5. CLEAN FUNCTIONAL (ARCHITECTURAL) --- */
-.layout-clean-functional .hero-v4-container {
-    background: #f2f2f2;
+.mc-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* --- 5. CLEAN FUNCTIONAL --- */
+.clean-functional {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .cf-sidebar {
-    background: #fff;
-    border-radius: 20px;
-    margin-left: 140px;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.05);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 60px;
+    width: 400px;
+    border-radius: 4px;
+    color: #000;
+    z-index: 20;
 }
 
 .cf-sidebar h1 {
+    font-size: 4rem;
     font-weight: 900;
 }
 
-.cf-add-btn {
-    background: #000;
-    padding: 22px;
-    font-size: 1.1rem;
-    cursor: pointer;
-}
-
-/* --- NAVIGATION UI V4 (ELITE) --- */
+/* --- BOTTOM TOOLS --- */
 .v4-bottom-nav {
+    position: absolute;
     bottom: 60px;
     right: 80px;
-    filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    z-index: 100;
 }
 
 .dot {
     width: 12px;
     height: 12px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    border: 2px solid rgba(255, 255, 255, 0.4);
     background: transparent;
-    transition: 0.4s var(--hero-ease);
+    cursor: pointer;
+    transition: 0.4s;
+    border-radius: 50%;
 }
 
 .dot.active {
@@ -254,41 +236,4 @@
     width: 40px;
     border-radius: 6px;
     border-color: #fff;
-}
-
-.v4-slide-count {
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 900;
-    letter-spacing: 0.1em;
-}
-
-.sep-line {
-    width: 60px;
-    height: 2px;
-    background: rgba(255, 255, 255, 0.2);
-}
-
-/* --- RESPONSIVE POLISH --- */
-@media (max-width: 1024px) {
-    .layout-wrap {
-        padding: 40px;
-    }
-
-    .ed-text-hero h2 {
-        font-size: 6rem;
-    }
-
-    .ag-main-content h1 {
-        font-size: 4rem;
-    }
-
-    .mc-card-box {
-        grid-template-columns: 1fr;
-    }
-
-    .cf-sidebar {
-        left: 40px;
-        width: 80%;
-    }
 }
