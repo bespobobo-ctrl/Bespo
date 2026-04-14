@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useSiteStore from '../store/siteStore';
+import { useShallow } from 'zustand/react/shallow';
 import { motion, AnimatePresence } from 'framer-motion';
 import AIAssistant from '../components/admin/AIAssistant';
 import SalesChart from '../components/admin/SalesChart';
@@ -14,11 +15,42 @@ const AdminPage = () => {
         updateProduct, addProduct, deleteProduct, toggleSoldOut,
         updateHeroSettings, addHeroSlide, deleteHeroSlide,
         updateAboutSettings, resetToDefault,
-        addGlobalSize, removeGlobalSize, addGlobalColor, removeGlobalColor,
+        addGlobalSize, removeGlobalSize, updateGlobalSize,
+        addGlobalColor, removeGlobalColor, updateGlobalColor,
         securitySettings, updateSecuritySettings, addIpToWhitelist, removeIpFromWhitelist,
         addAgentLog, setAgentStatus, rebrandSite, runSecurityAudit, runBugAudit, applyAutoFix,
         recommendedHeroSlides
-    } = useSiteStore();
+    } = useSiteStore(useShallow(state => ({
+        products: state.products,
+        heroSettings: state.heroSettings,
+        aboutSettings: state.aboutSettings,
+        globalSizes: state.globalSizes,
+        globalColors: state.globalColors,
+        agents: state.agents,
+        toggleAgent: state.toggleAgent,
+        updateProduct: state.updateProduct,
+        addProduct: state.addProduct,
+        deleteProduct: state.deleteProduct,
+        toggleSoldOut: state.toggleSoldOut,
+        updateHeroSettings: state.updateHeroSettings,
+        addHeroSlide: state.addHeroSlide,
+        deleteHeroSlide: state.deleteHeroSlide,
+        updateAboutSettings: state.updateAboutSettings,
+        resetToDefault: state.resetToDefault,
+        addGlobalSize: state.addGlobalSize, removeGlobalSize: state.removeGlobalSize, updateGlobalSize: state.updateGlobalSize,
+        addGlobalColor: state.addGlobalColor, removeGlobalColor: state.removeGlobalColor, updateGlobalColor: state.updateGlobalColor,
+        securitySettings: state.securitySettings,
+        updateSecuritySettings: state.updateSecuritySettings,
+        addIpToWhitelist: state.addIpToWhitelist,
+        removeIpFromWhitelist: state.removeIpFromWhitelist,
+        addAgentLog: state.addAgentLog,
+        setAgentStatus: state.setAgentStatus,
+        rebrandSite: state.rebrandSite,
+        runSecurityAudit: state.runSecurityAudit,
+        runBugAudit: state.runBugAudit,
+        applyAutoFix: state.applyAutoFix,
+        recommendedHeroSlides: state.recommendedHeroSlides
+    })));
 
     const [activeTab, setActiveTab] = useState('products');
     const [editingProduct, setEditingProduct] = useState(null);
@@ -37,6 +69,10 @@ const AdminPage = () => {
     const [agentTestResults, setAgentTestResults] = useState({});
     const [isTestRunning, setIsTestRunning] = useState(false);
     const [selectedHistoryItem, setSelectedHistoryItem] = useState(null);
+    const [hardResetPass, setHardResetPass] = useState('');
+    const [isResetting, setIsResetting] = useState(false);
+    const [editingSize, setEditingSize] = useState(null); // {oldSize: 'M'}
+    const [editingColor, setEditingColor] = useState(null); // {oldHex: '#000', name: 'Black', hex: '#000'}
 
     const handleApplyRecommendation = (rec) => {
         // Asosiy slaydlarni tanlangan tavsiya bilan almashtirish
@@ -219,6 +255,40 @@ const AdminPage = () => {
         setSelectedSizes([]);
         setIsAnalyzing(false);
         setAiStatusMessage('');
+    };
+
+    const handleHardReset = async () => {
+        if (hardResetPass !== '0868') {
+            alert('Xato parol! Tizimni o\'chirish uchun maxsus parol kiriting.');
+            return;
+        }
+
+        if (!confirm('DIQQAT! Barcha mahsulotlar, rasmlar va kesh butunlay o\'chib ketadi. Loyiha 0 dan boshlanadi. Davom etamizmi?')) {
+            return;
+        }
+
+        setIsResetting(true);
+        try {
+            const res = await fetch('/api/admin/hard-reset', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: hardResetPass })
+            });
+
+            if (res.ok) {
+                // Clear LocalStorage
+                localStorage.clear();
+                alert('Tizim muvaffaqiyatli tozalandi. Sahifa yangilanmoqda...');
+                window.location.reload();
+            } else {
+                const data = await res.json();
+                alert(data.error || 'Xatolik yuz berdi.');
+            }
+        } catch (e) {
+            console.error("Reset Fail:", e);
+            alert('Server bilon aloqa uzildi.');
+        }
+        setIsResetting(false);
     };
 
     const storyboardSlots = [
@@ -849,54 +919,72 @@ const AdminPage = () => {
                     {activeTab === 'about' && (
                         <motion.div key="about" className="admin-panel attribute-management" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                             <div className="admin-v3__bento-grid">
+                                {/* 1. Sizes Management */}
                                 <div className="admin-card">
                                     <div className="form-header">
                                         <h3>O'lchamlarni boshqarish</h3>
+                                        <span className="smart-badge">SIZE_ENGINE_V4</span>
                                     </div>
                                     <div className="attribute-editor">
                                         <div className="add-attribute">
                                             <input
                                                 type="text"
-                                                placeholder="Yangi o'lcham (masalan: 4XL)"
+                                                placeholder="Yangi o'lcham..."
                                                 value={newSize}
                                                 onChange={(e) => setNewSize(e.target.value)}
                                             />
-                                            <button className="add-btn" onClick={() => { if (newSize) { addGlobalSize(newSize); setNewSize(''); } }}>Qo'shish</button>
+                                            <button className="add-btn" onClick={() => { if (newSize) { addGlobalSize(newSize); setNewSize(''); } }}>➕</button>
                                         </div>
-                                        <div className="attribute-list">
+                                        <div className="attribute-list scrollable">
                                             {globalSizes.map(size => (
                                                 <div key={size} className="attribute-item">
-                                                    <span>{size}</span>
-                                                    <button className="remove-btn" onClick={() => removeGlobalSize(size)}>×</button>
+                                                    {editingSize === size ? (
+                                                        <input
+                                                            autoFocus
+                                                            className="inline-edit"
+                                                            defaultValue={size}
+                                                            onBlur={(e) => {
+                                                                if (e.target.value && e.target.value !== size) updateGlobalSize(size, e.target.value);
+                                                                setEditingSize(null);
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <span onClick={() => setEditingSize(size)}>{size}</span>
+                                                    )}
+                                                    <div className="item-actions">
+                                                        <button className="edit-mini" onClick={() => setEditingSize(size)}>✏️</button>
+                                                        <button className="remove-btn" onClick={() => removeGlobalSize(size)}>×</button>
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
                                 </div>
 
+                                {/* 2. Colors Management */}
                                 <div className="admin-card">
                                     <div className="form-header">
                                         <h3>Ranglarni boshqarish</h3>
+                                        <span className="smart-badge">COLOR_PALETTE_PRO</span>
                                     </div>
                                     <div className="attribute-editor">
                                         <div className="add-attribute column">
-                                            <input
-                                                type="text"
-                                                placeholder="Rang nomi (masalan: Midnight Blue)"
-                                                value={newColorName}
-                                                onChange={(e) => setNewColorName(e.target.value)}
-                                            />
-                                            <div className="color-input-row">
+                                            <div className="input-row-mini">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Nomi..."
+                                                    value={newColorName}
+                                                    onChange={(e) => setNewColorName(e.target.value)}
+                                                />
                                                 <input
                                                     type="color"
                                                     value={newColorHex}
                                                     onChange={(e) => setNewColorHex(e.target.value)}
                                                 />
-                                                <code>{newColorHex}</code>
-                                                <button className="add-btn" onClick={() => { if (newColorName) { addGlobalColor({ name: newColorName, hex: newColorHex }); setNewColorName(''); } }}>Qo'shish</button>
                                             </div>
+                                            <button className="add-btn full-w" onClick={() => { if (newColorName) { addGlobalColor({ name: newColorName, hex: newColorHex }); setNewColorName(''); } }}>Rang qo'shish</button>
                                         </div>
-                                        <div className="attribute-list">
+                                        <div className="attribute-list scrollable">
                                             {globalColors.map(color => (
                                                 <div key={color.hex} className="attribute-item color-item">
                                                     <div className="color-preview" style={{ backgroundColor: color.hex }}></div>
@@ -908,6 +996,42 @@ const AdminPage = () => {
                                                 </div>
                                             ))}
                                         </div>
+                                    </div>
+                                </div>
+
+                                {/* 3. Hard Reset Section (0868) */}
+                                <div className="admin-card danger-zone-v4">
+                                    <div className="form-header">
+                                        <h3 className="red-text">Tizimni Master Reset qilish</h3>
+                                        <span className="danger-badge">CRITICAL ACTION</span>
+                                    </div>
+                                    <p className="danger-desc">
+                                        Bu bo'lim orqali loyihani butunlay yangidan yurgizib yuborish mumkin.
+                                        Barcha mahsulotlar, rasmlar va tarix ochiriladi.
+                                    </p>
+
+                                    <div className="reset-gate">
+                                        <div className="pass-input-row">
+                                            <label>MASTER PAROL:</label>
+                                            <input
+                                                type="password"
+                                                placeholder="****"
+                                                value={hardResetPass}
+                                                onChange={(e) => setHardResetPass(e.target.value)}
+                                            />
+                                        </div>
+
+                                        <button
+                                            className={`hard-reset-btn ${hardResetPass === '0868' ? 'unlocked' : ''}`}
+                                            disabled={isResetting}
+                                            onClick={handleHardReset}
+                                        >
+                                            {isResetting ? 'TOZALANMOQDA...' : 'LOYIHANI 0 DAN BOSHLASH'}
+                                        </button>
+                                    </div>
+
+                                    <div className="warning-note">
+                                        * Ushbu amalni qaytarib bo'lmaydi.
                                     </div>
                                 </div>
                             </div>

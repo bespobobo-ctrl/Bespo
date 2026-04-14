@@ -72,9 +72,9 @@
     --z-max: 999;
 
     /* === Layout === */
-    --max-width: 1440px;
-    --content-width: 1200px;
-    --navbar-height: 72px;
+    --max-width: 1800px;
+    --content-width: 1600px;
+    --navbar-height: 90px;
 }
 
 /* === Reset === */
@@ -164,7 +164,7 @@ select {
 
 /* === Scrollbar === */
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -172,8 +172,9 @@ select {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--color-border-light);
+    background: #252528;
     border-radius: var(--radius-full);
+    border: 3px solid var(--color-bg);
 }
 
 ::-webkit-scrollbar-thumb:hover {

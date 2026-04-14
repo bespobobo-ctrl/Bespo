@@ -49,7 +49,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 100px 80px 40px 80px;
+    padding: 140px 100px 60px 100px;
 }
 
 .layout-wrap {
@@ -123,10 +123,11 @@
 }
 
 .mc-card-box {
-    width: 90%;
-    height: 70vh;
+    width: 100%;
+    max-width: 1540px;
+    height: 80vh;
     background: #fff;
-    border-radius: 40px;
+    border-radius: 60px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     overflow: hidden;

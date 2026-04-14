@@ -96,6 +96,36 @@ app.post('/api/upload', upload.single('image'), (req, res) => {
     });
 });
 
+// 3. Hard Reset Endpoint (Protected by 0868)
+app.post('/api/admin/hard-reset', async (req, res) => {
+    const { password } = req.body;
+
+    if (password !== '0868') {
+        return res.status(403).json({ error: 'Xato parol!' });
+    }
+
+    try {
+        // Clear uploads directory
+        const files = fs.readdirSync(UPLOADS_DIR);
+        for (const file of files) {
+            fs.unlinkSync(path.join(UPLOADS_DIR, file));
+        }
+
+        console.log('💀 SYSTEM HARD RESET TRIGGERED BY ADMIN');
+
+        res.json({ message: 'Tizim muvaffaqiyatli tozalandi. Barcha fayllar o\'chirildi.' });
+
+        // Optional: Trigger a process restart after sending response
+        setTimeout(() => {
+            process.exit(0); // PM2 will automatically restart it
+        }, 1000);
+
+    } catch (error) {
+        console.error("Reset Error:", error);
+        res.status(500).json({ error: 'Reset jarayonida xatolik yuz berdi.' });
+    }
+});
+
 // --- PRODUCTION: Serve React frontend ---
 if (process.env.NODE_ENV === 'production') {
     const frontendDist = path.join(__dirname, '..', 'dist');

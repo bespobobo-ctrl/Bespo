@@ -8,7 +8,7 @@ import './HeroSection.css';
 
 const HeroSection = () => {
     const { t, tr } = useT();
-    const heroSettings = useSiteStore((state) => state.heroSettings);
+    const heroSettings = useSiteStore(state => state.heroSettings);
     const [currentSlide, setCurrentSlide] = useState(0);
 
     const slideImages = heroSettings.slides && heroSettings.slides.length > 0

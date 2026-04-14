@@ -7,7 +7,7 @@ import './CatalogPage.css';
 const categories = ['Barchasi', 'Erkaklar', 'Ayollar', 'Bollar'];
 
 const CatalogPage = () => {
-    const { products } = useSiteStore();
+    const products = useSiteStore(state => state.products);
     const [activeCategory, setActiveCategory] = useState('Barchasi');
 
     const filteredProducts = useMemo(() => {

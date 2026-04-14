@@ -332,12 +332,20 @@ const useSiteStore = create(
                 globalSizes: [...new Set([...state.globalSizes, size])]
             })),
 
+            updateGlobalSize: (oldSize, newSize) => set((state) => ({
+                globalSizes: state.globalSizes.map(s => s === oldSize ? newSize : s)
+            })),
+
             removeGlobalSize: (size) => set((state) => ({
                 globalSizes: state.globalSizes.filter(s => s !== size)
             })),
 
             addGlobalColor: (color) => set((state) => ({
                 globalColors: [...state.globalColors, color]
+            })),
+
+            updateGlobalColor: (oldHex, newColor) => set((state) => ({
+                globalColors: state.globalColors.map(c => c.hex === oldHex ? newColor : c)
             })),
 
             removeGlobalColor: (colorHex) => set((state) => ({
@@ -649,7 +657,13 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 21, // Optimized performance v21
+            version: 22,
+            partialize: (state) => {
+                // EXCLUDE frequently changing ephemeral data from LocalStorage
+                // This prevents massive disk I/O lag during AI logs/scans
+                const { agents, analytics, ...rest } = state;
+                return rest;
+            },
         }
 
     )

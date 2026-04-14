@@ -6,7 +6,7 @@ import './AboutSection.css';
 
 const AboutSection = () => {
     const { tr, t } = useT();
-    const { aboutSettings } = useSiteStore();
+    const aboutSettings = useSiteStore(state => state.aboutSettings);
     const sectionRef = useRef(null);
 
     const { scrollYProgress } = useScroll({

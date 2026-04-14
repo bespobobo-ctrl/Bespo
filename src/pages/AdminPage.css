@@ -127,6 +127,9 @@
     flex: 1;
     padding: 60px 80px;
     overflow-y: auto;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    width: 100%;
 }
 
 .admin-v2__header {
@@ -206,8 +209,8 @@
 /* --- LUXURY BENTO SYSTEM --- */
 .admin-v3__bento-grid {
     display: grid;
-    grid-template-columns: 340px 1fr 360px;
-    gap: 30px;
+    grid-template-columns: minmax(340px, 1fr) 2fr 1fr;
+    gap: 40px;
     align-items: start;
     margin-bottom: 50px;
 }
@@ -1718,6 +1721,160 @@ textarea:focus {
     to {
         width: 100%
     }
+}
+
+/* --- ATTRIBUTE & DANGER ZONE STYLES --- */
+.attribute-list.scrollable {
+    max-height: 250px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.attribute-list.scrollable::-webkit-scrollbar {
+    width: 4px;
+}
+
+.attribute-list.scrollable::-webkit-scrollbar-thumb {
+    background: var(--color-bg-surface);
+    border-radius: 10px;
+}
+
+.item-actions {
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.attribute-item:hover .item-actions {
+    opacity: 1;
+}
+
+.edit-mini {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.7rem;
+    padding: 4px;
+    border-radius: 4px;
+    transition: 0.2s;
+}
+
+.edit-mini:hover {
+    background: rgba(255,255,255,0.05);
+}
+
+.inline-edit {
+    background: var(--color-bg-surface) !important;
+    border: 1px solid var(--color-accent) !important;
+    border-radius: 4px !important;
+    padding: 2px 8px !important;
+    width: 80% !important;
+    font-size: 0.8rem !important;
+    color: #fff !important;
+}
+
+.input-row-mini {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.input-row-mini input[type="text"] {
+    flex: 1;
+}
+
+.full-w {
+    width: 100%;
+}
+
+.danger-zone-v4 {
+    border: 1px solid rgba(195, 65, 56, 0.15);
+    background: linear-gradient(135deg, rgba(195, 65, 56, 0.05), transparent) !important;
+}
+
+.red-text {
+    color: #c34138 !important;
+}
+
+.danger-badge {
+    background: #c34138;
+    color: #fff;
+    font-size: 0.55rem;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 800;
+}
+
+.danger-desc {
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.reset-gate {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 25px;
+    border-radius: 20px;
+    border: 1px dashed rgba(195, 65, 56, 0.3);
+}
+
+.pass-input-row {
+    margin-bottom: 20px;
+}
+
+.pass-input-row label {
+    font-size: 0.6rem;
+    color: #666;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.pass-input-row input {
+    background: #000 !important;
+    border: 1px solid #222 !important;
+    padding: 12px !important;
+    width: 100% !important;
+    border-radius: 10px !important;
+    color: var(--color-accent) !important;
+    letter-spacing: 4px !important;
+    text-align: center !important;
+}
+
+.hard-reset-btn {
+    background: #111;
+    color: #333;
+    border: 1px solid #222;
+    padding: 18px;
+    width: 100%;
+    border-radius: 15px;
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    cursor: not-allowed;
+    transition: all 0.4s;
+}
+
+.hard-reset-btn.unlocked {
+    background: #c34138;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(195, 65, 56, 0.3);
+}
+
+.hard-reset-btn.unlocked:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(195, 65, 56, 0.5);
+}
+
+.warning-note {
+    font-size: 0.6rem;
+    color: #444;
+    text-align: center;
+    margin-top: 15px;
+    font-style: italic;
 }
 
 /* --- HERO RECOMMENDATIONS V4 --- */

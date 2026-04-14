@@ -33,17 +33,12 @@ const Navbar = () => {
         <>
             <motion.nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}
                 initial={{ y: -100 }} animate={{ y: 0 }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
-                <div className="navbar__inner container-wide">
+                <div className="navbar__inner">
                     <div className="navbar__left">
                         <button className={`navbar__burger ${menuOpen ? 'navbar__burger--open' : ''}`}
                             onClick={() => setMenuOpen(!menuOpen)} id="menu-toggle" aria-label="Toggle menu">
                             <span /><span /><span />
                         </button>
-                    </div>
-                    <Link to="/" className="navbar__logo">
-                        <span className="navbar__logo-accent">B</span><span className="navbar__logo-text">ESPO</span>
-                    </Link>
-                    <div className="navbar__right">
                         <div className="navbar__links">
                             {navLinks.map((link) => (
                                 <Link key={link.path} to={link.path}
@@ -52,6 +47,11 @@ const Navbar = () => {
                                 </Link>
                             ))}
                         </div>
+                    </div>
+                    <Link to="/" className="navbar__logo">
+                        <span className="navbar__logo-accent">B</span><span className="navbar__logo-text">ESPO</span>
+                    </Link>
+                    <div className="navbar__right">
                         <div className="navbar__actions">
                             <LangSwitcher variant="minimal" />
 
