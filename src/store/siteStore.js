@@ -176,15 +176,26 @@ const useSiteStore = create(
             },
 
             // Global Attributes
-            globalSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL', '30', '32', '34'],
+            globalSizes: [
+                { value: 'XS', active: true },
+                { value: 'S', active: true },
+                { value: 'M', active: true },
+                { value: 'L', active: true },
+                { value: 'XL', active: true },
+                { value: 'XXL', active: true },
+                { value: '3XL', active: true },
+                { value: '30', active: true },
+                { value: '32', active: true },
+                { value: '34', active: true }
+            ],
             globalColors: [
-                { name: 'Obsidian Black', hex: '#000000' },
-                { name: 'Pure White', hex: '#ffffff' },
-                { name: 'Ash Gray', hex: '#6b7280' },
-                { name: 'Deep Navy', hex: '#1e3a8a' },
-                { name: 'Desert Sand', hex: '#d2b48c' },
-                { name: 'Olive Green', hex: '#4b5320' },
-                { name: 'Blood Red', hex: '#991b1b' },
+                { name: 'Obsidian Black', hex: '#000000', active: true },
+                { name: 'Pure White', hex: '#ffffff', active: true },
+                { name: 'Ash Gray', hex: '#6b7280', active: true },
+                { name: 'Deep Navy', hex: '#1e3a8a', active: true },
+                { name: 'Desert Sand', hex: '#d2b48c', active: true },
+                { name: 'Olive Green', hex: '#4b5320', active: true },
+                { name: 'Blood Red', hex: '#991b1b', active: true },
             ],
 
             // New Analytics & AI State
@@ -331,24 +342,32 @@ const useSiteStore = create(
             })),
 
             // Global Attribute Actions
-            addGlobalSize: (size) => set((state) => ({
-                globalSizes: [...new Set([...state.globalSizes, size])]
+            addGlobalSize: (sizeValue) => set((state) => ({
+                globalSizes: [...state.globalSizes, { value: sizeValue, active: true }]
             })),
 
-            updateGlobalSize: (oldSize, newSize) => set((state) => ({
-                globalSizes: state.globalSizes.map(s => s === oldSize ? newSize : s)
+            updateGlobalSize: (oldValue, newValue) => set((state) => ({
+                globalSizes: state.globalSizes.map(s => s.value === oldValue ? { ...s, value: newValue } : s)
             })),
 
-            removeGlobalSize: (size) => set((state) => ({
-                globalSizes: state.globalSizes.filter(s => s !== size)
+            toggleGlobalSize: (value) => set((state) => ({
+                globalSizes: state.globalSizes.map(s => s.value === value ? { ...s, active: !s.active } : s)
+            })),
+
+            removeGlobalSize: (value) => set((state) => ({
+                globalSizes: state.globalSizes.filter(s => s.value !== value)
             })),
 
             addGlobalColor: (color) => set((state) => ({
-                globalColors: [...state.globalColors, color]
+                globalColors: [...state.globalColors, { ...color, active: true }]
             })),
 
             updateGlobalColor: (oldHex, newColor) => set((state) => ({
-                globalColors: state.globalColors.map(c => c.hex === oldHex ? newColor : c)
+                globalColors: state.globalColors.map(c => c.hex === oldHex ? { ...c, ...newColor } : c)
+            })),
+
+            toggleGlobalColor: (hex) => set((state) => ({
+                globalColors: state.globalColors.map(c => c.hex === hex ? { ...c, active: !c.active } : c)
             })),
 
             removeGlobalColor: (colorHex) => set((state) => ({

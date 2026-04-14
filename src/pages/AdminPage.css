@@ -1766,6 +1766,40 @@ textarea:focus {
     outline: none;
 }
 
+.attribute-item.disabled {
+    opacity: 0.3 !important;
+    filter: grayscale(1);
+    background: rgba(255, 255, 255, 0.01) !important;
+    border-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+.attribute-item.disabled span {
+    text-decoration: line-through;
+    color: #444 !important;
+}
+
+.toggle-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.8rem;
+    padding: 4px;
+    border-radius: 4px;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: scale(1.1);
+}
+
+.inline-color-edit .inline-edit {
+    width: 100% !important;
+}
+
 /* --- ATTRIBUTE & DANGER ZONE STYLES --- */
 .attribute-list.scrollable {
     max-height: 250px;

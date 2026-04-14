@@ -15,8 +15,8 @@ const AdminPage = () => {
         updateProduct, addProduct, deleteProduct, toggleSoldOut,
         updateHeroSettings, addHeroSlide, deleteHeroSlide,
         updateAboutSettings, resetToDefault,
-        addGlobalSize, removeGlobalSize, updateGlobalSize,
-        addGlobalColor, removeGlobalColor, updateGlobalColor,
+        addGlobalSize, removeGlobalSize, updateGlobalSize, toggleGlobalSize,
+        addGlobalColor, removeGlobalColor, updateGlobalColor, toggleGlobalColor,
         securitySettings, updateSecuritySettings, addIpToWhitelist, removeIpFromWhitelist,
         addAgentLog, setAgentStatus, rebrandSite, runSecurityAudit, runBugAudit, applyAutoFix,
         recommendedHeroSlides
@@ -37,8 +37,8 @@ const AdminPage = () => {
         deleteHeroSlide: state.deleteHeroSlide,
         updateAboutSettings: state.updateAboutSettings,
         resetToDefault: state.resetToDefault,
-        addGlobalSize: state.addGlobalSize, removeGlobalSize: state.removeGlobalSize, updateGlobalSize: state.updateGlobalSize,
-        addGlobalColor: state.addGlobalColor, removeGlobalColor: state.removeGlobalColor, updateGlobalColor: state.updateGlobalColor,
+        addGlobalSize: state.addGlobalSize, removeGlobalSize: state.removeGlobalSize, updateGlobalSize: state.updateGlobalSize, toggleGlobalSize: state.toggleGlobalSize,
+        addGlobalColor: state.addGlobalColor, removeGlobalColor: state.removeGlobalColor, updateGlobalColor: state.updateGlobalColor, toggleGlobalColor: state.toggleGlobalColor,
         securitySettings: state.securitySettings,
         updateSecuritySettings: state.updateSecuritySettings,
         addIpToWhitelist: state.addIpToWhitelist,
@@ -937,23 +937,26 @@ const AdminPage = () => {
                                         </div>
                                         <div className="attribute-list scrollable">
                                             {globalSizes.map(size => (
-                                                <div key={size} className="attribute-item">
-                                                    {editingSize === size ? (
+                                                <div key={size.value} className={`attribute-item ${!size.active ? 'disabled' : ''}`}>
+                                                    {editingSize === size.value ? (
                                                         <input
                                                             autoFocus
                                                             className="inline-edit"
-                                                            defaultValue={size}
+                                                            defaultValue={size.value}
                                                             onBlur={(e) => {
-                                                                if (e.target.value && e.target.value !== size) updateGlobalSize(size, e.target.value);
+                                                                if (e.target.value && e.target.value !== size.value) updateGlobalSize(size.value, e.target.value);
                                                                 setEditingSize(null);
                                                             }}
                                                         />
                                                     ) : (
-                                                        <span onClick={() => setEditingSize(size)}>{size}</span>
+                                                        <span onClick={() => setEditingSize(size.value)}>{size.value}</span>
                                                     )}
                                                     <div className="item-actions">
-                                                        <button className="edit-mini" onClick={() => setEditingSize(size)}>✏️</button>
-                                                        <button className="remove-btn" onClick={() => removeGlobalSize(size)}>×</button>
+                                                        <button className="toggle-btn" onClick={() => toggleGlobalSize(size.value)} title={size.active ? "Berkitish" : "Ko'rsatish"}>
+                                                            {size.active ? '👁️' : '👁️‍🗨️'}
+                                                        </button>
+                                                        <button className="edit-mini" onClick={() => setEditingSize(size.value)}>✏️</button>
+                                                        <button className="remove-btn" onClick={() => removeGlobalSize(size.value)}>×</button>
                                                     </div>
                                                 </div>
                                             ))}
@@ -986,13 +989,35 @@ const AdminPage = () => {
                                         </div>
                                         <div className="attribute-list scrollable">
                                             {globalColors.map(color => (
-                                                <div key={color.hex} className="attribute-item color-item">
+                                                <div key={color.hex} className={`attribute-item color-item ${!color.active ? 'disabled' : ''}`}>
                                                     <div className="color-preview" style={{ backgroundColor: color.hex }}></div>
                                                     <div className="color-info">
-                                                        <span className="name">{color.name}</span>
-                                                        <span className="hex">{color.hex}</span>
+                                                        {editingColor === color.hex ? (
+                                                            <div className="inline-color-edit">
+                                                                <input
+                                                                    autoFocus
+                                                                    className="inline-edit"
+                                                                    defaultValue={color.name}
+                                                                    onBlur={(e) => {
+                                                                        if (e.target.value) updateGlobalColor(color.hex, { name: e.target.value });
+                                                                        setEditingColor(null);
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                        ) : (
+                                                            <>
+                                                                <span className="name" onClick={() => setEditingColor(color.hex)}>{color.name}</span>
+                                                                <span className="hex">{color.hex}</span>
+                                                            </>
+                                                        )}
                                                     </div>
-                                                    <button className="remove-btn" onClick={() => removeGlobalColor(color.hex)}>×</button>
+                                                    <div className="item-actions">
+                                                        <button className="toggle-btn" onClick={() => toggleGlobalColor(color.hex)} title={color.active ? "Berkitish" : "Ko'rsatish"}>
+                                                            {color.active ? '👁️' : '👁️‍🗨️'}
+                                                        </button>
+                                                        <button className="edit-mini" onClick={() => setEditingColor(color.hex)}>✏️</button>
+                                                        <button className="remove-btn" onClick={() => removeGlobalColor(color.hex)}>×</button>
+                                                    </div>
                                                 </div>
                                             ))}
                                         </div>
