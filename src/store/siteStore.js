@@ -284,9 +284,14 @@ const useSiteStore = create(
                 products: state.products.map(p => p.id === id ? { ...p, isSoldOut: !p.isSoldOut } : p)
             })),
 
+            // NEW: Global Vibe System (Site Identity Themes)
+            activeVibe: 'luxury', // 'luxury' | 'minimalist' | 'cyber' | 'vogue' | 'underground'
+
+            // Actions
             updateHeroSettings: (settings) => set((state) => ({
                 heroSettings: { ...state.heroSettings, ...settings }
             })),
+            updateVibe: (vibe) => set({ activeVibe: vibe }),
 
             addHeroSlide: (slide) => set((state) => ({
                 heroSettings: {
@@ -392,46 +397,45 @@ const useSiteStore = create(
                 }
             })),
 
-            rebrandSite: (styleKey) => {
+            updateVibe: (vibeKey) => {
                 const styles = {
                     'luxury': {
-                        name: 'Old Money Luxury',
-                        colors: { bg: '#080808', bgCard: '#121212', bgSurface: '#181818', accent: '#D4AF37', textPrimary: '#FFFFFF' }
+                        name: 'Bespo Luxury 2026',
+                        colors: { bg: '#080808', bgCard: '#121212', bgSurface: '#181818', accent: '#D4AF37', textPrimary: '#FFFFFF' },
+                        font: "'Outfit', sans-serif"
                     },
-                    'minimal': {
-                        name: 'Tokyo Minimal',
-                        colors: { bg: '#F2F2F2', bgCard: '#FFFFFF', bgSurface: '#F9F9F9', accent: '#000000', textPrimary: '#1A1A1A' }
+                    'minimalist': {
+                        name: 'Zen Minimalist',
+                        colors: { bg: '#F2F2F2', bgCard: '#FFFFFF', bgSurface: '#F9F9F9', accent: '#000000', textPrimary: '#1A1A1A' },
+                        font: "'Inter', sans-serif"
                     },
                     'cyber': {
-                        name: 'Cyberpunk Neon',
-                        colors: { bg: '#050510', bgCard: '#0A0A1A', bgSurface: '#12122A', accent: '#00FFAA', textPrimary: '#FFFFFF' }
+                        name: 'Neo Cyberpunk',
+                        colors: { bg: '#050510', bgCard: '#0A0A1A', bgSurface: '#12122A', accent: '#00FFAA', textPrimary: '#FFFFFF' },
+                        font: "'Space Grotesk', sans-serif"
                     },
-                    'street': {
-                        name: 'NYC Streetwear',
-                        colors: { bg: '#111111', bgCard: '#1A1A1A', bgSurface: '#222222', accent: '#FF4500', textPrimary: '#F0F0F0' }
+                    'vogue': {
+                        name: 'Editorial Vogue',
+                        colors: { bg: '#FFFFFF', bgCard: '#F8F8F8', bgSurface: '#F0F0F0', accent: '#c34138', textPrimary: '#000000' },
+                        font: "'Playfair Display', serif"
+                    },
+                    'underground': {
+                        name: 'NYC Underground',
+                        colors: { bg: '#111111', bgCard: '#1A1A1A', bgSurface: '#222222', accent: '#FF4500', textPrimary: '#F0F0F0' },
+                        font: "'JetBrains Mono', monospace"
                     }
                 };
 
-                const selected = styles[styleKey] || styles['luxury'];
-
-                // REAL CSS VARIABLE APPLICATION
+                const selected = styles[vibeKey] || styles['luxury'];
                 const root = document.documentElement;
                 root.style.setProperty('--color-bg', selected.colors.bg);
                 root.style.setProperty('--color-bg-card', selected.colors.bgCard);
                 root.style.setProperty('--color-bg-surface', selected.colors.bgSurface);
                 root.style.setProperty('--color-accent', selected.colors.accent);
                 root.style.setProperty('--color-text-primary', selected.colors.textPrimary);
+                root.style.setProperty('--font-primary', selected.font);
 
-                set((state) => ({
-                    theme: selected,
-                    agents: {
-                        ...state.agents,
-                        rebrander: {
-                            ...state.agents.rebrander,
-                            logs: [`✅ Sayt "${selected.name}" uslubiga o'tkazildi.`, ...(state.agents.rebrander?.logs || [])]
-                        }
-                    }
-                }));
+                set({ activeVibe: vibeKey });
             },
 
             runSecurityAudit: async () => {

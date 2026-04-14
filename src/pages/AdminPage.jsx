@@ -18,7 +18,7 @@ const AdminPage = () => {
         addGlobalSize, removeGlobalSize, updateGlobalSize, toggleGlobalSize,
         addGlobalColor, removeGlobalColor, updateGlobalColor, toggleGlobalColor,
         securitySettings, updateSecuritySettings, addIpToWhitelist, removeIpFromWhitelist,
-        addAgentLog, setAgentStatus, rebrandSite, runSecurityAudit, runBugAudit, applyAutoFix,
+        addAgentLog, setAgentStatus, updateVibe, activeVibe, runSecurityAudit, runBugAudit, applyAutoFix,
         recommendedHeroSlides
     } = useSiteStore(useShallow(state => ({
         products: state.products,
@@ -45,7 +45,8 @@ const AdminPage = () => {
         removeIpFromWhitelist: state.removeIpFromWhitelist,
         addAgentLog: state.addAgentLog,
         setAgentStatus: state.setAgentStatus,
-        rebrandSite: state.rebrandSite,
+        updateVibe: state.updateVibe,
+        activeVibe: state.activeVibe,
         runSecurityAudit: state.runSecurityAudit,
         runBugAudit: state.runBugAudit,
         applyAutoFix: state.applyAutoFix,
@@ -417,29 +418,6 @@ const AdminPage = () => {
                                             );
                                         })}
                                     </div>
-
-                                    {/* AI Rebranding — inside left column */}
-                                    <div className="rebrand-section">
-                                        <div className="ai-hub__header" style={{ marginTop: '25px' }}>
-                                            <span className="sparkle-icon">🎨</span>
-                                            <h3>AI Rebranding</h3>
-                                        </div>
-                                        <div className="rebrand-options">
-                                            <button className="rebrand-chip" onClick={() => rebrandSite('luxury')}>
-                                                ⚜️ Luxury
-                                            </button>
-                                            <button className="rebrand-chip" onClick={() => rebrandSite('minimal')}>
-                                                🇯🇵 Minimal
-                                            </button>
-                                            <button className="rebrand-chip" onClick={() => rebrandSite('cyber')}>
-                                                🧪 Cyber
-                                            </button>
-                                            <button className="rebrand-chip" onClick={() => rebrandSite('street')}>
-                                                🛹 Street
-                                            </button>
-                                        </div>
-                                        <p className="rebrand-tip">AI trendlar asosida sayt uslubini yangilang.</p>
-                                    </div>
                                 </div>
 
                                 {/* Row 1 Middle: Yangi Mahsulot Form */}
@@ -581,23 +559,47 @@ const AdminPage = () => {
                     {activeTab === 'hero' && (
                         <motion.div key="hero" className="admin-panel-hero" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
                             <div className="hero-bento">
-                                {/* Left: AI Slide Assistant */}
+                                {/* 1. AI Slide Assistant & GLOBAL VIBE SELECTOR */}
                                 <div className="admin-card ai-slide-assistant">
-                                    <div className="ai-hub__header">
-                                        <span className="sparkle-icon">✨</span>
-                                        <h3>Slide AI Assistant</h3>
-                                    </div>
-                                    <div className="ai-tips">
-                                        <div className="tip-item">
-                                            <span className="tip-dot"></span>
-                                            <p>AI tavsiyasi: Slayder rasmlari 21:9 nisbatda eng yaxshi ko'rinadi.</p>
+                                    <div className="section-header-v5">
+                                        <div className="header-title-wrap">
+                                            <span className="icon-box">🎨</span>
+                                            <div>
+                                                <h3>Global Vibe Switcher</h3>
+                                                <p className="sub-header-text">Butun sayt uslubini bir zumda o'zgartiring</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <button className="primary-submit-btn tiny" onClick={handleNewSlide}>+ Yangi Slayd Qo'shish</button>
+
+                                    <div className="vibe-grid">
+                                        {[
+                                            { id: 'luxury', name: 'Luxury', icon: '⚜️' },
+                                            { id: 'minimalist', name: 'Minimal', icon: '🇯🇵' },
+                                            { id: 'cyber', name: 'Cyber', icon: '🧪' },
+                                            { id: 'vogue', name: 'Vogue', icon: '👠' },
+                                            { id: 'underground', name: 'Street', icon: '🛹' }
+                                        ].map(v => (
+                                            <button
+                                                key={v.id}
+                                                className={`vibe-card ${activeVibe === v.id ? 'active' : ''}`}
+                                                onClick={() => updateVibe(v.id)}
+                                            >
+                                                <span className="vibe-icon">{v.icon}</span>
+                                                <span className="vibe-label">{v.name}</span>
+                                                {activeVibe === v.id && <div className="active-dot"></div>}
+                                            </button>
+                                        ))}
+                                    </div>
+
+                                    <div className="divider-v5"></div>
+
+                                    <button className="add-v5-btn full-w" onClick={handleNewSlide}>
+                                        <span>+ YANGI SLAYD QO'SHISH</span>
+                                    </button>
                                 </div>
 
-                                {/* Right: Active Slides List */}
-                                <div className="admin-card slides-list-view">
+                                {/* 2. Active Slides List */}
+                                <div className="admin-card slides-list-view attr-card-v5">
                                     <div className="form-header">
                                         <h3>Faol Slayderlar</h3>
                                         <span className="smart-badge">{heroSettings.slides.length} SLIDES ACTIVE</span>

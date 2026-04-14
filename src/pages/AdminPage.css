@@ -1954,6 +1954,77 @@ textarea:focus {
     color: #888;
 }
 
+/* --- V5 VIBE SELECTOR STYLES --- */
+.section-header-v5 {
+    margin-bottom: 25px;
+}
+
+.divider-v5 {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    margin: 25px 0;
+}
+
+.vibe-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.vibe-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.vibe-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.vibe-card.active {
+    background: rgba(181, 150, 107, 0.05);
+    border-color: #b5966b;
+    box-shadow: 0 10px 25px rgba(181, 150, 107, 0.1);
+}
+
+.vibe-icon {
+    font-size: 1.4rem;
+}
+
+.vibe-label {
+    font-size: 0.6rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #888;
+}
+
+.vibe-card.active .vibe-label {
+    color: #b5966b;
+}
+
+.active-dot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 6px;
+    height: 6px;
+    background: #b5966b;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #b5966b;
+}
+
 .attribute-management .admin-v3__bento-grid {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 25px;
