@@ -4,7 +4,7 @@ import { products as initialProducts } from '../data/products';
 
 const defaultHeroSlides = [
     {
-        image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=2000',
+        image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200',
         title: 'CARBON_PRO™ ELITE',
         subtitle: 'BEYOND PERFORMANCE',
         price: '450.00',
@@ -12,7 +12,7 @@ const defaultHeroSlides = [
         description: 'Professional darajadagi uglerod tolali texnologiya. Maksimal tezlik va barqarorlik uchun yaratilgan.'
     },
     {
-        image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=2000',
+        image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=1200',
         title: 'SMART_TECH SYSTEM',
         subtitle: 'URBAN INTELLIGENCE',
         price: '299.99',
@@ -20,7 +20,7 @@ const defaultHeroSlides = [
         description: 'Biometrik datchiklar bilan jihozlangan aqlli libos. Har bir harakatingizni tahlil qiling.'
     },
     {
-        image: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=2000',
+        image: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=1200',
         title: 'OLYMPUS HERITAGE',
         subtitle: 'LEGACY OF POWER',
         price: '599.00',
@@ -28,7 +28,7 @@ const defaultHeroSlides = [
         description: 'Klassik sport estetikasi va yuqori darajadagi dabdaba uyg\'unligi. Cheksiz imkoniyatlar ramzi.'
     },
     {
-        image: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=2000',
+        image: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=1200',
         title: 'STREET RACER COLLECTION',
         subtitle: 'ALWAYS ACTIVE',
         price: '185.00',
@@ -36,7 +36,7 @@ const defaultHeroSlides = [
         description: 'Shahar ko\'chalarida erkin harakatlanish uchun yengil va zamonaviy sport uslubi.'
     },
     {
-        image: 'https://images.unsplash.com/photo-1530541930197-ff16ac917b0e?auto=format&fit=crop&q=80&w=2000',
+        image: 'https://images.unsplash.com/photo-1530541930197-ff16ac917b0e?auto=format&fit=crop&q=80&w=1200',
         title: 'STORM_SHIELD X',
         subtitle: 'SUPREME PROTECTION',
         price: '720.00',
@@ -120,7 +120,7 @@ const useSiteStore = create(
                     title: 'CARBON ELITE™ 01',
                     subtitle: 'PRO PERFORMANCE',
                     description: 'Eng yuqori marralar uchun professional sport kiyimlari. Tezlik va kuch uyg\'unligi.',
-                    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=2000', // Man in active gear
+                    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=1200', // Man in active gear
                     layout: 'avant-garde',
                     price: '420.00'
                 },
@@ -129,7 +129,7 @@ const useSiteStore = create(
                     title: 'TRACK MASTER CLASS',
                     subtitle: 'HERITAGE SPORT',
                     description: 'Olimpiya o\'yinlari darajasidagi dizayn va yuqori sifatli materiallar.',
-                    image: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=2000', // Runner
+                    image: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=1200', // Runner
                     layout: 'editorial',
                     price: '380.00'
                 },
@@ -138,7 +138,7 @@ const useSiteStore = create(
                     title: 'SMART BIOMETRIC TEE',
                     subtitle: 'DATA INTELLIGENCE',
                     description: 'Sizning har bir harakatingizni kuzatadigan va natijalarni yaxshilaydigan texnologiya.',
-                    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=2000', // Gym tech
+                    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200', // Gym tech
                     layout: 'tech',
                     price: '150.00'
                 },
@@ -649,7 +649,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 20, // Final Supreme Overhaul v20
+            version: 21, // Optimized performance v21
         }
 
     )
