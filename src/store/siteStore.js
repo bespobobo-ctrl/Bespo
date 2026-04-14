@@ -681,11 +681,24 @@ const useSiteStore = create(
             name: 'bespo-site-content',
             version: 22,
             partialize: (state) => {
-                // EXCLUDE frequently changing ephemeral data from LocalStorage
-                // This prevents massive disk I/O lag during AI logs/scans
                 const { agents, analytics, ...rest } = state;
                 return rest;
             },
+            onRehydrateStorage: () => (state) => {
+                if (!state) return;
+                // Self-healing for product data
+                if (state.products) {
+                    state.products = state.products.map(p => ({
+                        ...p,
+                        sizes: (p.sizes || []).map(s => typeof s === 'object' ? (s.value || 'N/A') : s),
+                        colors: (p.colors || []).map(c => typeof c === 'object' ? (c.hex || '#000') : c)
+                    }));
+                }
+                // Migration logic for global sizes
+                if (state.globalSizes && state.globalSizes.length > 0 && typeof state.globalSizes[0] === 'string') {
+                    state.globalSizes = state.globalSizes.map(s => ({ value: s, active: true }));
+                }
+            }
         }
 
     )

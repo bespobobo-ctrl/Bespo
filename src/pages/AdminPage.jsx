@@ -492,14 +492,14 @@ const AdminPage = () => {
                                         <div className="input-group full">
                                             <label>O'LCHAMLAR (GLOBAL SIZES)</label>
                                             <div className="size-btns">
-                                                {globalSizes.map(size => (
+                                                {globalSizes.filter(s => s.active).map(size => (
                                                     <button
-                                                        key={size}
+                                                        key={size.value}
                                                         type="button"
-                                                        className={`size-btn ${selectedSizes.includes(size) ? 'active' : ''}`}
-                                                        onClick={() => setSelectedSizes(prev => prev.includes(size) ? prev.filter(s => s !== size) : [...prev, size])}
+                                                        className={`size-btn ${selectedSizes.includes(size.value) ? 'active' : ''}`}
+                                                        onClick={() => setSelectedSizes(prev => prev.includes(size.value) ? prev.filter(s => s !== size.value) : [...prev, size.value])}
                                                     >
-                                                        {size}
+                                                        {size.value}
                                                     </button>
                                                 ))}
                                             </div>
@@ -508,7 +508,7 @@ const AdminPage = () => {
                                         <div className="input-group full">
                                             <label>MAHSULOT RANGLARI (GLOBAL PALETTE)</label>
                                             <div className="color-dots">
-                                                {globalColors.map(color => (
+                                                {globalColors.filter(c => c.active).map(color => (
                                                     <div
                                                         key={color.hex}
                                                         className={`color-dot ${selectedColors.includes(color.hex) ? 'active' : ''}`}
