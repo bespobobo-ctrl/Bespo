@@ -11,10 +11,10 @@ import './AdminPage.css';
 const AdminPage = () => {
     const {
         products, heroSettings, aboutSettings,
-        materialSettings, promoSettings, galleryImages, marqueeText,
+        materialSettings, promoSettings, galleryImages, marqueeText, categorySettings,
         globalSizes, globalColors, agents, toggleAgent,
         updateProduct, addProduct, deleteProduct, toggleSoldOut,
-        updateHeroSettings, updateMaterialSettings, updatePromoSettings, updateGalleryImages, updateMarqueeText,
+        updateHeroSettings, updateMaterialSettings, updatePromoSettings, updateCategorySettings, updateGalleryImages, updateMarqueeText,
         addHeroSlide, deleteHeroSlide,
         updateAboutSettings, resetToDefault,
         addGlobalSize, removeGlobalSize, updateGlobalSize, toggleGlobalSize,
@@ -28,6 +28,7 @@ const AdminPage = () => {
         aboutSettings: state.aboutSettings,
         materialSettings: state.materialSettings,
         promoSettings: state.promoSettings,
+        categorySettings: state.categorySettings,
         galleryImages: state.galleryImages,
         marqueeText: state.marqueeText,
         globalSizes: state.globalSizes,
@@ -41,6 +42,7 @@ const AdminPage = () => {
         updateHeroSettings: state.updateHeroSettings,
         updateMaterialSettings: state.updateMaterialSettings,
         updatePromoSettings: state.updatePromoSettings,
+        updateCategorySettings: state.updateCategorySettings,
         updateGalleryImages: state.updateGalleryImages,
         updateMarqueeText: state.updateMarqueeText,
         addHeroSlide: state.addHeroSlide,
@@ -624,7 +626,49 @@ const AdminPage = () => {
                                     </div>
                                 </div>
 
-                                {/* Section 3: Gallery & Marquee */}
+                                {/* Section 3: Categories Management */}
+                                <div className="admin-card attr-card-v5 full-col">
+                                    <div className="section-header-v5">
+                                        <div className="header-title-wrap">
+                                            <span className="icon-box">🗂️</span>
+                                            <div>
+                                                <h3>Kategoriyalar (Men/Women/Unisex)</h3>
+                                                <p className="sub-header-text">Asosiy bloklar rasmlari va nomlari</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="v5-category-editor-grid">
+                                        {categorySettings.map((cat, i) => (
+                                            <div key={cat.id} className="v5-cat-item">
+                                                <div className="cat-img-preview">
+                                                    <img src={cat.image} alt="" />
+                                                    <input type="file" onChange={(e) => {
+                                                        const reader = new FileReader();
+                                                        reader.onload = () => {
+                                                            const newCats = [...categorySettings];
+                                                            newCats[i].image = reader.result;
+                                                            updateCategorySettings(newCats);
+                                                        };
+                                                        reader.readAsDataURL(e.target.files[0]);
+                                                    }} />
+                                                </div>
+                                                <div className="v5-input-group">
+                                                    <label>NOMINI O'ZGARTIRISH</label>
+                                                    <input
+                                                        value={cat.name}
+                                                        onChange={(e) => {
+                                                            const newCats = [...categorySettings];
+                                                            newCats[i].name = e.target.value;
+                                                            updateCategorySettings(newCats);
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Section 4: Gallery & Marquee */}
                                 <div className="admin-card attr-card-v5 full-col">
                                     <div className="section-header-v5">
                                         <div className="header-title-wrap">

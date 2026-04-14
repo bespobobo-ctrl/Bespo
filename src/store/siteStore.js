@@ -104,6 +104,11 @@ const useSiteStore = create(
                 label: 'LIMITED EDITION',
                 image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&q=80&w=1200'
             },
+            categorySettings: [
+                { id: 'men', name: 'MEN', image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&q=80&w=1000' },
+                { id: 'women', name: 'WOMEN', image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=1000' },
+                { id: 'unisex', name: 'UNISEX', image: 'https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&q=80&w=1000' }
+            ],
             galleryImages: [
                 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800',
                 'https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800',
@@ -185,8 +190,9 @@ const useSiteStore = create(
                 promoSettings: { ...state.promoSettings, ...settings }
             })),
 
-            updateGalleryImages: (images) => set({ galleryImages: images }),
-            updateMarqueeText: (text) => set({ marqueeText: text }),
+            updateGalleryImages: (imgs) => set({ galleryImages: imgs }),
+            updateCategorySettings: (settings) => set({ categorySettings: settings }),
+            updateMarqueeText: (txt) => set({ marqueeText: txt }),
 
             addHeroSlide: (slide) => set((state) => ({
                 heroSettings: { ...state.heroSettings, slides: [...state.heroSettings.slides, slide] }
@@ -298,7 +304,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 25,
+            version: 30, // Global sync for Dolenga V5
             partialize: (state) => {
                 const { agents, analytics, ...rest } = state;
                 return rest;

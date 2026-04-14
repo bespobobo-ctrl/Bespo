@@ -1,235 +1,182 @@
 .material-v2 {
     position: relative;
-    background-color: var(--color-bg);
-    padding: var(--space-5xl) 0;
+    background-color: #fff;
+    padding: 100px 0;
     overflow: hidden;
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 }
 
 .material-v2__grid-lines {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     pointer-events: none;
     z-index: 1;
 }
 
 .material-v2__line {
     position: absolute;
-    background-color: var(--color-border);
-    opacity: 0.5;
+    background-color: #f0f0f0;
 }
 
 .material-v2__line--v {
     top: 0;
-    left: 33.333%;
+    left: 50%;
     width: 1px;
     height: 100%;
-}
-
-.material-v2__line--h {
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 1px;
 }
 
 .material-v2__container {
     position: relative;
     z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
 }
 
 .material-v2__content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: var(--space-4xl);
+    gap: 80px;
     align-items: center;
 }
 
 .material-v2__tag {
     display: block;
-    font-family: var(--font-accent);
     font-size: 0.7rem;
-    color: var(--color-accent);
-    letter-spacing: 0.3em;
-    margin-bottom: var(--space-md);
+    color: #999;
+    letter-spacing: 0.2em;
+    margin-bottom: 15px;
+    font-weight: 700;
 }
 
 .material-v2__headline {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 800;
+    font-size: 3.5rem;
+    font-weight: 900;
     line-height: 1;
-    letter-spacing: -0.04em;
-    margin-bottom: var(--space-xl);
-    text-transform: uppercase;
-    max-width: 500px;
+    letter-spacing: -0.05em;
+    margin-bottom: 30px;
+    color: #000;
 }
 
 .material-v2__desc {
-    font-family: var(--font-body);
     font-size: 1.1rem;
-    color: var(--color-text-secondary);
-    max-width: 400px;
-    margin-bottom: var(--space-2xl);
+    color: #666;
+    max-width: 450px;
+    margin-bottom: 40px;
     line-height: 1.6;
 }
 
 .material-v2__cta-btn {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-md);
-    font-family: var(--font-accent);
-    font-size: 0.8rem;
-    font-weight: 600;
+    gap: 15px;
+    font-size: 0.75rem;
+    font-weight: 900;
     letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-text-primary);
+    color: #000;
+    text-decoration: none;
 }
 
 .material-v2__cta-arrow {
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--color-border-light);
+    width: 40px;
+    height: 40px;
+    border: 1px solid #eee;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all var(--duration-normal) var(--ease-out);
+    transition: 0.4s;
 }
 
 .material-v2__cta-btn:hover .material-v2__cta-arrow {
-    background-color: var(--color-accent);
-    border-color: var(--color-accent);
-    color: var(--color-bg);
+    background: #000;
+    color: #fff;
     transform: translateX(5px);
 }
 
-/* Stats Right Side */
 .material-v2__stats {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2xl);
-    margin-bottom: var(--space-3xl);
+    gap: 40px;
 }
 
 .material-v2__stat-row {
     display: flex;
     flex-direction: column;
-    gap: var(--space-sm);
-    transform-origin: left;
 }
 
 .material-v2__stat-header {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-.material-v2__stat-label-wrap {
-    display: flex;
-    flex-direction: column;
-}
-
-.material-v2__stat-code {
-    font-family: var(--font-accent);
-    font-size: 0.6rem;
-    color: var(--color-accent);
-    letter-spacing: 0.1em;
+.material-v2__stat-label {
+    font-size: 0.8rem;
+    font-weight: 900;
+    color: #000;
+    letter-spacing: 0.05em;
 }
 
 .material-v2__stat-val {
-    font-family: var(--font-display);
-    font-size: 3rem;
-    font-weight: 800;
-    line-height: 0.8;
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #000;
 }
 
 .material-v2__stat-bar-bg {
     width: 100%;
-    height: 1px;
-    background-color: var(--color-border);
-    position: relative;
-    margin: var(--space-sm) 0;
+    height: 2px;
+    background-color: #eee;
 }
 
 .material-v2__stat-bar-fill {
-    position: absolute;
-    top: -1px;
-    left: 0;
-    height: 3px;
-    background-color: var(--color-accent);
-}
-
-.material-v2__stat-bar-glow {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    width: 20px;
-    height: 20px;
-    background-color: var(--color-accent);
-    filter: blur(10px);
-    border-radius: 50%;
-    transform: translate(50%, -50%);
-    opacity: 0.6;
-}
-
-.material-v2__stat-label {
-    font-family: var(--font-accent);
-    font-size: 0.75rem;
-    color: var(--color-text-primary);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    height: 100%;
+    background-color: #000;
 }
 
 .material-v2__stat-desc {
-    font-family: var(--font-body);
-    font-size: 0.8rem;
-    color: var(--color-text-muted);
-    margin-top: var(--space-xs);
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: 5px;
 }
 
-/* Badges */
 .material-v2__badges {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-md);
+    gap: 20px;
+    margin-top: 40px;
 }
 
 .material-v2__badge {
-    background-color: var(--color-bg-card);
-    border: 1px solid var(--color-border);
-    padding: var(--space-md);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-xs);
-    transition: border-color var(--duration-fast);
-}
-
-.material-v2__badge:hover {
-    border-color: var(--color-accent);
+    background: #fcfcfc;
+    border: 1px solid #eee;
+    padding: 20px;
+    text-align: center;
+    border-radius: 12px;
 }
 
 .material-v2__badge-icon {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    display: block;
 }
 
 .material-v2__badge-text {
-    font-family: var(--font-accent);
     font-size: 0.6rem;
-    color: var(--color-text-secondary);
+    font-weight: 800;
+    color: #999;
     letter-spacing: 0.1em;
-    text-transform: uppercase;
 }
 
 @media (max-width: 968px) {
     .material-v2__content {
         grid-template-columns: 1fr;
-        gap: var(--space-3xl);
     }
 
-    .material-v2__line--v {
-        display: none;
+    .material-v2__headline {
+        font-size: 2.5rem;
     }
 }
