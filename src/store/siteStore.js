@@ -4,44 +4,44 @@ import { products as initialProducts } from '../data/products';
 
 const defaultHeroSlides = [
     {
-        image: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&q=80&w=2000',
-        title: 'ARTIC EXPLORER™ 01',
-        subtitle: 'AVANT-GARDE SERIES',
-        price: '899.99',
+        image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=2000',
+        title: 'PRO-CARBON™ SERIES',
+        subtitle: 'PERFORMANCE ELITE',
+        price: '420.00',
         layout: 'avant-garde',
-        description: 'Ekstremal sharoitlar uchun futuristik collection.'
+        description: 'Professional sportchilar uchun maksimal samaradorlik va uglerod tolali chidamlilik.'
     },
     {
-        image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=2000',
-        title: 'DIGITAL NOMAD SYSTEM',
-        subtitle: 'URBAN INTELLIGENCE',
-        price: '350.00',
+        image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=2000',
+        title: 'DATA-GEN GYM™',
+        subtitle: 'SMART TRAINING',
+        price: '280.00',
         layout: 'tech',
-        description: 'Aqlli shahar hayoti uchun maxsus tizim.'
+        description: 'Mashg\'ulotlaringizni aqlli datchiklar va biometrik matolar bilan boshqaring.'
     },
     {
-        image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&q=80&w=2000',
-        title: 'HERITAGE HOODIE',
-        subtitle: 'CRAFTED PRECISION',
-        price: '240.00',
+        image: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=2000',
+        title: 'OLYMPUS TRACK 01',
+        subtitle: 'HERITAGE LUXURY',
+        price: '550.00',
         layout: 'editorial',
-        description: 'Har bir chokda mukammallik va dizayn merosi.'
+        description: 'Sport merosi va zamonaviy dabdaba. Jismoniy kamolot cho\'qqisida.'
     },
     {
-        image: 'https://images.unsplash.com/photo-1529139513466-429cf64736f8?auto=format&fit=crop&q=80&w=2000',
-        title: 'LIFESTYLE SERIES',
-        subtitle: 'EVERY DAY FASHION',
-        price: '180.00',
+        image: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=2000',
+        title: 'URBAN PACER',
+        subtitle: 'ACTIVE LIFESTYLE',
+        price: '190.00',
         layout: 'modern-card',
-        description: 'Kundalik hayot uchun minimalizm va qulaylik.'
+        description: 'Shahar ko\'chalari uchun tezkor, qulay va minimalist sport uslubi.'
     },
     {
-        image: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&q=80&w=2000',
-        title: 'NIKE_ACG SHIELD',
-        subtitle: 'ELITE PERFORMANCE',
-        price: '520.00',
+        image: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=2000',
+        title: 'STORM-TECH ACG',
+        subtitle: 'EXTREME ELEMENTS',
+        price: '680.00',
         layout: 'clean-functional',
-        description: 'Klinik aniqlik bilan ishlangan himoya qatlami.'
+        description: 'Har qanday ob-havo sharoitida maksimal himoya va harakat erkinligi.'
     }
 ];
 
@@ -117,48 +117,48 @@ const useSiteStore = create(
             recommendedHeroSlides: [
                 {
                     id: 'rec1',
-                    title: 'ARTIC EXPLORER™ 01',
-                    subtitle: 'AVANT-GARDE SERIES',
-                    description: 'Shimoliy qutb ruhida yaratilgan futuristik collection. 460G Yuqori zichlikdagi mato va ekstremal chidamlilik.',
-                    image: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&q=80&w=2000',
+                    title: 'CARBON ELITE™ 01',
+                    subtitle: 'PRO PERFORMANCE',
+                    description: 'Eng yuqori marralar uchun professional sport kiyimlari. Tezlik va kuch uyg\'unligi.',
+                    image: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=2000', // Man in active gear
                     layout: 'avant-garde',
-                    price: '899.99'
+                    price: '420.00'
                 },
                 {
                     id: 'rec2',
-                    title: 'HERITAGE HOODIE SYSTEM',
-                    subtitle: 'CRAFTED PRECISION',
-                    description: 'Har bir chokda mukammallik. High-density premium paxta va tahririyat darajasidagi dizayn merosi.',
-                    image: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&q=80&w=2000',
+                    title: 'TRACK MASTER CLASS',
+                    subtitle: 'HERITAGE SPORT',
+                    description: 'Olimpiya o\'yinlari darajasidagi dizayn va yuqori sifatli materiallar.',
+                    image: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=2000', // Runner
                     layout: 'editorial',
-                    price: '240.00'
+                    price: '380.00'
                 },
                 {
                     id: 'rec3',
-                    title: 'DIGITAL TECH NOMAD',
-                    subtitle: 'URBAN INTELLIGENCE',
-                    description: 'Aqlli shahar hayoti uchun maxsus tizim. Funksionallik va futuristik estetikadan iborat texnologik kiyim.',
-                    image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=2000',
+                    title: 'SMART BIOMETRIC TEE',
+                    subtitle: 'DATA INTELLIGENCE',
+                    description: 'Sizning har bir harakatingizni kuzatadigan va natijalarni yaxshilaydigan texnologiya.',
+                    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=2000', // Gym tech
                     layout: 'tech',
-                    price: '350.00'
+                    price: '150.00'
                 },
                 {
                     id: 'rec4',
-                    title: 'LIFESTYLE COLLECTION',
-                    subtitle: 'EVERY DAY FASHION',
-                    description: 'Kundalik hayot uchun minimalizm va qulaylik uyg\'unligi. Zamonaviy shahar uslubini tanlang.',
-                    image: 'https://images.unsplash.com/photo-1529139513466-429cf64736f8?auto=format&fit=crop&q=80&w=2000',
+                    title: 'STREET PACE COLLECTION',
+                    subtitle: 'URBAN ACTIVE',
+                    description: 'Shahar muhitida faol bo\'lishni xush ko\'ruvchi erkaklar uchun zamonaviy yechimlar.',
+                    image: 'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&q=80&w=2000', // Urban runner
                     layout: 'modern-card',
-                    price: '180.00'
+                    price: '120.00'
                 },
                 {
                     id: 'rec5',
-                    title: 'NIKE_ACG SHIELD X',
-                    subtitle: 'ELITE PERFORMANCE',
-                    description: 'Ekstremal sharoitlar uchun klinik aniqlik bilan ishlangan himoya qatlami. To\'liq suv o\'tkazmaydigan tizim.',
-                    image: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?auto=format&fit=crop&q=80&w=2000',
+                    title: 'PEAK SHIELD ACG',
+                    subtitle: 'OUTDOOR GEAR',
+                    description: 'Har qanday balandlik va sharoitda o\'zingizni ishonchli his qiling. Haqiqiy erkaklar tanlovi.',
+                    image: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=2000', // Hiking/Sport
                     layout: 'clean-functional',
-                    price: '520.00'
+                    price: '650.00'
                 }
             ],
 
@@ -649,7 +649,7 @@ const useSiteStore = create(
         }),
         {
             name: 'bespo-site-content',
-            version: 12, // Force ultimate professional header v12
+            version: 15, // Force Men's Sports Wear Overhaul v15
         }
 
     )
