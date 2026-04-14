@@ -1723,6 +1723,49 @@ textarea:focus {
     }
 }
 
+.attribute-management .admin-v3__bento-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 25px;
+}
+
+.map-preview-mini iframe {
+    transition: all 0.5s ease;
+}
+
+.map-preview-mini:hover iframe {
+    filter: grayscale(0) invert(0) contrast(1) !important;
+}
+
+.admin-grid-form-v3 {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group label {
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: var(--color-text-secondary);
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.input-group input {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 14px 20px !important;
+    border-radius: 12px !important;
+    color: #fff !important;
+    width: 100%;
+}
+
+.input-group input:focus {
+    border-color: var(--color-accent) !important;
+    background: rgba(255, 255, 255, 0.04) !important;
+    outline: none;
+}
+
 /* --- ATTRIBUTE & DANGER ZONE STYLES --- */
 .attribute-list.scrollable {
     max-height: 250px;
@@ -1761,7 +1804,7 @@ textarea:focus {
 }
 
 .edit-mini:hover {
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .inline-edit {

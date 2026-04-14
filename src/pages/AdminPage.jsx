@@ -999,7 +999,64 @@ const AdminPage = () => {
                                     </div>
                                 </div>
 
-                                {/* 3. Hard Reset Section (0868) */}
+                                {/* 3. Store Identity & Contacts */}
+                                <div className="admin-card">
+                                    <div className="form-header">
+                                        <h3>Do'kon ma'lumotlari</h3>
+                                        <span className="smart-badge">STORE_IDENTITY_V1</span>
+                                    </div>
+                                    <div className="admin-grid-form-v3">
+                                        <div className="input-group">
+                                            <label>DO'KON MANZILI (TEXT)</label>
+                                            <input
+                                                type="text"
+                                                value={aboutSettings.location}
+                                                onChange={(e) => updateAboutSettings({ location: e.target.value })}
+                                            />
+                                        </div>
+                                        <div className="input-row">
+                                            <div className="input-group">
+                                                <label>TELEFON</label>
+                                                <input
+                                                    type="text"
+                                                    value={aboutSettings.phone}
+                                                    onChange={(e) => updateAboutSettings({ phone: e.target.value })}
+                                                />
+                                            </div>
+                                            <div className="input-group">
+                                                <label>EMAIL</label>
+                                                <input
+                                                    type="email"
+                                                    value={aboutSettings.email}
+                                                    onChange={(e) => updateAboutSettings({ email: e.target.value })}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="input-group">
+                                            <label>GOOGLE MAPS (EMBED URL)</label>
+                                            <input
+                                                type="text"
+                                                placeholder="https://www.google.com/maps/embed?..."
+                                                value={aboutSettings.mapUrl}
+                                                onChange={(e) => updateAboutSettings({ mapUrl: e.target.value })}
+                                            />
+                                            {aboutSettings.mapUrl && (
+                                                <div className="map-preview-mini" style={{ marginTop: '15px' }}>
+                                                    <iframe
+                                                        src={aboutSettings.mapUrl}
+                                                        width="100%"
+                                                        height="120"
+                                                        style={{ border: 0, borderRadius: '20px', filter: 'grayscale(1) invert(1) contrast(0.8)' }}
+                                                        allowFullScreen=""
+                                                        loading="lazy"
+                                                    ></iframe>
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* 4. Hard Reset Section (0868) */}
                                 <div className="admin-card danger-zone-v4">
                                     <div className="form-header">
                                         <h3 className="red-text">Tizimni Master Reset qilish</h3>

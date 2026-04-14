@@ -169,7 +169,10 @@ const useSiteStore = create(
                 location: 'TOKYO / SHIBUYA',
                 craft: 'HAND-CRAFTED',
                 instagram: 'https://instagram.com/bespo.official',
-                telegram: 'https://t.me/bespo'
+                telegram: 'https://t.me/bespo',
+                phone: '+998 90 123 45 67',
+                email: 'info@bespo.uz',
+                mapUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11984.14811804364!2d69.2400734!3d41.311081!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b0cc379e9c3%3A0xa5a9976993a6b3c!2sTashkent%20City!5e0!3m2!1sen!2suz!4v1713083674681!5m2!1sen!2suz'
             },
 
             // Global Attributes

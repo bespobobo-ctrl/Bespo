@@ -1,0 +1,131 @@
+.contact-v4 {
+    padding: 150px 0;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-v4__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 100px;
+    align-items: center;
+}
+
+.contact-v4__index {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 4px;
+    color: var(--color-accent);
+    margin-bottom: 20px;
+}
+
+.contact-v4__title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 60px;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.contact-v4__items {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.contact-v4__item label {
+    display: block;
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+}
+
+.contact-v4__item p,
+.c-link {
+    font-size: 1.2rem;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.contact-v4__links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.c-link:hover {
+    color: var(--color-accent);
+    transform: translateX(5px);
+}
+
+.contact-v4__socials {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+
+.contact-v4__socials a {
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.contact-v4__socials a:hover {
+    color: var(--color-accent);
+}
+
+.contact-v4__socials span {
+    color: rgba(255, 255, 255, 0.1);
+}
+
+/* Map Frame */
+.contact-v4__map-frame {
+    height: 600px;
+    background: #0a0a0a;
+    border-radius: 40px;
+    padding: 2px;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transform-style: preserve-3d;
+}
+
+.map-wrapper {
+    width: 100%;
+    height: 100%;
+    border-radius: 38px;
+    overflow: hidden;
+    position: relative;
+    filter: grayscale(1) invert(0.9) contrast(0.9);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contact-v4__map-frame:hover .map-wrapper {
+    filter: grayscale(0) invert(0) contrast(1);
+    transform: scale(1.02);
+}
+
+.map-overlay-glow {
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.5);
+    pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+    .contact-v4__grid {
+        grid-template-columns: 1fr;
+        gap: 60px;
+    }
+
+    .contact-v4__map-frame {
+        height: 400px;
+    }
+}

@@ -7,6 +7,8 @@ import PromoSection from '../components/sections/PromoSection';
 import GalleryGrid from '../components/sections/GalleryGrid';
 import Marquee from '../components/layout/Marquee';
 
+import ContactSection from '../components/sections/ContactSection';
+
 const HomePage = () => {
     return (
         <main>
@@ -18,6 +20,7 @@ const HomePage = () => {
             <CatalogPreview />
             <Marquee />
             <PromoSection />
+            <ContactSection />
             <GalleryGrid />
         </main>
     );
