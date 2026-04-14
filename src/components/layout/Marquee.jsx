@@ -1,22 +1,18 @@
 import { useT } from '../../hooks/useTranslation';
 import './Marquee.css';
 
+import useSiteStore from '../../store/siteStore';
+
 const Marquee = ({ variant = 'default' }) => {
-    const { tr, t } = useT();
-    const items = [
-        { text: tr(t.marquee.everyStyle), type: 'serif' },
-        { text: tr(t.marquee.builtForComfort), type: 'bold' },
-        { text: tr(t.marquee.forHimHer), type: 'serif' },
-        { text: tr(t.marquee.madeWithCare), type: 'bold' },
-        { text: '#BESPO', type: 'accent' }
-    ];
+    const marqueeText = useSiteStore(state => state.marqueeText);
+    const items = marqueeText.split('/').map(t => t.trim());
 
     const MarqueeGroup = () => (
         <div className="marquee__group">
             {items.map((item, i) => (
                 <div key={i} className="marquee__item">
-                    <span className={`marquee__text--${item.type}`}>
-                        {item.text}
+                    <span className="marquee__text--bold">
+                        {item}
                     </span>
                     <span className="marquee__dot">✦</span>
                 </div>

@@ -2,8 +2,11 @@ import { motion } from 'framer-motion';
 import { useT } from '../../hooks/useTranslation';
 import './MaterialSection.css';
 
+import useSiteStore from '../../store/siteStore';
+
 const MaterialSection = () => {
     const { tr, t } = useT();
+    const materialSettings = useSiteStore(state => state.materialSettings);
 
     return (
         <section className="material-v2" id="material-section">
@@ -21,12 +24,11 @@ const MaterialSection = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        <span className="material-v2__tag">[ TECH-SPEC / 2026 ]</span>
-                        <h2 className="material-v2__headline">{tr(t.material.headline)}</h2>
+                        <span className="material-v2__tag">[ {materialSettings.subtitle} ]</span>
+                        <h2 className="material-v2__headline">{materialSettings.title}</h2>
                         <div className="material-v2__details">
                             <p className="material-v2__desc">
-                                We prioritize organic sources and technical precision in every fiber.
-                                Each garment undergoes a multi-layer verification process for density and durability.
+                                {materialSettings.mainText}
                             </p>
                             <a href="#" className="material-v2__cta-btn">
                                 <span>{tr(t.material.readMore)}</span>
@@ -37,12 +39,9 @@ const MaterialSection = () => {
 
                     <div className="material-v2__right">
                         <div className="material-v2__stats">
-                            {[
-                                { val: '85%', label: tr(t.material.cotton), code: 'ORG-CTN', desc: 'Grade-A Organic Long Staple' },
-                                { val: '15%', label: tr(t.material.polyester), code: 'RCY-PLY', desc: 'Recycled Ocean Plastic Polymer' }
-                            ].map((stat, i) => (
+                            {materialSettings.features.map((feature, i) => (
                                 <motion.div
-                                    key={i}
+                                    key={feature.id}
                                     className="material-v2__stat-row"
                                     initial={{ opacity: 0, x: 30 }}
                                     whileInView={{ opacity: 1, x: 0 }}
@@ -51,23 +50,23 @@ const MaterialSection = () => {
                                 >
                                     <div className="material-v2__stat-header">
                                         <div className="material-v2__stat-label-wrap">
-                                            <span className="material-v2__stat-code">{stat.code}</span>
-                                            <span className="material-v2__stat-label">{stat.label}</span>
+                                            <span className="material-v2__stat-code">TECH_0{i + 1}</span>
+                                            <span className="material-v2__stat-label">{feature.title}</span>
                                         </div>
-                                        <span className="material-v2__stat-val">{stat.val}</span>
+                                        <span className="material-v2__stat-val">100%</span>
                                     </div>
                                     <div className="material-v2__stat-bar-bg">
                                         <motion.div
                                             className="material-v2__stat-bar-fill"
                                             initial={{ width: 0 }}
-                                            whileInView={{ width: stat.val }}
+                                            whileInView={{ width: '100%' }}
                                             viewport={{ once: true }}
                                             transition={{ delay: 0.5 + i * 0.2, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
                                         >
                                             <div className="material-v2__stat-bar-glow" />
                                         </motion.div>
                                     </div>
-                                    <p className="material-v2__stat-desc">{stat.desc}</p>
+                                    <p className="material-v2__stat-desc">{feature.desc}</p>
                                 </motion.div>
                             ))}
                         </div>

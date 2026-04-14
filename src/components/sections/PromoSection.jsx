@@ -3,15 +3,18 @@ import { Link } from 'react-router-dom';
 import { useT } from '../../hooks/useTranslation';
 import './PromoSection.css';
 
+import useSiteStore from '../../store/siteStore';
+
 const PromoSection = () => {
     const { tr, t } = useT();
+    const promoSettings = useSiteStore(state => state.promoSettings);
 
     return (
         <section className="promo-v2" id="promo-section">
             <div className="promo-v2__inner">
                 <div className="promo-v2__bg-wrap">
                     <img
-                        src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&q=80&w=2000"
+                        src={promoSettings.image}
                         alt="Promo Background"
                         className="promo-v2__bg"
                     />
@@ -27,14 +30,13 @@ const PromoSection = () => {
                         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                     >
                         <div className="promo-v2__head">
-                            <span className="promo-v2__badge">[ {tr(t.promo.limitedTime)} ]</span>
+                            <span className="promo-v2__badge">[ {promoSettings.label} ]</span>
                             <div className="promo-v2__line" />
                         </div>
 
                         <h2 className="promo-v2__title">
-                            {tr(t.promo.offerTitle).split('\n').map((line, i) => (
-                                <span key={i} className="promo-v2__title-line">{line}</span>
-                            ))}
+                            {promoSettings.title} <br />
+                            <span style={{ color: 'var(--color-accent)' }}>-{promoSettings.discount} OFF</span>
                         </h2>
 
                         <div className="promo-v2__footer">

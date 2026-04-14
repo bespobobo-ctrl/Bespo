@@ -11,19 +11,25 @@ import './AdminPage.css';
 const AdminPage = () => {
     const {
         products, heroSettings, aboutSettings,
+        materialSettings, promoSettings, galleryImages, marqueeText,
         globalSizes, globalColors, agents, toggleAgent,
         updateProduct, addProduct, deleteProduct, toggleSoldOut,
-        updateHeroSettings, addHeroSlide, deleteHeroSlide,
+        updateHeroSettings, updateMaterialSettings, updatePromoSettings, updateGalleryImages, updateMarqueeText,
+        addHeroSlide, deleteHeroSlide,
         updateAboutSettings, resetToDefault,
         addGlobalSize, removeGlobalSize, updateGlobalSize, toggleGlobalSize,
         addGlobalColor, removeGlobalColor, updateGlobalColor, toggleGlobalColor,
-        securitySettings, updateSecuritySettings, addIpToWhitelist, removeIpFromWhitelist,
-        addAgentLog, setAgentStatus, updateVibe, activeVibe, runSecurityAudit, runBugAudit, applyAutoFix,
+        securitySettings, updateSecuritySettings,
+        updateVibe, activeVibe, runSecurityAudit, runBugAudit, applyAutoFix,
         recommendedHeroSlides
     } = useSiteStore(useShallow(state => ({
         products: state.products,
         heroSettings: state.heroSettings,
         aboutSettings: state.aboutSettings,
+        materialSettings: state.materialSettings,
+        promoSettings: state.promoSettings,
+        galleryImages: state.galleryImages,
+        marqueeText: state.marqueeText,
         globalSizes: state.globalSizes,
         globalColors: state.globalColors,
         agents: state.agents,
@@ -33,6 +39,10 @@ const AdminPage = () => {
         deleteProduct: state.deleteProduct,
         toggleSoldOut: state.toggleSoldOut,
         updateHeroSettings: state.updateHeroSettings,
+        updateMaterialSettings: state.updateMaterialSettings,
+        updatePromoSettings: state.updatePromoSettings,
+        updateGalleryImages: state.updateGalleryImages,
+        updateMarqueeText: state.updateMarqueeText,
         addHeroSlide: state.addHeroSlide,
         deleteHeroSlide: state.deleteHeroSlide,
         updateAboutSettings: state.updateAboutSettings,
@@ -41,10 +51,6 @@ const AdminPage = () => {
         addGlobalColor: state.addGlobalColor, removeGlobalColor: state.removeGlobalColor, updateGlobalColor: state.updateGlobalColor, toggleGlobalColor: state.toggleGlobalColor,
         securitySettings: state.securitySettings,
         updateSecuritySettings: state.updateSecuritySettings,
-        addIpToWhitelist: state.addIpToWhitelist,
-        removeIpFromWhitelist: state.removeIpFromWhitelist,
-        addAgentLog: state.addAgentLog,
-        setAgentStatus: state.setAgentStatus,
         updateVibe: state.updateVibe,
         activeVibe: state.activeVibe,
         runSecurityAudit: state.runSecurityAudit,
@@ -325,6 +331,9 @@ const AdminPage = () => {
                 </div>
 
                 <nav className="admin-v2__nav">
+                    <button className={activeTab === 'site' ? 'active' : ''} onClick={() => setActiveTab('site')}>
+                        <span className="nav-icon">🎨</span> Sahifa Dizayni
+                    </button>
                     <button className={activeTab === 'products' ? 'active' : ''} onClick={() => setActiveTab('products')}>
                         <span className="nav-icon">📊</span> Boshqaruv
                     </button>
@@ -552,6 +561,101 @@ const AdminPage = () => {
                                         ))}
                                     </tbody>
                                 </table>
+                            </div>
+                        </motion.div>
+                    )}
+
+                    {activeTab === 'site' && (
+                        <motion.div key="site" className="admin-panel-site" initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }}>
+                            <div className="hero-bento">
+                                {/* Section 1: Material Settings */}
+                                <div className="admin-card attr-card-v5">
+                                    <div className="section-header-v5">
+                                        <div className="header-title-wrap">
+                                            <span className="icon-box">🧱</span>
+                                            <div>
+                                                <h3>Materiallar bo'limi</h3>
+                                                <p className="sub-header-text">Mato va texnologiyalar tavsifi</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="v5-input-group">
+                                        <label>SARLAVHA</label>
+                                        <input value={materialSettings.title} onChange={(e) => updateMaterialSettings({ title: e.target.value })} />
+                                    </div>
+                                    <div className="v5-input-group">
+                                        <label>KICHIK SARLAVHA</label>
+                                        <input value={materialSettings.subtitle} onChange={(e) => updateMaterialSettings({ subtitle: e.target.value })} />
+                                    </div>
+                                    <div className="v5-input-group">
+                                        <label>ASOSIY MATN</label>
+                                        <textarea
+                                            value={materialSettings.mainText}
+                                            onChange={(e) => updateMaterialSettings({ mainText: e.target.value })}
+                                            className="v5-textarea"
+                                        />
+                                    </div>
+                                </div>
+
+                                {/* Section 2: Promo Settings */}
+                                <div className="admin-card attr-card-v5">
+                                    <div className="section-header-v5">
+                                        <div className="header-title-wrap">
+                                            <span className="icon-box">🏷️</span>
+                                            <div>
+                                                <h3>Promo Banner</h3>
+                                                <p className="sub-header-text">Chegirma va aksiyalar</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="v5-input-row">
+                                        <div className="v5-input-group">
+                                            <label>FOIZ (%)</label>
+                                            <input value={promoSettings.discount} onChange={(e) => updatePromoSettings({ discount: e.target.value })} />
+                                        </div>
+                                        <div className="v5-input-group">
+                                            <label>LABEL</label>
+                                            <input value={promoSettings.label} onChange={(e) => updatePromoSettings({ label: e.target.value })} />
+                                        </div>
+                                    </div>
+                                    <div className="v5-input-group">
+                                        <label>AKSIYA NOMI</label>
+                                        <input value={promoSettings.title} onChange={(e) => updatePromoSettings({ title: e.target.value })} />
+                                    </div>
+                                </div>
+
+                                {/* Section 3: Gallery & Marquee */}
+                                <div className="admin-card attr-card-v5 full-col">
+                                    <div className="section-header-v5">
+                                        <div className="header-title-wrap">
+                                            <span className="icon-box">🖼️</span>
+                                            <div>
+                                                <h3>Galereya va Marquee</h3>
+                                                <p className="sub-header-text">Vizuallar va yuguruvchi matn</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="v5-input-group">
+                                        <label>YUGURUVCHI MATN (MARQUEE)</label>
+                                        <input value={marqueeText} onChange={(e) => updateMarqueeText(e.target.value)} />
+                                    </div>
+                                    <div className="gallery-preview-grid">
+                                        {galleryImages.map((img, i) => (
+                                            <div key={i} className="gallery-slot">
+                                                <img src={img} alt="" />
+                                                <input type="file" onChange={(e) => {
+                                                    const reader = new FileReader();
+                                                    reader.onload = () => {
+                                                        const newImgs = [...galleryImages];
+                                                        newImgs[i] = reader.result;
+                                                        updateGalleryImages(newImgs);
+                                                    };
+                                                    reader.readAsDataURL(e.target.files[0]);
+                                                }} />
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
                         </motion.div>
                     )}

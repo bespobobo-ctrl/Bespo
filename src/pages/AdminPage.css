@@ -1713,6 +1713,119 @@ textarea:focus {
     color: #ef4444;
 }
 
+/* --- V5 SITE DESIGN TAB STYLES --- */
+.admin-panel-site .hero-bento {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: min-content;
+    gap: 30px;
+    padding: 20px;
+}
+
+.admin-panel-site .full-col {
+    grid-column: span 2;
+}
+
+.v5-input-group {
+    margin-bottom: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.v5-input-group label {
+    font-size: 0.6rem;
+    font-weight: 900;
+    color: #555;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-left: 2px;
+}
+
+.v5-input-group input,
+.v5-textarea {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    padding: 16px 22px !important;
+    border-radius: 12px !important;
+    color: #fff !important;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.v5-input-group input:focus,
+.v5-textarea:focus {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border-color: var(--color-accent) !important;
+    outline: none;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+}
+
+.v5-textarea {
+    min-height: 120px;
+    resize: vertical;
+    line-height: 1.6;
+}
+
+.v5-input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.gallery-preview-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.gallery-slot {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gallery-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+.gallery-slot:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-slot input[type="file"] {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.gallery-slot::after {
+    content: 'EDIT';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.gallery-slot:hover::after {
+    opacity: 1;
+}
+
 @keyframes typing {
     from {
         width: 0
