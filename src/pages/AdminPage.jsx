@@ -919,201 +919,269 @@ const AdminPage = () => {
                     {activeTab === 'about' && (
                         <motion.div key="about" className="admin-panel attribute-management" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                             <div className="admin-v3__bento-grid">
-                                {/* 1. Sizes Management */}
-                                <div className="admin-card">
+                                {/* 1. Sizes Management - Premium V5 */}
+                                <div className="admin-card attr-card-v5">
                                     <div className="form-header">
-                                        <h3>O'lchamlarni boshqarish</h3>
-                                        <span className="smart-badge">SIZE_ENGINE_V4</span>
+                                        <div className="header-title-wrap">
+                                            <span className="icon-box">📐</span>
+                                            <div>
+                                                <h3>O'lchamlar Muhandisligi</h3>
+                                                <p className="sub-header-text">Global o'lchamlar tarmog'ini boshqarish</p>
+                                            </div>
+                                        </div>
+                                        <span className="smart-badge-gold">SIZE_ENGINE_V5.0</span>
                                     </div>
-                                    <div className="attribute-editor">
-                                        <div className="add-attribute">
+
+                                    <div className="attribute-v5-workspace">
+                                        <div className="add-v5-row">
                                             <input
                                                 type="text"
-                                                placeholder="Yangi o'lcham..."
+                                                placeholder="Yangi o'lcham (masalan: 4XL)..."
                                                 value={newSize}
                                                 onChange={(e) => setNewSize(e.target.value)}
                                             />
-                                            <button className="add-btn" onClick={() => { if (newSize) { addGlobalSize(newSize); setNewSize(''); } }}>➕</button>
+                                            <button className="add-v5-btn" onClick={() => { if (newSize) { addGlobalSize(newSize); setNewSize(''); } }}>
+                                                <span>INITIALIZE</span>
+                                            </button>
                                         </div>
-                                        <div className="attribute-list scrollable">
-                                            {globalSizes.map(size => (
-                                                <div key={size.value} className={`attribute-item ${!size.active ? 'disabled' : ''}`}>
-                                                    {editingSize === size.value ? (
-                                                        <input
-                                                            autoFocus
-                                                            className="inline-edit"
-                                                            defaultValue={size.value}
-                                                            onBlur={(e) => {
-                                                                if (e.target.value && e.target.value !== size.value) updateGlobalSize(size.value, e.target.value);
-                                                                setEditingSize(null);
-                                                            }}
-                                                        />
-                                                    ) : (
-                                                        <span onClick={() => setEditingSize(size.value)}>{size.value}</span>
-                                                    )}
-                                                    <div className="item-actions">
-                                                        <button className="toggle-btn" onClick={() => toggleGlobalSize(size.value)} title={size.active ? "Berkitish" : "Ko'rsatish"}>
-                                                            {size.active ? '👁️' : '👁️‍🗨️'}
-                                                        </button>
-                                                        <button className="edit-mini" onClick={() => setEditingSize(size.value)}>✏️</button>
-                                                        <button className="remove-btn" onClick={() => removeGlobalSize(size.value)}>×</button>
+
+                                        <div className="attribute-v5-list scrollable">
+                                            {globalSizes.map((size, idx) => (
+                                                <motion.div
+                                                    key={size.value}
+                                                    className={`v5-item ${!size.active ? 'v5-item-disabled' : ''}`}
+                                                    initial={{ opacity: 0, x: -10 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: idx * 0.03 }}
+                                                >
+                                                    <div className="v5-item-meta">
+                                                        <span className="v5-id">SZ-{String(idx + 1).padStart(2, '0')}</span>
+                                                        {editingSize === size.value ? (
+                                                            <input
+                                                                autoFocus
+                                                                className="v5-inline-input"
+                                                                defaultValue={size.value}
+                                                                onBlur={(e) => {
+                                                                    if (e.target.value && e.target.value !== size.value) updateGlobalSize(size.value, e.target.value);
+                                                                    setEditingSize(null);
+                                                                }}
+                                                            />
+                                                        ) : (
+                                                            <span className="v5-value" onClick={() => setEditingSize(size.value)}>{size.value}</span>
+                                                        )}
                                                     </div>
-                                                </div>
+
+                                                    <div className="v5-actions">
+                                                        <button
+                                                            className={`v5-action-btn ${size.active ? 'active-glow' : ''}`}
+                                                            onClick={() => toggleGlobalSize(size.value)}
+                                                        >
+                                                            {size.active ? 'STATUS: ACTIVE' : 'STATUS: HIDDEN'}
+                                                        </button>
+                                                        <div className="v5-action-group">
+                                                            <button onClick={() => setEditingSize(size.value)}>✏️</button>
+                                                            <button className="v5-del" onClick={() => removeGlobalSize(size.value)}>🗑️</button>
+                                                        </div>
+                                                    </div>
+                                                </motion.div>
                                             ))}
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* 2. Colors Management */}
-                                <div className="admin-card">
+                                {/* 2. Colors Management - Premium V5 */}
+                                <div className="admin-card attr-card-v5">
                                     <div className="form-header">
-                                        <h3>Ranglarni boshqarish</h3>
-                                        <span className="smart-badge">COLOR_PALETTE_PRO</span>
+                                        <div className="header-title-wrap">
+                                            <span className="icon-box">🎨</span>
+                                            <div>
+                                                <h3>Ranglar Palitrasi</h3>
+                                                <p className="sub-header-text">Vizual brend identifikatsiyasini sozlash</p>
+                                            </div>
+                                        </div>
+                                        <span className="smart-badge-gold">COLOR_CORE_V5.0</span>
                                     </div>
-                                    <div className="attribute-editor">
-                                        <div className="add-attribute column">
-                                            <div className="input-row-mini">
-                                                <input
-                                                    type="text"
-                                                    placeholder="Nomi..."
-                                                    value={newColorName}
-                                                    onChange={(e) => setNewColorName(e.target.value)}
-                                                />
+
+                                    <div className="attribute-v5-workspace">
+                                        <div className="add-v5-row color-mode">
+                                            <input
+                                                type="text"
+                                                placeholder="Rang nomi..."
+                                                value={newColorName}
+                                                onChange={(e) => setNewColorName(e.target.value)}
+                                            />
+                                            <div className="color-picker-v5">
                                                 <input
                                                     type="color"
                                                     value={newColorHex}
                                                     onChange={(e) => setNewColorHex(e.target.value)}
                                                 />
+                                                <span className="hex-preview">{newColorHex}</span>
                                             </div>
-                                            <button className="add-btn full-w" onClick={() => { if (newColorName) { addGlobalColor({ name: newColorName, hex: newColorHex }); setNewColorName(''); } }}>Rang qo'shish</button>
+                                            <button className="add-v5-btn" onClick={() => { if (newColorName) { addGlobalColor({ name: newColorName, hex: newColorHex }); setNewColorName(''); } }}>
+                                                <span>ADD COLOR</span>
+                                            </button>
                                         </div>
-                                        <div className="attribute-list scrollable">
-                                            {globalColors.map(color => (
-                                                <div key={color.hex} className={`attribute-item color-item ${!color.active ? 'disabled' : ''}`}>
-                                                    <div className="color-preview" style={{ backgroundColor: color.hex }}></div>
-                                                    <div className="color-info">
-                                                        {editingColor === color.hex ? (
-                                                            <div className="inline-color-edit">
+
+                                        <div className="attribute-v5-list scrollable">
+                                            {globalColors.map((color, idx) => (
+                                                <motion.div
+                                                    key={color.hex}
+                                                    className={`v5-item color-v5-item ${!color.active ? 'v5-item-disabled' : ''}`}
+                                                    initial={{ opacity: 0, x: -10 }}
+                                                    animate={{ opacity: 1, x: 0 }}
+                                                    transition={{ delay: idx * 0.03 }}
+                                                >
+                                                    <div className="v5-item-meta">
+                                                        <div className="v5-color-preview" style={{ backgroundColor: color.hex }}>
+                                                            <div className="color-glow" style={{ boxShadow: `0 0 15px ${color.hex}66` }}></div>
+                                                        </div>
+                                                        <div className="v5-color-info">
+                                                            {editingColor === color.hex ? (
                                                                 <input
                                                                     autoFocus
-                                                                    className="inline-edit"
+                                                                    className="v5-inline-input"
                                                                     defaultValue={color.name}
                                                                     onBlur={(e) => {
                                                                         if (e.target.value) updateGlobalColor(color.hex, { name: e.target.value });
                                                                         setEditingColor(null);
                                                                     }}
                                                                 />
-                                                            </div>
-                                                        ) : (
-                                                            <>
-                                                                <span className="name" onClick={() => setEditingColor(color.hex)}>{color.name}</span>
-                                                                <span className="hex">{color.hex}</span>
-                                                            </>
-                                                        )}
+                                                            ) : (
+                                                                <>
+                                                                    <span className="v5-name" onClick={() => setEditingColor(color.hex)}>{color.name}</span>
+                                                                    <span className="v5-hex-label">{color.hex}</span>
+                                                                </>
+                                                            )}
+                                                        </div>
                                                     </div>
-                                                    <div className="item-actions">
-                                                        <button className="toggle-btn" onClick={() => toggleGlobalColor(color.hex)} title={color.active ? "Berkitish" : "Ko'rsatish"}>
-                                                            {color.active ? '👁️' : '👁️‍🗨️'}
+
+                                                    <div className="v5-actions">
+                                                        <button
+                                                            className={`v5-action-btn ${color.active ? 'active-glow' : ''}`}
+                                                            onClick={() => toggleGlobalColor(color.hex)}
+                                                        >
+                                                            {color.active ? 'ACTIVE' : 'HIDDEN'}
                                                         </button>
-                                                        <button className="edit-mini" onClick={() => setEditingColor(color.hex)}>✏️</button>
-                                                        <button className="remove-btn" onClick={() => removeGlobalColor(color.hex)}>×</button>
+                                                        <div className="v5-action-group">
+                                                            <button onClick={() => setEditingColor(color.hex)}>✏️</button>
+                                                            <button className="v5-del" onClick={() => removeGlobalColor(color.hex)}>🗑️</button>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </motion.div>
                                             ))}
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* 3. Store Identity & Contacts */}
-                                <div className="admin-card">
+                                {/* 3. Store Identity & Contacts - Premium V5 */}
+                                <div className="admin-card attr-card-v5 full-col">
                                     <div className="form-header">
-                                        <h3>Do'kon ma'lumotlari</h3>
-                                        <span className="smart-badge">STORE_IDENTITY_V1</span>
-                                    </div>
-                                    <div className="admin-grid-form-v3">
-                                        <div className="input-group">
-                                            <label>DO'KON MANZILI (TEXT)</label>
-                                            <input
-                                                type="text"
-                                                value={aboutSettings.location}
-                                                onChange={(e) => updateAboutSettings({ location: e.target.value })}
-                                            />
+                                        <div className="header-title-wrap">
+                                            <span className="icon-box">🏢</span>
+                                            <div>
+                                                <h3>Do'kon Identifikatsiyasi</h3>
+                                                <p className="sub-header-text">Brend va aloqa nuqtalarini boshqarish</p>
+                                            </div>
                                         </div>
-                                        <div className="input-row">
-                                            <div className="input-group">
-                                                <label>TELEFON</label>
+                                        <span className="smart-badge-gold">STORE_IDENTITY_V5.0</span>
+                                    </div>
+
+                                    <div className="v5-store-grid">
+                                        <div className="v5-store-inputs">
+                                            <div className="v5-input-group">
+                                                <label>DO'KON MANZILI (MATN)</label>
                                                 <input
                                                     type="text"
-                                                    value={aboutSettings.phone}
-                                                    onChange={(e) => updateAboutSettings({ phone: e.target.value })}
+                                                    placeholder="Shahar / Tuman / Ko'cha..."
+                                                    value={aboutSettings.location}
+                                                    onChange={(e) => updateAboutSettings({ location: e.target.value })}
                                                 />
                                             </div>
-                                            <div className="input-group">
-                                                <label>EMAIL</label>
+                                            <div className="v5-input-row">
+                                                <div className="v5-input-group">
+                                                    <label>TELEFON</label>
+                                                    <input
+                                                        type="text"
+                                                        value={aboutSettings.phone}
+                                                        onChange={(e) => updateAboutSettings({ phone: e.target.value })}
+                                                    />
+                                                </div>
+                                                <div className="v5-input-group">
+                                                    <label>EMAIL</label>
+                                                    <input
+                                                        type="email"
+                                                        value={aboutSettings.email}
+                                                        onChange={(e) => updateAboutSettings({ email: e.target.value })}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="v5-input-group">
+                                                <label>GOOGLE MAPS (EMBED URL)</label>
                                                 <input
-                                                    type="email"
-                                                    value={aboutSettings.email}
-                                                    onChange={(e) => updateAboutSettings({ email: e.target.value })}
+                                                    type="text"
+                                                    placeholder="https://google.com/maps/embed?..."
+                                                    value={aboutSettings.mapUrl}
+                                                    onChange={(e) => updateAboutSettings({ mapUrl: e.target.value })}
                                                 />
                                             </div>
                                         </div>
-                                        <div className="input-group">
-                                            <label>GOOGLE MAPS (EMBED URL)</label>
-                                            <input
-                                                type="text"
-                                                placeholder="https://www.google.com/maps/embed?..."
-                                                value={aboutSettings.mapUrl}
-                                                onChange={(e) => updateAboutSettings({ mapUrl: e.target.value })}
-                                            />
-                                            {aboutSettings.mapUrl && (
-                                                <div className="map-preview-mini" style={{ marginTop: '15px' }}>
-                                                    <iframe
-                                                        src={aboutSettings.mapUrl}
-                                                        width="100%"
-                                                        height="120"
-                                                        style={{ border: 0, borderRadius: '20px', filter: 'grayscale(1) invert(1) contrast(0.8)' }}
-                                                        allowFullScreen=""
-                                                        loading="lazy"
-                                                    ></iframe>
-                                                </div>
+
+                                        <div className="v5-map-preview">
+                                            <div className="map-overlay-v5">MAP PREVIEW ACTIVE</div>
+                                            {aboutSettings.mapUrl ? (
+                                                <iframe
+                                                    src={aboutSettings.mapUrl}
+                                                    width="100%"
+                                                    height="250"
+                                                    style={{ border: 0, borderRadius: '15px' }}
+                                                    allowFullScreen=""
+                                                    loading="lazy"
+                                                ></iframe>
+                                            ) : (
+                                                <div className="map-placeholder-v5">Xarita manzili kiritilmagan</div>
                                             )}
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* 4. Hard Reset Section (0868) */}
-                                <div className="admin-card danger-zone-v4">
-                                    <div className="form-header">
-                                        <h3 className="red-text">Tizimni Master Reset qilish</h3>
-                                        <span className="danger-badge">CRITICAL ACTION</span>
-                                    </div>
-                                    <p className="danger-desc">
-                                        Bu bo'lim orqali loyihani butunlay yangidan yurgizib yuborish mumkin.
-                                        Barcha mahsulotlar, rasmlar va tarix ochiriladi.
-                                    </p>
-
-                                    <div className="reset-gate">
-                                        <div className="pass-input-row">
-                                            <label>MASTER PAROL:</label>
-                                            <input
-                                                type="password"
-                                                placeholder="****"
-                                                value={hardResetPass}
-                                                onChange={(e) => setHardResetPass(e.target.value)}
-                                            />
+                                {/* 4. Reset Zone - Premium V5 */}
+                                <div className="admin-card danger-zone-v5 full-col">
+                                    <div className="danger-header">
+                                        <div className="header-title-wrap">
+                                            <span className="icon-box-red">⚠️</span>
+                                            <div>
+                                                <h3>Tizimni Master Reset qilish</h3>
+                                                <p className="sub-header-red">Barcha ma'lumotlarni qaytarib bo'lmaydigan qilib o'chirish</p>
+                                            </div>
                                         </div>
-
-                                        <button
-                                            className={`hard-reset-btn ${hardResetPass === '0868' ? 'unlocked' : ''}`}
-                                            disabled={isResetting}
-                                            onClick={handleHardReset}
-                                        >
-                                            {isResetting ? 'TOZALANMOQDA...' : 'LOYIHANI 0 DAN BOSHLASH'}
-                                        </button>
+                                        <span className="danger-badge">CRITICAL_V5.0</span>
                                     </div>
 
-                                    <div className="warning-note">
-                                        * Ushbu amalni qaytarib bo'lmaydi.
+                                    <div className="v5-reset-workspace">
+                                        <p className="v5-danger-desc">
+                                            DIQQAT: Ushbu amal barcha mahsulotlarni, foydalanuvchi ma'lumotlarini, rasmlarni va tizim tarixini
+                                            butunlay o'chirib yuboradi. Tizim 0 holatga qaytadi.
+                                        </p>
+                                        <div className="v5-reset-gate">
+                                            <div className="v5-pass-field">
+                                                <label>MASTER PAROLNI KIRITING</label>
+                                                <input
+                                                    type="password"
+                                                    placeholder="••••"
+                                                    value={hardResetPass}
+                                                    onChange={(e) => setHardResetPass(e.target.value)}
+                                                    maxLength={4}
+                                                />
+                                            </div>
+                                            <button
+                                                className={`v5-reset-btn ${hardResetPass === '0868' ? 'ready' : ''}`}
+                                                disabled={hardResetPass !== '0868' || isResetting}
+                                                onClick={handleHardReset}
+                                            >
+                                                {isResetting ? 'TOZALANMOQDA...' : 'LOYIHANI 0 DAN BOSHLASH'}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1123,21 +1191,22 @@ const AdminPage = () => {
             </section>
             <AIAssistant />
 
-            {/* Agent Details Modal (Placeholder for future depth) */}
             <AnimatePresence>
                 {selectedAgentKey && (
-                    <motion.div className="mod-overlay" onClick={() => setSelectedAgentKey(null)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                        <motion.div className="mod-content admin-card" onClick={e => e.stopPropagation()} initial={{ scale: 0.9 }} animate={{ scale: 1 }}>
-                            <h3>{agents[selectedAgentKey].icon} {agents[selectedAgentKey].name}</h3>
-                            <button className="close-mod" onClick={() => setSelectedAgentKey(null)}>×</button>
-                            <div className="mod-body">
-                                <p>{agents[selectedAgentKey].logs[0]}</p>
-                                <div className="agent-status-toggle">
-                                    <label>Agent Status:</label>
-                                    <button onClick={() => toggleAgent(selectedAgentKey)}>
-                                        {agents[selectedAgentKey].active ? 'TERMINATE' : 'INITIALIZE'}
-                                    </button>
-                                </div>
+                    <motion.div className="ai-overlay-v5" onClick={() => setSelectedAgentKey(null)} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                        <motion.div className="ai-modal-v5" onClick={e => e.stopPropagation()} initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}>
+                            <div className="ai-modal-header">
+                                <span className="ai-icon">{agents[selectedAgentKey].icon}</span>
+                                <h3>{agents[selectedAgentKey].name} Diagnostics</h3>
+                                <button className="close-v5" onClick={() => setSelectedAgentKey(null)}>×</button>
+                            </div>
+                            <div className="ai-logs-v5">
+                                {agents[selectedAgentKey].logs.map((log, i) => (
+                                    <div key={i} className="ai-log-line">
+                                        <span className="log-time">[{new Date().toLocaleTimeString()}]</span>
+                                        <span className="log-msg">{log}</span>
+                                    </div>
+                                ))}
                             </div>
                         </motion.div>
                     </motion.div>
